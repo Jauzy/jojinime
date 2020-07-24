@@ -6,7 +6,7 @@ title_japan: ワンパンマン
 rating: R-17+ - (Violence & Profanity)
 score: "8.64"
 total_episode: 12
-duration: 24 min per episodes
+duration: 24 min per episode
 status: Completed
 airing: " October 5, 2015 - December 21, 2015 "
 studio: Madhouse

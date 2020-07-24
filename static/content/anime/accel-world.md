@@ -18,22 +18,17 @@ genre:
   - School
 type: TV
 synopsis: >-
-  Haruyuki Arita is an overweight, bullied middle schooler who finds solace in
-  playing online games. But his life takes a drastic turn one day, when he finds
-  that all his high scores have been topped by Kuroyukihime, the popular vice
-  president of the student council. She then invites him to the student lounge
-  and introduces him to "Brain Burst," a program which allows the users to
-  accelerate their brain waves to the point where time seems to stop. Brain
-  Burst also functions as an augmented reality fighting game, and in order to
-  get more points to accelerate, users must win duels against other players.
-  However, if a user loses all their points, they will also lose access to Brain
-  Burst forever.\
+  Haruyuki "Haru" Arita adalah seorang pemuda bertubuh pendek dan gemuk yang
+  sering diejek oleh berandalan di SMP Umesato. Akibatnya ia menjadi sangat
+  rendah diri. Ia melarikan diri dari siksaan di kehidupan nyata dengan *log in*
+  ke jaringan lokal sekolah di mana ia selalu memainkan permainan dan
+  menunjukkan keterampilannya. Hal ini menarik perhatian Kuroyukihime (secara
+  harfiah berarti "Putri Salju Hitam"), seorang gadis populer dan menarik yang
+  menjabat sebagai Wakil Ketua OSIS.
 
-  \
 
-  Kuroyukihime explains that she chose to show Haruyuki the program because she needs his help. She wants to meet the creator of Brain Burst and uncover the reason of why it was created, but that's easier said than done; to do so, she must defeat the "Six Kings of Pure Color," powerful faction leaders within the game, and reach level 10, the highest level attainable. After the girl helps Haruyuki overcome the bullies that torment him, he vows to help her realize her goal, and so begins the duo's fight to reach the top.\
+  Setelah membantunya melawan beberapa berandalan, Kuroyukihime memperkenalkan Haruyuki dengan Brain Burst, sebuah program rahasia yang mampu mempercepat proses kognitif manusia ke titik di mana waktu tampak berhenti. Haruyuki segera mengetahui bahwa Brain Burst adalah lebih dari sekadar program biasa, melainkan sebuah *Augmented Reality Massively Multiplayer Online* (ARMMO) di mana orang saling bertarung dalam duel sengit untuk mendapatkan Burst Point yang dapat digunakan untuk melakukan akselerasi di dunia nyata.
 
-  \
 
-  \[Written by MAL Rewrite]
+  Kuroyukihime kemudian meminta bantuan Haruyuki agar dapat mencapai Level 10 dalam Brain Burst dengan cara mengalahkan "Six Kings of Pure Colour" sehingga dapat bertemu pencipta Brain Burst dan mengetahui tujuan sebenarnya dari pembuatan program ini. Dengan setiap tantangan yang mereka hadapi di Accelerated World, Haru dan Kuroyukihime, di bawah alias mereka yaitu "Silver Crow" dan "Black Lotus", mengumpulkan sekutu tepercaya, menghadapi musuh berbahaya, dan ikatan mereka tumbuh kuat saat berusaha untuk mencapai tujuan akhir mereka: untuk mencapai level tertinggi dan bertemu dengan pencipta permainan.
 ---

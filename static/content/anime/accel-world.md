@@ -1,5 +1,5 @@
 ---
-cover_image: https://id.pinterest.com/pin/759771399641903037/
+cover_image: https://myanimelist.net/anime/11759/Accel_World/pics
 title: Accel World
 title_english: Accel World
 title_japan: アクセル・ワールド
@@ -18,10 +18,16 @@ genre:
   - School
 type: TV
 synopsis: >-
-  <!--StartFragment-->
-
-
-  Haruyuki Arita is an overweight, bullied middle schooler who finds solace in playing online games. But his life takes a drastic turn one day, when he finds that all his high scores have been topped by Kuroyukihime, the popular vice president of the student council. She then invites him to the student lounge and introduces him to "Brain Burst," a program which allows the users to accelerate their brain waves to the point where time seems to stop. Brain Burst also functions as an augmented reality fighting game, and in order to get more points to accelerate, users must win duels against other players. However, if a user loses all their points, they will also lose access to Brain Burst forever.\
+  Haruyuki Arita is an overweight, bullied middle schooler who finds solace in
+  playing online games. But his life takes a drastic turn one day, when he finds
+  that all his high scores have been topped by Kuroyukihime, the popular vice
+  president of the student council. She then invites him to the student lounge
+  and introduces him to "Brain Burst," a program which allows the users to
+  accelerate their brain waves to the point where time seems to stop. Brain
+  Burst also functions as an augmented reality fighting game, and in order to
+  get more points to accelerate, users must win duels against other players.
+  However, if a user loses all their points, they will also lose access to Brain
+  Burst forever.\
 
   \
 
@@ -30,7 +36,4 @@ synopsis: >-
   \
 
   \[Written by MAL Rewrite]
-
-
-  <!--EndFragment-->
 ---

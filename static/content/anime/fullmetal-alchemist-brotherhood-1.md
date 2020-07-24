@@ -19,18 +19,21 @@ genre:
   - Fantasy
 type: TV
 synopsis: >-
-  "In order for something to be obtained, something of equal value must be
-  lost."\
+  Vico Edward Elric dan Alphonse Elric awalnya hidup bahagia dengan [orang
+  tua](https://id.wikipedia.org/wiki/Orang_tua "Orang tua") mereka. Tetapi
+  karena pekerjaan ayahnya adalah alkemist (ahli kimia), ayahnya yang bernama
+  Van Hohenheim sering bepergian keluar rumah, sehingga Ed dan Al hanya tinggal
+  bersama ibunya, Trisha Elric. Karena terlalu lelah mengurus rumah sendirian,
+  Trisha jatuh sakit dan akhirnya meninggal. Ed dan Al yang saat itu masih
+  kecil, namun sudah mewarisi bakat ayahnya sebagai alkemist mencoba
+  menghidupkan kembali sang ibu. Namun, usaha mereka gagal. Tubuh Al dan kaki
+  kiri Ed diambil sebagai "biaya masuk" karena transmutasi manusia adalah hal
+  tabu dalam alkimia. Ed yang panik akhirnya memindahkan roh Al ke dalam baju
+  zirah dengan bayaran tangan kanannya.
 
-  \
 
-  Alchemy is bound by this Law of Equivalent Exchange—something the young brothers Edward and Alphonse Elric only realize after attempting human transmutation: the one forbidden act of alchemy. They pay a terrible price for their transgression—Edward loses his left leg, Alphonse his physical body. It is only by the desperate sacrifice of Edward's right arm that he is able to affix Alphonse's soul to a suit of armor. Devastated and alone, it is the hope that they would both eventually return to their original bodies that gives Edward the inspiration to obtain metal limbs called "automail" and become a state alchemist, the Fullmetal Alchemist.\
+  Di tengah keputusasaannya, Ed mendapat tawaran untuk menjadi seorang alchemist kenegaraan (State Alchemist). setelah mempertimbangkan keuntungan memperoleh berbagai hak istimewa sehingga ia bisa menyelidiki dan mencari cara untuk mengembalikan tubuh mereka, Ed menerima tawaran itu. Tangan dan kaki Ed pun diganti dengan [automail](https://id.wikipedia.org/w/index.php?title=Automail&action=edit&redlink=1 "Automail (halaman belum tersedia)"). Setelah itu, Ed mengikuti tes ujian alchemist kenegaraan dan lulus sebagai alchemist kenegaraan termuda dalam sejarah dan mendapat julukan Fullmetal Alchemist. Bersama dengan Al, dimulailah petualangan Ed guna mencari cara untuk mengembalikan tubuh mereka.
 
-  \
 
-  Three years of searching later, the brothers seek the Philosopher's Stone, a mythical relic that allows an alchemist to overcome the Law of Equivalent Exchange. Even with military allies Colonel Roy Mustang, Lieutenant Riza Hawkeye, and Lieutenant Colonel Maes Hughes on their side, the brothers find themselves caught up in a nationwide conspiracy that leads them not only to the true nature of the elusive Philosopher's Stone, but their country's murky history as well. In between finding a serial killer and racing against time, Edward and Alphonse must ask themselves if what they are doing will make them human again... or take away their humanity.\
-
-  \
-
-  \[Written by MAL Rewrite]
+  Dalam petualangan mereka, mereka menemukan bahwa militer bekerja sama dengan Homunculus untuk menghancurkan Amestris. Homunculus-homunculus tersebut diperintahkan secara khusus oleh orang yang disebut dengan julukan "Ayah." Ayah ini adalah Homunculus pertama yang ada di dunia. Dalam versi manga, homunculus ini pertama tertangkap dalam sebuah botol kecil. Homunculus dapat hidup karena darah Van Hohenheim diberikan sedikit kepada Homunculus. Van Hohenheim berteman akrab dengan Homunculus ini sampai suatu hari raja di Cselk Cess meminta kepada Homunculus untuk mendapatkan hidup abadi. Setelah Homunculus memberi tahu caranya, dimulailah pembuatan lingkaran transmutasi oleh raja Cselk Cess. Ternyata Homunculus menipu raja dan semua orang di Cselk Cess menjadi kurban dalam pembuatan [batu filsuf](https://id.wikipedia.org/wiki/Batu_filsuf "Batu filsuf") (philosopher's stone). Karena dulu Van Hohenheim menolong Homunculus, maka Homunculus memberikan hidup abadi kepada Van Hohenheim sebagai imbalan dengan menggunakan setengah batu bijak. Setengahnya lagi dipakai oleh Homunculus untuk mengubah dirinya menjadi mirip seperti Van Hohenheim. Oleh sebab itu, Ed, Al, dan teman-temannya berusaha keras untuk mencegah "Ayah" dalam menghancurkan Amestris.
 ---

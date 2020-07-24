@@ -1,5 +1,5 @@
 ---
-cover_image: https://cdn.myanimelist.net/images/anime/1223/96541.jpg
+cover_image: https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood/pics
 title: "Fullmetal Alchemist: Brotherhood"
 title_english: "Fullmetal Alchemist: Brotherhood"
 title_japan: "鋼の錬金術師 FULLMETAL ALCHEMIST "
@@ -19,10 +19,8 @@ genre:
   - Fantasy
 type: TV
 synopsis: >-
-  <!--StartFragment-->
-
-
-  "In order for something to be obtained, something of equal value must be lost."\
+  "In order for something to be obtained, something of equal value must be
+  lost."\
 
   \
 
@@ -35,7 +33,4 @@ synopsis: >-
   \
 
   \[Written by MAL Rewrite]
-
-
-  <!--EndFragment-->
 ---

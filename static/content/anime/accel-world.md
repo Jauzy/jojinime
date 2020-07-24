@@ -1,5 +1,5 @@
 ---
-cover_image: https://myanimelist.net/anime/11759/Accel_World/pics
+cover_image: https://cdn.myanimelist.net/images/anime/8/38155.jpg
 title: Accel World
 title_english: Accel World
 title_japan: アクセル・ワールド

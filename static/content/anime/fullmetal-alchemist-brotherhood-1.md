@@ -1,5 +1,5 @@
 ---
-cover_image: https://i.pinimg.com/564x/dd/05/87/dd0587c16689f33a35bb74d0e53cca43.jpg
+cover_image: https://cdn.myanimelist.net/images/anime/1223/96541.jpg
 title: "Fullmetal Alchemist: Brotherhood"
 title_english: "Fullmetal Alchemist: Brotherhood"
 title_japan: "鋼の錬金術師 FULLMETAL ALCHEMIST "

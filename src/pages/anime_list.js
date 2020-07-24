@@ -71,7 +71,7 @@ const Combined = (props) => {
                                                     <small className='font-weight-bol' key={node.childMarkdownRemark.frontmatter.title}>
                                                         <li>
                                                             <Link className='text-decoration- text-white' to={`/${node.name}`}>{node.childMarkdownRemark.frontmatter.title}</Link>
-                                                            {user?.favourite.filter(fav => fav.mal_id === node.childMarkdownRemark.frontmatter.mal_id)[0] && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
+                                                            {true && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
                                                             {node.childMarkdownRemark.frontmatter.type === 'Movie' && <strong className='text-warning'> : Movie</strong>}
                                                             {node.childMarkdownRemark.frontmatter.status === 'Airing' && <strong className='text-primary'> : Ongoing</strong>}
                                                         </li>
@@ -112,7 +112,6 @@ export const query = graphql`
             node {
                 childMarkdownRemark {
                     frontmatter {
-                    mal_id
                     status
                     title
                     type

@@ -29,9 +29,9 @@ const DetailsSection = (props) => {
             </div>
 
             <div className='row'>
-                <div className='col-sm-auto d-flex mt-3'><img src={detail?.image_url} height='auto' className='rounded-lg border mx-auto' /></div>
+                <div className='col-sm-auto d-flex mt-3'><img src={detail?.cover_image} height='auto' className='rounded-lg border mx-auto' /></div>
                 <div className='col-sm d-flex mt-3'>
-                    <table className='my-auto' style={{ maxWidth: '600px' }}>
+                    <table className='my-auto w-100' style={{ maxWidth: '600px' }}>
                         <thead></thead>
                         <tbody>
                             <tr>
@@ -44,7 +44,7 @@ const DetailsSection = (props) => {
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Japanese</td>
-                                <td>: {detail?.title_japanese}</td>
+                                <td>: {detail?.title_japan}</td>
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Rating</td>
@@ -56,7 +56,7 @@ const DetailsSection = (props) => {
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Total Episode</td>
-                                <td>: {detail?.episodes ? detail.episodes : '?'}</td>
+                                <td>: {detail?.total_episode ? detail.total_episode : '?'}</td>
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Durasi</td>
@@ -68,15 +68,15 @@ const DetailsSection = (props) => {
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Ditayangkan</td>
-                                <td>: {detail?.aired.string}</td>
+                                <td>: {detail?.airing}</td>
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Studio</td>
-                                <td>: {detail?.studios.map((item) => (item.name + ', '))} </td>
+                                <td>: {detail?.studio} </td>
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Genre</td>
-                                <td className='text-wrap'>: {detail?.genres.map((item) => (item.name + ', '))}</td>
+                                <td className='text-wrap'>: {detail?.genre.map((item) => (item + ', '))}</td>
                             </tr>
                         </tbody>
                         <tfoot></tfoot>

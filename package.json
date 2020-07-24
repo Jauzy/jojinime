@@ -30,12 +30,12 @@
     "react-loading-overlay": "^1.0.1",
     "react-share": "^4.2.1",
     "react-slick": "^0.27.0",
-    "react-time-ago": "^6.0.0",
     "reactstrap": "^8.5.1",
     "remove": "^0.1.5",
     "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
+    "kill-port": "^1.6.1",
     "prettier": "2.0.5"
   },
   "keywords": [
@@ -43,6 +43,7 @@
   ],
   "license": "0BSD",
   "scripts": {
+    "dev": "nodemon --exec 'kill-port --port 8000 && gatsby develop' --watch gatsby-node.js --watch package.json --watch gatsby-config.js",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",

@@ -19,14 +19,27 @@ exports.createPages = async ({ graphql, actions }) => {
                     node{
                         childMarkdownRemark {
                             frontmatter{
+                                total_episode
                                 title
-                                mal_id
-                                status
-                                type
+                                genre
                             }
                         }
                         name
                     }   
+                }
+            }
+            episode: allFile(filter: {relativeDirectory:{ne: "anime"}, childMarkdownRemark:{frontmatter:{anime_title:{ne:null}}}}) {
+                edges{
+                    node{
+                        name
+                        childMarkdownRemark{
+                            frontmatter{
+                                cover_image
+                                anime_title
+                                date_uploaded(fromNow:true)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -40,7 +53,20 @@ exports.createPages = async ({ graphql, actions }) => {
                 // in page queries as GraphQL variables.
                 name: node.name,
                 title: node.childMarkdownRemark.frontmatter.title,
-                mal_id: node.childMarkdownRemark.frontmatter.mal_id,
+                genre: node.childMarkdownRemark.frontmatter.genre,
+            },
+        })
+    })
+    result.data.episode.edges.forEach(({ node }) => {
+        createPage({
+            path: node.name,
+            component: path.resolve(`./src/templates/streaming.js`),
+            context: {
+                // Data passed to context is available
+                // in page queries as GraphQL variables.
+                name: node.name,
+                anime_title: node.childMarkdownRemark.frontmatter.anime_title,
+                total_episode: node.childMarkdownRemark.frontmatter.total_episode
             },
         })
     })

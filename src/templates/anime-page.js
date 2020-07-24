@@ -4,17 +4,17 @@ import Slider from "react-slick";
 
 import JikanURL from '../../static/constants/jikanURL'
 
-import { ShareSection, DetailsSection, EpisodeSection, Footer, Layout, SEO } from '../components/Index';
+import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
 
 const COLORS = require('../../static/constants/Colors')
 
 const AnimePage = (props) => {
     const { data } = props
     const [state, setState] = useState({
-        loading: false, characters: null, detail: null, recommendation: null, episode_arr: null
+        loading: false, characters: null, detail: null, recommendation: null
     })
 
-    const { characters, detail, recommendation, episodes_arr } = state
+    const { characters, detail, recommendation } = state
 
     var settings = {
         slidesToShow: 5,
@@ -49,26 +49,16 @@ const AnimePage = (props) => {
         ]
     };
 
-    const fetchData = async () => {
-        const mal_id = data.anime.edges[0].node.childMarkdownRemark.frontmatter.mal_id
-        console.log(mal_id)
-        if (mal_id) {
-            setState({ ...state, loading: true })
-            const detail = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}`)
-            const characters = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/characters`)
-            const recommendations = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/recommendations`)
-            setState({
-                ...state, loading: false,
-                detail: detail.data.data,
-                characters: characters.data.characters,
-                recommendation: recommendations.data.data
-            })
+    const fillRecomendations = (length) => {
+        let arr = []
+        let j = 0
+        for (let i = 0; i < 5 - length; i++) {
+            if (i >= length) j = 0
+            arr.push(data.recommendations.edges[j])
+            j++
         }
+        return arr
     }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
 
     return (
         <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={state.loading}>
@@ -76,9 +66,8 @@ const AnimePage = (props) => {
             <div className='shape-wave-top'></div>
             <div className='bg-dark container-lg' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
 
-
                 {/* Details */}
-                <DetailsSection detail={detail} />
+                <DetailsSection detail={data.anime.edges[0].node.childMarkdownRemark?.frontmatter} />
 
                 {/* Characters */}
                 {characters?.length > 4 && <div>
@@ -112,15 +101,25 @@ const AnimePage = (props) => {
                     </div>
                 <div className='bg-light p-3' style={{ borderTop: '5px solid ' + COLORS.MAIN, borderRadius: '20px' }}>
                     <Slider {...settings}>
-                        {recommendation?.map((item, index) => (
+                        {data.recommendations.edges?.map(({ node }, index) => (
                             <div className='' key={index + 'recommend'} style={{ width: '200px' }}>
-                                <Link to={'/anime/' + item.mal_id} className='recommend-card'>
+                                <Link to={'/' + node.name} className='recommend-card'>
                                     <div className='bg-recommend text-truncate p-3 text-center text-white' style={{ width: '200px', height: '50px' }}></div>
-                                    <div className='position-absolute text-truncate p-3 text-center text-white' style={{ width: '200px', bottom: '3px' }}>{item.title}</div>
-                                    <img src={item.image_url} style={{ objectFit: 'cover', width: '200px', height: '280px' }} className='rounded-lg' />
+                                    <div className='position-absolute text-truncate p-3 text-center text-white' style={{ width: '200px', bottom: '3px' }}>{node.childMarkdownRemark.frontmatter.title}</div>
+                                    <img src={node.childMarkdownRemark.frontmatter.cover_image} style={{ objectFit: 'cover', width: '200px', height: '280px' }} alt='cover' className='rounded-lg' />
                                 </Link>
                             </div>
                         ))}
+                        {data.recommendations.edges?.length < 5 ? fillRecomendations(data.recommendations.edges.length).map(({ node }, index) => (
+                            <div className='' key={index + 'recommend'} style={{ width: '200px' }}>
+                                <Link to={'/' + node.name} className='recommend-card'>
+                                    <div className='bg-recommend text-truncate p-3 text-center text-white' style={{ width: '200px', height: '50px' }}></div>
+                                    <div className='position-absolute text-truncate p-3 text-center text-white' style={{ width: '200px', bottom: '3px' }}>{node.childMarkdownRemark.frontmatter.title}</div>
+                                    <img src={node.childMarkdownRemark.frontmatter.cover_image} style={{ objectFit: 'cover', width: '200px', height: '280px' }} alt='cover' className='rounded-lg' />
+                                </Link>
+                            </div>
+                        ))
+                            : null}
                     </Slider>
                 </div>
 
@@ -131,34 +130,61 @@ const AnimePage = (props) => {
 }
 
 export const query = graphql`
-    query($title: String!){
-        anime: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {title: {eq: $title}}}}) {
-        edges {
-            node {
-            childMarkdownRemark {
-                frontmatter {
-                title
-                mal_id
-                status
-                type
+    query($title: String!, $genre: [String!]!){
+        recommendations: allFile(filter: {relativeDirectory:{eq: "anime"}, childMarkdownRemark:{frontmatter:{genre:{in:$genre}, title: {ne:$title}}}}) {
+            edges{
+                node{
+                    name
+                    childMarkdownRemark{
+                        frontmatter{
+                            cover_image
+                            title
+                        }
+                    }
                 }
             }
-            name
-            }
         }
+        anime: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {title: {eq: $title}}}}) {
+            edges {
+                node {
+                childMarkdownRemark {
+                    frontmatter {
+                        cover_image
+                        title
+                        title_english
+                        title_japan
+                        rating
+                        score
+                        total_episode
+                        duration
+                        status
+                        airing
+                        studio
+                        genre
+                        type
+                        synopsis
+                        batch_360
+                        batch_480
+                        batch_720
+                    }
+                }
+                name
+                }
+            }
         }
         episode: allFile(filter: {childMarkdownRemark: {frontmatter: {anime_title: {eq: $title}}}}) {
         edges {
             node {
-            childMarkdownRemark {
-                frontmatter {
-                title
-                status
-                anime_title
-                episode
-                date_uploaded
+                name
+                childMarkdownRemark {
+                    frontmatter {
+                        title
+                        status
+                        anime_title
+                        episode
+                        date_uploaded(fromNow:true)
+                    }
                 }
-            }
             }
         }
         }

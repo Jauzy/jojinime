@@ -9,7 +9,7 @@ import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import LoadingOverlay from 'react-loading-overlay';
 
-import { Navbar, Footer } from './Index'
+import { Navbar, Footer, ChatWidget } from './Index'
 
 const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
@@ -39,6 +39,7 @@ const Layout = (props) => {
     <div className='font-open-sans text-white' style={{ background: COLORS.DARKSECONDARY }}>
       <LoadingOverlay active={loading || false} spinner={<Spinner />}>
         <Navbar color={navbarColor} navigate={navigate} />
+        <ChatWidget />
         {children}
         {!blackList.includes(location?.pathname) && <Footer />}
       </LoadingOverlay>

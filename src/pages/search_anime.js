@@ -6,10 +6,8 @@ import { SEO, Layout } from '../components/Index'
 const COLORS = require('../../static/constants/Colors')
 
 const SearchAnime = props => {
-    const { search } = props.location.state
-
     const [state, setState] = useState({
-        list: props.data.anime.edges, full_list: props.data.anime.edges, search: null
+        list: props.data.anime.edges, full_list: props.data.anime.edges, search: props.location?.state
     })
 
     const onChange = e => {

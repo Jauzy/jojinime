@@ -40,7 +40,7 @@ const Layout = (props) => {
       <LoadingOverlay active={loading || false} spinner={<Spinner />}>
         <Navbar color={navbarColor} navigate={navigate} />
         {children}
-        {!blackList.includes(location.pathname) && <Footer />}
+        {!blackList.includes(location?.pathname) && <Footer />}
       </LoadingOverlay>
     </div>
   )

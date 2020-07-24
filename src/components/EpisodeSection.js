@@ -35,7 +35,7 @@ const EpisodeSection = (props) => {
                         <li>
                             <Link className='text-decoration-none text-white' to={''}>
                                 {node.childMarkdownRemark.frontmatter.title}
-                                <date className='ml-auto'><ReactTimeAgo locale="en" date={new Date(node.childMarkdownRemark.frontmatter.date_uploaded)} /></date>
+                                <date className='ml-auto'></date>
                             </Link>
                             
                         </li>

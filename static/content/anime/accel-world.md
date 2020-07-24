@@ -1,12 +1,12 @@
 ---
-cover_image: https://upload.wikimedia.org/wikipedia/id/thumb/d/dd/Accel_World_cover.png/220px-Accel_World_cover.png
+cover_image: https://cdn.myanimelist.net/images/anime/8/38155.jpg
 title: Accel World
 title_english: Accel World
 title_japan: アクセル・ワールド
 rating: PG-13 - Teens 13 or older
 score: "7.38"
-total_episode: 18
-duration: 24 min
+total_episode: 24
+duration: 24 menit per episode
 status: Completed
 airing: April 7, 2012 - September 22, 2012
 studio: Sunrise

@@ -1,12 +1,12 @@
 ---
 cover_image: https://cdn.myanimelist.net/images/anime/7/60263.jpg
-title: Aldnoah.Zero
-title_english: Aldnoah.Zero
+title: Aldnoah Zero
+title_english: Aldnoah Zero
 title_japan: アルドノア・ゼロ
 rating: R-17+ - (Violence & Profanity)
 score: "7.47"
 total_episode: 12
-duration: 23 min per espisode
+duration: 23 min per episode
 status: Completed
 airing: "July 6, 2014 - September 21, 2014 "
 studio: A-1 Pictures, TROYCA

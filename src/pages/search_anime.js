@@ -18,12 +18,6 @@ const SearchAnime = props => {
         setState({ ...state, list: state.full_list.filter(item => item.node.childMarkdownRemark.frontmatter.title?.toLowerCase().includes(state.search?.toLowerCase())) })
     }, [state.search])
 
-    useEffect(() => {
-        if (search) {
-            setState({ ...state, search })
-        }
-    }, [search])
-
     return (
         <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title='Search Anime' />

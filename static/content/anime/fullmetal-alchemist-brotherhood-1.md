@@ -1,11 +1,11 @@
 ---
-cover_image: https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood/pics
+cover_image: https://cdn.myanimelist.net/images/anime/1223/96541.jpg
 title: "Fullmetal Alchemist: Brotherhood"
 title_english: "Fullmetal Alchemist: Brotherhood"
 title_japan: "鋼の錬金術師 FULLMETAL ALCHEMIST "
 rating: R-17+ - (Violence & Profanity)
 score: "9.23"
-total_episode: 60
+total_episode: 64
 duration: 24 min per episode
 status: Completed
 airing: " April 5, 2009 - July 4, 2010"

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
+import ReactTimeAgo from 'react-time-ago'
 
 const COLORS = require('../../static/constants/Colors')
 
@@ -30,21 +31,13 @@ const EpisodeSection = (props) => {
                     {detail?.title} Episode List <em className='text-dark'>( Link Download + Streaming )</em>
                 </div>
                 <ul style={{ backgroundColor: '#2D2D2D', listStyle: 'none' }} className='px-3 py-1 border-radius-bottom link-list'>
-                    {anime.type == 'TV' && episodes?.map(({ node }, index) => (
+                    {episodes?.map(({ node }, index) => (
                         <li>
                             <Link className='text-decoration-none text-white' to={''}>
                                 {node.childMarkdownRemark.frontmatter.title}
-                                <date className='ml-auto'>
-                                    <small>Uploaded</small>
-                                    {new Date(node.childMarkdownRemark.frontmatter.date_uploaded).toDateString()}</date>
+                                <date className='ml-auto'><ReactTimeAgo date={new Date(node.childMarkdownRemark.frontmatter.date_uploaded)} /></date>
                             </Link>
-                        </li>
-                    ))}
-                    {anime.type != 'TV' && episodes?.map((item, index) => (
-                        <li>
-                            <Link className='text-decoration-none text-white' to={``}>
-                                Movie {detail?.title} Subtitle Indonesia
-                                        <date className='ml-auto'><small>Uploaded</small> {new Date(item.date_uploaded).toDateString()}</date></Link>
+                            
                         </li>
                     ))}
                     {(!episodes || episodes.length == 0) &&

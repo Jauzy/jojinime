@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'gatsby'
 import Slider from "react-slick";
-import axios from 'axios'
 
 import JikanURL from '../../static/constants/jikanURL'
 
@@ -55,14 +54,14 @@ const AnimePage = (props) => {
         console.log(mal_id)
         if (mal_id) {
             setState({ ...state, loading: true })
-            const detail = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}`)
-            const characters = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/characters`)
-            const recommendations = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/recommendations`)
+            // const detail = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}`)
+            // const characters = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/characters`)
+            // const recommendations = await JikanURL.get(`https://api.jikan.moe/v4-alpha/anime/${mal_id}/recommendations`)
             setState({
                 ...state, loading: false,
-                detail: detail.data.data,
-                characters: characters.data.characters,
-                recommendation: recommendations.data.data
+                // detail: detail.data.data,
+                // characters: characters.data.characters,
+                // recommendation: recommendations.data.data
             })
         }
     }

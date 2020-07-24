@@ -58,4 +58,4 @@ collections:
       - {label: 'Title', name: 'title', widget: 'string', hint: 'Ex: Overlord Eps 1, SAO Eps 2, dst.'}
       - {label: 'Episode', name: 'episode', widget: 'string', hint: 'Ex: Episode 1, Episode 2, Ova 1, OVa 2, dst.'}
       - {label: 'Date Uploaded', name: 'date_uploaded', widget: 'datetime'}
-      - {label: '360P', name: '360', widget: 'file', required: false}
+      - {label: 'Streaming 360 Video', name: 'stream_360', widget: 'file', required: false}

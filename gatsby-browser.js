@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'popper.js/dist/popper.min'
 
-import './static/styles/share.scss'
 import './static/styles/cube-anime.css'
 import './static/styles/floating-labels.css'
 import './static/styles/font.css'

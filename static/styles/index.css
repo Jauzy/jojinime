@@ -1,0 +1,183 @@
+:root {
+    --main-color: #00ADB5;
+    --secondary-color: #222222;
+    --ligth-secondary-color: #343A40;
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+.border-radius-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.border-radius-bottom {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.link-list li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 20px;
+    border-radius: 20px;
+}
+
+.link-list li a {
+    display: flex;
+}
+
+.link-list li:nth-child(odd) {
+    background-color: #403C3C;
+}
+
+.link-list li:hover {
+    background-color: #6E7AFF;
+}
+
+.two-column {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+@media only screen and (max-width: 920px) {
+    .two-column {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+    }
+}
+
+.recommend-card .bg-recommend {
+    background-color: black;
+    opacity: .6;
+    position: absolute;
+    bottom: 5px;
+}
+
+.recommend-card:hover .bg-recommend {
+    opacity: .8;
+}
+
+.recommend-card-2 .bg-recommend {
+    background-color: black;
+    opacity: .6;
+    position: absolute;
+    margin-bottom: 225px;
+}
+
+.recommend-card-2:hover .bg-recommend {
+    opacity: .8;
+}
+
+.schedule-list div:hover {
+    background-color: var(--main-color);
+    border: none;
+}
+
+.px-10 {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+@media only screen and (max-width: 1600px) {
+    .px-10 {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .px-10 {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+}
+
+.shape-wave-top {
+    background-position-y: top;
+    margin-top: 0px;
+    margin-bottom: -300px;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-image: url('./images/wavetop.svg');
+}
+
+.shape-wave-bottom {
+    background-position-y: bottom;
+    margin-top: -180px;
+    margin-bottom: -2px;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-image: url('./images/wave.svg');
+}
+
+@media only screen and (max-width: 1420px) {
+    .shape-wave-top {
+        height: 300px;
+        margin-bottom: -200px;
+    }
+    .shape-wave-bottom {
+        height: 300px;
+    }
+}
+
+@media only screen and (max-width: 920px) {
+    .shape-wave-top {
+        height: 300px;
+    }
+    .shape-wave-bottom {
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .shape-wave-top {
+        height: 250px;
+    }
+    .shape-wave-bottom {
+        height: 150px;
+    }
+}
+
+.btn-main {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.btn-main:hover {
+    background-color: var(--ligth-secondary-color);
+    color: white;
+}
+
+.text-main {
+    color: var(--main-color);
+}
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: var(--main-color);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ligth-secondary-color);
+}

@@ -1,5 +1,6 @@
 ---
 mal_id: "32262"
 title: Renai Boukun
-status: Ongoing
+status: On Going
+type: TV
 ---

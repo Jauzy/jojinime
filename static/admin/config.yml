@@ -1,0 +1,61 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: master
+
+
+media_folder: static/media
+public_folder: /media
+
+collections:
+  - name: "anime"
+    label: "Anime"
+    folder: "static/content/anime"
+    create: true
+    path: "{{title}}"
+    media_folder: "static/media"
+    public_folder: "/media"
+    editor:
+      preview: false
+    fields:
+      - {
+          label: "My Anime List ID ( mal_id )",
+          name: "mal_id",
+          widget: "string",
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: 'Status', name: 'status', widget: 'select',
+          options: [
+            'On Going', 'Completed'
+          ]
+        }
+      - {
+          label: 'Type', name: 'type', widget: 'select',
+          options: [
+            'TV', 'Movie'
+          ]
+        }
+
+  - name: "episode"
+    label: "Episode"
+    folder: "static/content/episode"
+    create: true
+    path: "{{anime_title}}/{{episode}}"
+    editor:
+      preview: false
+    fields:
+      - {
+          label: "Anime Title",
+          name: "anime_title",
+          widget: "relation",
+          collection: "anime",
+          searchFields: [title],
+          valueField: title,
+          displayFields: [title],
+        }
+      - {label: 'Title', name: 'title', widget: 'string', hint: 'Ex: Overlord Eps 1, SAO Eps 2, dst.'}
+      - {label: 'Episode', name: 'episode', widget: 'string', hint: 'Ex: Episode 1, Episode 2, Ova 1, OVa 2, dst.'}
+      - {label: 'Date Uploaded', name: 'date_uploaded', widget: 'datetime'}
+      - {label: '360P', name: '360', widget: 'file', required: false}

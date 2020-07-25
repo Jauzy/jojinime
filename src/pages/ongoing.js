@@ -62,7 +62,7 @@ const Ongoing = (props) => {
 
 export const query = graphql`
     {
-        ongoing: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {status: {eq: "On Going"}}}}) {
+        ongoing: allFile(filter: {relativeDirectory: {eq: "anime"}}) {
             edges {
                 node {
                     name

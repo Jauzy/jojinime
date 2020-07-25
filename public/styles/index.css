@@ -73,11 +73,6 @@ html, body, #root {
     opacity: .8;
 }
 
-.schedule-list div:hover {
-    background-color: var(--main-color);
-    border: none;
-}
-
 .px-10 {
     padding-left: 10%;
     padding-right: 10%;

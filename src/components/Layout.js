@@ -14,24 +14,18 @@ import { Navbar, Footer, ChatWidget } from './Index'
 const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
 
-const aquaImg = require('../../static/styles/images/aqua.png')
 const Spinner = (props) => {
   return (
-      <div className='row'>
-          <div className="gooey"></div>
-      </div>
+    <div className='row'>
+      <div className="gooey"></div>
+    </div>
   )
 }
 
 const Layout = (props) => {
-  const { location, navigate, path, children, navbarColor, loading } = props
-
-  const blackList = [
-    '/'
-  ]
+  const { navigate, children, navbarColor, loading, noFooter } = props
 
   useEffect(() => {
-    console.log(props)
     // METHODS.disableF12()
   }, [])
 
@@ -41,7 +35,7 @@ const Layout = (props) => {
         <Navbar color={navbarColor} navigate={navigate} />
         <ChatWidget />
         {children}
-        {!blackList.includes(location?.pathname) && <Footer />}
+        {!noFooter && <Footer />}
       </LoadingOverlay>
     </div>
   )

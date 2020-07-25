@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import { SEO, Layout } from '../components/Index'
 
@@ -7,7 +7,7 @@ const COLORS = require('../../static/constants/Colors')
 
 const SearchAnime = props => {
     const [state, setState] = useState({
-        list: props.data.anime.edges, full_list: props.data.anime.edges, search: props.location?.state
+        list: props.data.anime.edges, full_list: props.data.anime.edges, search: props.location?.state?.search || ''
     })
 
     const onChange = e => {
@@ -19,10 +19,9 @@ const SearchAnime = props => {
     }, [state.search])
 
     return (
-        <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
+        <Layout navigate={props.navigate} navbarColor={'transparent'} >
             <SEO title='Search Anime' />
 
-            <div className='shape-wave-top'></div>
             <div className='container bg-dark' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black', marginBottom: '150px' }}>
                 <div style={{ backgroundColor: '#2D2D2D', borderRadius: '20px' }} className='p-4 '>
                     <div className='d-flex'>
@@ -63,7 +62,7 @@ const SearchAnime = props => {
                 </div>
             </div>
             <div className='shape-wave-bottom'></div>
-        </Layout>
+        </Layout >
     )
 }
 

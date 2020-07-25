@@ -8,7 +8,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'popper.js/dist/popper.min'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
+import './static/styles/404page.css'
 import './static/styles/chat.scss'
 import './static/styles/cube-anime.css'
 import './static/styles/floating-labels.css'

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import { SEO, Layout, DownloadSection, ShareSection, CommentSection } from '../components/Index'
 
@@ -8,7 +8,6 @@ const COLORS = require('../../static/constants/Colors')
 
 const Streaming = (props) => {
     const episode = props.data.episode.edges[0].node.childMarkdownRemark.frontmatter
-    console.log(episode)
     const [state, setState] = useState({
 
     })
@@ -16,7 +15,7 @@ const Streaming = (props) => {
     const [url, setUrl] = useState(episode?.stream_360.relativePath)
 
     return (
-        <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title={`${episode?.title} - Streaming`} />
             <div className='shape-wave-top'></div>
             <div className='bg-dark container-lg pb-2' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
@@ -67,9 +66,10 @@ const Streaming = (props) => {
                 </div>
 
                 <DownloadSection title={episode?.title}
-                    video_360={require('../../static/content/' + episode?.stream_360.relativePath)}
-                    video_480={require('../../static/content/' + episode?.stream_480.relativePath)}
-                    video_720={require('../../static/content/' + episode?.stream_720.relativePath)} />
+                    video_360={require('../../static/content/' + episode?.stream_360.relativePath)} video_360_size={episode?.stream_360.size}
+                    video_480={require('../../static/content/' + episode?.stream_480.relativePath)} video_480_size={episode?.stream_480.size}
+                    video_720={require('../../static/content/' + episode?.stream_720.relativePath)} video_720_size={episode?.stream_720.size}
+                />
 
                 <ShareSection title={episode?.title} location={props.location} />
 
@@ -95,12 +95,15 @@ export const query = graphql`
                         anime_title
                         stream_360 {
                             relativePath
+                            size
                         }
                         stream_480 {
                             relativePath
+                            size
                         }
                         stream_720 {
                             relativePath
+                            size
                         }
                         date_uploaded(fromNow: true)
                         }

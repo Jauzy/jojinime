@@ -8,9 +8,10 @@ import ShareSection from './ShareSection'
 import DownloadSection from './DownloadSection'
 import CommentSection from './CommentSection'
 import ChatWidget from './ChatWidget'
+import ListAnime from './ListAnime'
 
 export {
     Footer, SEO, DownloadSection, CommentSection,
     Navbar, ShareSection, EpisodeSection, DetailsSection,
-    Layout, ChatWidget
+    Layout, ChatWidget, ListAnime
 }

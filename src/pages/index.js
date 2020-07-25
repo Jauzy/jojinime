@@ -22,7 +22,7 @@ const IndexPage = (props) => {
   }, [])
 
   return (
-    <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor='transparent'>
+    <Layout navigate={props.navigate} navbarColor={'transparent'} noFooter={true}>
       <SEO title="Home" />
       <div className='position-absolute w-100' style={{ top: 0, backgroundColor: COLORS.DARKSECONDARY }}>
 

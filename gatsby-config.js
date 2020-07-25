@@ -40,5 +40,14 @@ module.exports = {
     `gatsby-plugin-netlify-cms`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: '#00ADB5',
+        // Disable the loading spinner.
+        showSpinner: true,
+      },
+    },
   ],
 }

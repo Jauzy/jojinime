@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
-import LoadingOverlay from 'react-loading-overlay';
 import anime from 'animejs'
 import { Container } from 'reactstrap'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import { Layout, SEO } from "../components/Index"
 
@@ -14,7 +13,24 @@ const Combined = (props) => {
     const anime_list = props.data.allFile.edges
     const firstLetter = 'A B C D E F G H I J K L M N P Q R S T U V W X Y Z'
     const genres = [
-        'Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Magic', 'Supernatural', 'Horror','Sci-Fi', 'Mystery', 'Psychological', 'Romance',  'Slice of Life'
+        "Action",
+        "Adventure",
+        "Comedy",
+        "Drama",
+        "Slice of Life",
+        "Fantasy",
+        "Magic",
+        "Supernatural",
+        "Horror",
+        "Mystery",
+        "Game",
+        "Pyschological",
+        "Romance",
+        "Sci-Fi",
+        "Harem",
+        "Ecchi",
+        "Mecha",
+        "School",
     ]
 
     useEffect(() => {
@@ -28,76 +44,68 @@ const Combined = (props) => {
     }, [])
 
     return (
-        <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title='Anime List' />
             <div className='shape-wave-top'></div>
             <Container>
                 <div className='container bg-dark ' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }} id='anime-wrapper'>
-
-                    <LoadingOverlay
-                        active={props.loading}
-                        spinner
-                        text='Loading your content...'
-                    >
-                        <div style={{ backgroundColor: '#2D2D2D', borderRadius: '20px' }} className='p-4'>
-                            <div className='row'>
-                                <div className='col-lg'>
-                                    <div className='d-flex'>
-                                        <div>
-                                            <h4>Anime List Subtitle Indonesia</h4>
-                                        </div>
+                    <div style={{ backgroundColor: '#2D2D2D', borderRadius: '20px' }} className='p-4'>
+                        <div className='row'>
+                            <div className='col-lg'>
+                                <div className='d-flex'>
+                                    <div>
+                                        <h4>Anime List Subtitle Indonesia</h4>
                                     </div>
-                                    <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
+                                </div>
+                                <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
 
-                                    <div className='d-flex flex-wrap justify-content-center mb-3'>
-                                        <a className='btn btn-secondary m-1 p-0 d-flex' style={{ width: '25px', height: '25px', fontSize: 'auto' }} href='#Sec'>
-                                            <small className='m-auto'>#</small>
+                                <div className='d-flex flex-wrap justify-content-center mb-3'>
+                                    <a className='btn btn-secondary m-1 p-0 d-flex' style={{ width: '25px', height: '25px', fontSize: 'auto' }} href='#Sec'>
+                                        <small className='m-auto'>#</small>
+                                    </a>
+                                    {firstLetter.split(" ").map((item) => (
+                                        <a className='btn btn-secondary m-1 p-0 d-flex' key={item + 'box'} style={{ width: '25px', height: '25px', fontSize: 'auto' }}
+                                            href={'#' + item + '-section'}
+                                        >
+                                            <small className='m-auto'>{item}</small>
                                         </a>
-                                        {firstLetter.split(" ").map((item) => (
-                                            <a className='btn btn-secondary m-1 p-0 d-flex' key={item + 'box'} style={{ width: '25px', height: '25px', fontSize: 'auto' }}
-                                                href={'#' + item + '-section'}
-                                            >
-                                                <small className='m-auto'>{item}</small>
-                                            </a>
-                                        ))}
-                                    </div>
-
-                                    {firstLetter.split(" ").map(item => (
-                                        <section className='px-3 font-open-sans' id={item + '-section'} key={item + '-section'}>
-                                            <h6 className='text-left font-weight-bold'>{item}</h6>
-                                            <hr style={{ borderWidth: '2px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
-                                            <ul className='two-column'>
-                                                {anime_list?.filter(anime => anime.node.childMarkdownRemark.frontmatter.title.charAt(0) === item).map(({ node }) => (
-                                                    <small className='font-weight-bol' key={node.childMarkdownRemark.frontmatter.title}>
-                                                        <li>
-                                                            <Link className='text-decoration- text-white' to={`/${node.name}`}>{node.childMarkdownRemark.frontmatter.title}</Link>
-                                                            {true && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
-                                                            {node.childMarkdownRemark.frontmatter.type === 'Movie' && <strong className='text-warning'> : Movie</strong>}
-                                                            {node.childMarkdownRemark.frontmatter.status === 'Airing' && <strong className='text-primary'> : Ongoing</strong>}
-                                                        </li>
-                                                    </small>
-                                                ))}
-                                            </ul>
-                                        </section>
                                     ))}
                                 </div>
-                                <div className='col-lg-4'>
-                                    <div className=''>
-                                        <div className='rounded-lg'>
-                                            <img width='100%' src={aquaImg} style={{ objectFit: 'cover', marginBottom: '-100px' }} alt='aqua' />
-                                        </div>
-                                        <div className='p-3 bg-dark'>
-                                            <h6>Genre:</h6>
-                                            {genres.map((item) => (
-                                                <Link className='btn btn-main m-1' key={item + '-genre'} to={`/anime/genre/${item}`}>{item}</Link>
+
+                                {firstLetter.split(" ").map(item => (
+                                    <section className='px-3 font-open-sans' id={item + '-section'} key={item + '-section'}>
+                                        <h6 className='text-left font-weight-bold'>{item}</h6>
+                                        <hr style={{ borderWidth: '2px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
+                                        <ul className='two-column'>
+                                            {anime_list?.filter(anime => anime.node.childMarkdownRemark.frontmatter.title.charAt(0) === item).map(({ node }) => (
+                                                <small className='font-weight-bol' key={node.childMarkdownRemark.frontmatter.title}>
+                                                    <li>
+                                                        <Link className='text-decoration- text-white' to={`/${node.name}`}>{node.childMarkdownRemark.frontmatter.title}</Link>
+                                                        {true && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
+                                                        {node.childMarkdownRemark.frontmatter.type === 'Movie' && <strong className='text-warning'> : Movie</strong>}
+                                                        {node.childMarkdownRemark.frontmatter.status === 'Airing' && <strong className='text-primary'> : Ongoing</strong>}
+                                                    </li>
+                                                </small>
                                             ))}
-                                        </div>
+                                        </ul>
+                                    </section>
+                                ))}
+                            </div>
+                            <div className='col-lg-4'>
+                                <div className=''>
+                                    <div className='rounded-lg'>
+                                        <img width='100%' src={aquaImg} style={{ objectFit: 'cover', marginBottom: '-100px' }} alt='aqua' />
+                                    </div>
+                                    <div className='p-3 bg-dark'>
+                                        <h6>Genre:</h6>
+                                        {genres.map((item) => (
+                                            <Link className='btn btn-main m-1' key={item + '-genre'} to={`/search_genre`} state={{ genre: item }} >{item}</Link>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </LoadingOverlay>
-
+                    </div>
                 </div>
             </Container>
             <div className='shape-wave-bottom'></div>

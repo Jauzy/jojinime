@@ -35,6 +35,7 @@ collections:
           label: "Title in Japanese",
           name: "title_japan",
           widget: "string",
+          require: false,
           hint: "Title but Japanese Version",
         }
       - {
@@ -96,6 +97,7 @@ collections:
               "Sci-Fi",
               "Harem",
               "Ecchi",
+              "Mecha",
               "School",
             ],
         }
@@ -148,7 +150,12 @@ collections:
           widget: "string",
           hint: "Ex: Overlord Eps 1, SAO Eps 2, dst.",
         }
-      - { label: "Episode Description", name: "desc", widget: "string", hint: "Ex: Episode Description or Episode Title"}
+      - {
+          label: "Episode Description",
+          name: "desc",
+          widget: "string",
+          hint: "Ex: Episode Description or Episode Title",
+        }
       - {
           label: "Episode",
           name: "episode",
@@ -159,3 +166,36 @@ collections:
       - { label: "Streaming 360 Video", name: "stream_360", widget: "file" }
       - { label: "Streaming 480 Video", name: "stream_480", widget: "file" }
       - { label: "Streaming 720 Video", name: "stream_720", widget: "file" }
+
+  - name: "schedule"
+    label: "Schedule"
+    folder: "static/content/schedule"
+    create: true
+    identifier_field: day
+    fields:
+      - {
+          label: "Day",
+          name: "day",
+          widget: "select",
+          options:
+            [
+              "Senin",
+              "Selasa",
+              "Rabu",
+              "Kamis",
+              "Jumat",
+              "Sabtu",
+              "Minggu",
+              "Random",
+            ],
+        }
+      - {
+          label: "Animes",
+          name: "animes",
+          widget: "relation",
+          multiple: true,
+          collection: "anime",
+          searchFields: [title],
+          valueField: title,
+          required: false
+        }

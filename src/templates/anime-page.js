@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'gatsby'
+import React, {useState } from 'react'
+import { Link, graphql } from 'gatsby'
 import Slider from "react-slick";
-
-import JikanURL from '../../static/constants/jikanURL'
 
 import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
 
@@ -49,19 +47,8 @@ const AnimePage = (props) => {
         ]
     };
 
-    const fillRecomendations = (length) => {
-        let arr = []
-        let j = 0
-        for (let i = 0; i < 5 - length; i++) {
-            if (i >= length) j = 0
-            arr.push(data.recommendations.edges[j])
-            j++
-        }
-        return arr
-    }
-
     return (
-        <Layout location={props.location} path={props.path} navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={state.loading}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={state.loading}>
             <SEO title={data.anime.edges[0].node.childMarkdownRemark.frontmatter.title} />
             <div className='shape-wave-top'></div>
             <div className='bg-dark container-lg' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
@@ -110,16 +97,6 @@ const AnimePage = (props) => {
                                 </Link>
                             </div>
                         ))}
-                        {data.recommendations.edges?.length < 5 ? fillRecomendations(data.recommendations.edges.length).map(({ node }, index) => (
-                            <div className='' key={index + 'recommend'} style={{ width: '200px' }}>
-                                <Link to={'/' + node.name} className='recommend-card'>
-                                    <div className='bg-recommend text-truncate p-3 text-center text-white' style={{ width: '200px', height: '50px' }}></div>
-                                    <div className='position-absolute text-truncate p-3 text-center text-white' style={{ width: '200px', bottom: '3px' }}>{node.childMarkdownRemark.frontmatter.title}</div>
-                                    <img src={node.childMarkdownRemark.frontmatter.cover_image} style={{ objectFit: 'cover', width: '200px', height: '280px' }} alt='cover' className='rounded-lg' />
-                                </Link>
-                            </div>
-                        ))
-                            : null}
                     </Slider>
                 </div>
 

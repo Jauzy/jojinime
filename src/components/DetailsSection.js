@@ -19,7 +19,7 @@ const DetailsSection = (props) => {
             <div className='d-flex'>
                 <div>
                     <h4>{detail?.title} Subtitle Indonesia</h4>
-                    <h6 className='text-white'>{detail?.title_english} - {detail?.title_japanese}</h6>
+                    <h6 className='text-white'>{detail?.title_english} - {detail?.title_japan}</h6>
                 </div>
             </div>
             <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
@@ -94,8 +94,8 @@ const DetailsSection = (props) => {
                         :
                         <button className='btn btn-main px-3' onClick={toggleDesc}>Show More</button>
                     }
-                    {(!user?.favourite?.filter(item => item.mal_id == props.match.params.mal_id)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() => addtoFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Add to Favourite</button>}
-                    {user?.favourite?.filter(item => item.mal_id == props.match.params.mal_id)[0] && <button className='btn btn-danger ml-4' onClick={() => removeFromFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Favourite</button>}
+                    {(!user?.favourite?.filter(item => item.mal_id === props.match.params.mal_id)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() => addtoFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Add to Favourite</button>}
+                    {user?.favourite?.filter(item => item.mal_id === props.match.params.mal_id)[0] && <button className='btn btn-danger ml-4' onClick={() => removeFromFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Favourite</button>}
                 </div>
             </div>
         </div>

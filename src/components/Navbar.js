@@ -48,6 +48,9 @@ const NavbarComponent = (props) => {
                                 <Link className="nav-link" to={ROUTES.ONGOINGLIST}>On - Going List</Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link" to={ROUTES.SEARCHGENRE}>Genre List</Link>
+                            </li>
+                            <li className="nav-item">
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

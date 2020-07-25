@@ -3,7 +3,7 @@ import React from 'react'
 const COLORS = require('../../static/constants/Colors')
 
 const DownloadSection = (props) => {
-    const { title, video_360, video_480, video_720 } = props
+    const { title, video_360, video_480, video_720, video_360_size, video_480_size, video_720_size } = props
     return (
         <div>
             <div className='my-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
@@ -20,7 +20,9 @@ const DownloadSection = (props) => {
                                 360P
                             </div>
                             |
-                                <div className='d-flex'><a href={video_360} className='mx-3 text-white' download={`Jojinime - ${title} - 360P`}>Jojinime Direct Link</a>|</div>
+                                <div className='d-flex'>
+                                <a href={video_360} className='mx-3 text-white' download={`Jojinime - ${title} - 360P`}>Jojinime Direct Link</a>| {video_360_size}
+                                </div>
                         </div>
                     </li>
                     <li>
@@ -29,7 +31,9 @@ const DownloadSection = (props) => {
                                 480P
                             </div>
                             |
-                                <div className='d-flex'><a href={video_480} className='mx-3 text-white' download={`Jojinime - ${title} - 480P`}>Jojinime Direct Link</a>|</div>
+                                <div className='d-flex'>
+                                <a href={video_480} className='mx-3 text-white' download={`Jojinime - ${title} - 480P`}>Jojinime Direct Link</a>| {video_480_size}
+                                </div>
                         </div>
                     </li>
                     <li>
@@ -38,7 +42,9 @@ const DownloadSection = (props) => {
                                 720P
                             </div>
                             |
-                                <div className='d-flex'><a href={video_720} className='mx-3 text-white' download={`Jojinime - ${title} - 720P`}>Jojinime Direct Link</a>|</div>
+                                <div className='d-flex'>
+                                <a href={video_720} className='mx-3 text-white' download={`Jojinime - ${title} - 720P`}>Jojinime Direct Link</a>| {video_720_size}
+                                </div>
                         </div>
                     </li>
                 </ul>

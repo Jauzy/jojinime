@@ -42,7 +42,7 @@ const Ongoing = (props) => {
                                 </div>
                                 <div className='text-center mt-2'>
                                     {schedule?.filter(({node}) => node.childMarkdownRemark.frontmatter.day === item)[0]?.node.childMarkdownRemark.frontmatter.animes?.map((item, index) => (
-                                        <Link className='text-decoration-none text-white w-100' key={index + 'keyschedule'} to={``}>
+                                        <Link className='text-decoration-none text-white w-100' key={index + 'keyschedule'}>
                                             <div className='text-truncate btn btn-main mb-2 py-2 w-100'>
                                                 {item}
                                             </div>
@@ -62,7 +62,7 @@ const Ongoing = (props) => {
 
 export const query = graphql`
     {
-        ongoing: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {status: {eq: "Ongoing"}}}}) {
+        ongoing: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {status: {eq: "On Going"}}}}) {
             edges {
                 node {
                     name

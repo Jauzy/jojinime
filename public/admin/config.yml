@@ -1,0 +1,203 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: master
+
+media_folder: static/media
+public_folder: /media
+
+collections:
+  - name: "anime"
+    label: "Anime"
+    folder: "static/content/anime"
+    create: true
+    path: "{{title}}"
+    media_folder: "static/media"
+    public_folder: "/media"
+    editor:
+      preview: true
+    fields:
+      - {
+          label: "Cover Image",
+          name: "cover_image",
+          widget: "string",
+          hint: "Cover Image Url Link",
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Title in English",
+          name: "title_english",
+          widget: "string",
+          hint: "Title but English Version",
+        }
+      - {
+          label: "Title in Japanese",
+          name: "title_japan",
+          widget: "string",
+          require: false,
+          hint: "Title but Japanese Version",
+        }
+      - {
+          label: "Rating",
+          name: "rating",
+          widget: "select",
+          options:
+            [
+              "G - All Ages",
+              "PG - Children",
+              "PG-13 - Teens 13 or older",
+              "R-17+ - (Violence & Profanity)",
+              "R+ - Mild Nudity",
+              "Rx - Hentai",
+              "None"
+            ],
+          hint: "Anime Age Rating",
+        }
+      - { label: "Score", name: "score", widget: "string" }
+      - { label: "Total Episode", name: "total_episode", widget: "number", hint: "Fill to 1 if Anime is On Going" }
+      - {
+          label: "Duration",
+          name: "duration",
+          widget: "string",
+          hint: "Average duration per episode",
+        }
+      - {
+          label: "Status",
+          name: "status",
+          widget: "select",
+          options: ["On Going", "Completed"],
+        }
+      - {
+          label: "Airing",
+          name: "airing",
+          widget: "string",
+          hint: "Date Aired",
+        }
+      - { label: "Studio", name: "studio", widget: "string" }
+      - {
+          label: "Genre",
+          name: "genre",
+          widget: "select",
+          multiple: true,
+          options:
+            [
+              "Action",
+              "Adventure",
+              "Comedy",
+              "Drama",
+              "Slice of Life",
+              "Fantasy",
+              "Magic",
+              "Supernatural",
+              "Horror",
+              "Mystery",
+              "Game",
+              "Pyschological",
+              "Romance",
+              "Sci-Fi",
+              "Harem",
+              "Ecchi",
+              "Mecha",
+              "School",
+              "Shounen"
+            ],
+        }
+      - {
+          label: "Type",
+          name: "type",
+          widget: "select",
+          options: ["TV", "Movie"],
+        }
+      - { label: "Synopsis", name: "synopsis", widget: "markdown" }
+      - {
+          label: "Batch 360p Link",
+          name: "batch_360",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Batch 480p Link",
+          name: "batch_480",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Batch 720p Link",
+          name: "batch_720",
+          widget: "string",
+          required: false,
+        }
+
+  - name: "episode"
+    label: "Episode"
+    folder: "static/content/episode"
+    create: true
+    path: "{{anime_title}}/{{title}}"
+    editor:
+      preview: false
+    fields:
+      - {
+          label: "Anime Title",
+          name: "anime_title",
+          widget: "relation",
+          collection: "anime",
+          searchFields: [title],
+          valueField: title,
+          displayFields: [title],
+        }
+      - {
+          label: "Title",
+          name: "title",
+          widget: "string",
+          hint: "Ex: Overlord Eps 1, SAO Eps 2, dst.",
+        }
+      - {
+          label: "Episode Description",
+          name: "desc",
+          widget: "string",
+          hint: "Ex: Episode Description or Episode Title",
+        }
+      - {
+          label: "Episode",
+          name: "episode",
+          widget: "string",
+          hint: "Ex: Episode 1 - Eps Title, Episode 2, Ova 1, OVa 2, dst.",
+        }
+      - { label: "Date Uploaded", name: "date_uploaded", widget: "datetime" }
+      - { label: "Streaming 360 Video", name: "stream_360", widget: "file" }
+      - { label: "Streaming 480 Video", name: "stream_480", widget: "file" }
+      - { label: "Streaming 720 Video", name: "stream_720", widget: "file" }
+
+  - name: "schedule"
+    label: "Schedule"
+    folder: "static/content/schedule"
+    create: true
+    identifier_field: day
+    fields:
+      - {
+          label: "Day",
+          name: "day",
+          widget: "select",
+          options:
+            [
+              "Senin",
+              "Selasa",
+              "Rabu",
+              "Kamis",
+              "Jumat",
+              "Sabtu",
+              "Minggu",
+              "Random",
+            ],
+        }
+      - {
+          label: "Animes",
+          name: "animes",
+          widget: "relation",
+          multiple: true,
+          collection: "anime",
+          searchFields: [title],
+          valueField: title,
+          required: false
+        }

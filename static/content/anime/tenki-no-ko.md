@@ -7,7 +7,7 @@ rating: PG-13 - Teens 13 or older
 score: "8.50"
 total_episode: 1
 duration: 1 jam 54 menit
-status: On Going
+status: Completed
 airing: Jul 19, 2019
 studio: CoMix Wave Films
 genre:

@@ -8,7 +8,7 @@ const COLORS = require('../../static/constants/Colors')
 
 const Ongoing = (props) => {
     const schedule = props.data?.schedule.edges
-    const ongoing = props.data?.ongoing.edges
+    const ongoing = props.data?.ongoing.edges.filter(item => item.node.childMarkdownRemark.frontmatter.status === 'On Going')
     const dayInAWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'Random']
 
     useEffect(() => {
@@ -73,22 +73,9 @@ export const query = graphql`
                             score
                             type
                             total_episode
-                        }
-                    }
-                }
-            }
-        }
-        allFile(filter: {relativeDirectory: {eq: "anime"}}) {
-            edges {
-                node {
-                    childMarkdownRemark {
-                        frontmatter {
                             status
-                            title
-                            type
                         }
                     }
-                name
                 }
             }
         }

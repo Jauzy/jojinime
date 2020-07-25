@@ -11,8 +11,9 @@ import 'popper.js/dist/popper.min'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import './static/styles/404page.css'
+import './static/styles/login.scss'
 import './static/styles/chat.scss'
+import './static/styles/404page.css'
 import './static/styles/cube-anime.css'
 import './static/styles/floating-labels.css'
 import './static/styles/font.css'

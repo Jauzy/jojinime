@@ -10,8 +10,14 @@ export const changeMainColor = (newColor) => {
 
 export const changeSecondaryColor = (newColor) => {
     SECONDARY = newColor
+    document.documentElement.style.setProperty('--secondary-color', newColor);
 }
 
 export const changeLightSecondaryColor = (newColor) => {
     LIGHTSECONDARY = newColor
+    document.documentElement.style.setProperty('--light-secondary-color', newColor);
+}
+
+export const changeDarkSecondaryColor = (newColor) => {
+    DARKSECONDARY = newColor
 }

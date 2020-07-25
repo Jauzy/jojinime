@@ -1,17 +1,19 @@
-import React, {useState } from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link, graphql } from 'gatsby'
 import Slider from "react-slick";
 
 import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
 
 const COLORS = require('../../static/constants/Colors')
+const USERACTION = require('../../static/constants/userAction')
 
 const AnimePage = (props) => {
     const { data } = props
+    const [loading, setLoading] = useState(false)
     const [state, setState] = useState({
-        loading: false, characters: null, detail: null, recommendation: null
+        characters: null, detail: null, recommendation: null
     })
-
+    const [user, setUser] = useState(null)
     const { characters, detail, recommendation } = state
 
     var settings = {
@@ -47,14 +49,22 @@ const AnimePage = (props) => {
         ]
     };
 
+    useEffect(() => {
+        Promise.resolve(USERACTION.getUserData(setLoading)).then(value => {
+            setUser(value)
+        })
+    }, [])
+
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={state.loading}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={loading}>
             <SEO title={data.anime.edges[0].node.childMarkdownRemark.frontmatter.title} />
             <div className='shape-wave-top'></div>
             <div className='bg-dark container-lg' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
 
                 {/* Details */}
-                <DetailsSection detail={data.anime.edges[0].node.childMarkdownRemark?.frontmatter} />
+                <DetailsSection detail={data.anime.edges[0].node.childMarkdownRemark?.frontmatter} name={data.anime.edges[0].node.name} user={user} 
+                    setLoading={setLoading} setUser={setUser}
+                />
 
                 {/* Characters */}
                 {characters?.length > 4 && <div>

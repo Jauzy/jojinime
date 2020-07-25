@@ -7,8 +7,8 @@ import { graphql } from 'gatsby'
 const COLORS = require('../../static/constants/Colors')
 
 const Ongoing = (props) => {
-    const schedule = props.data.schedule.edges
-    const ongoing = props.data.ongoing.edges
+    const schedule = props.data?.schedule.edges
+    const ongoing = props.data?.ongoing.edges
     const dayInAWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'Random']
 
     useEffect(() => {

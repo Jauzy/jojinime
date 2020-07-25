@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Cookies from 'universal-cookie'
 import { Link } from "gatsby"
 
@@ -7,9 +7,11 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 const cookies = new Cookies()
 const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
+const USERACTION = require('../../static/constants/userAction')
 
 const NavbarComponent = (props) => {
-    const { admin, user, color, navigate } = props
+    const { color } = props
+    let user = cookies.get('user')
     const [state, setState] = useState({
         search: null || '', isModalOpen: false
     })
@@ -19,11 +21,6 @@ const NavbarComponent = (props) => {
     }
 
     const modalToggle = () => setState({ ...state, isModalOpen: !state.isModalOpen })
-
-    const onSearch = () => {
-        modalToggle()
-        navigate(`/search/${state.search}`)
-    }
 
     return (
         <div className=''>
@@ -51,6 +48,7 @@ const NavbarComponent = (props) => {
                                 <Link className="nav-link" to={ROUTES.SEARCHGENRE}>Genre List</Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link" to='#' onClick={modalToggle}><i className='fa fa-search' /></Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,42 +58,10 @@ const NavbarComponent = (props) => {
                                     <Link className="dropdown-item" to={ROUTES.ABOUT}>About Us</Link>
                                 </div>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to='#' onClick={modalToggle}><i className='fa fa-search' /></Link>
-                            </li>
                             {!cookies.get('user') && <li className="nav-item">
                                 <Link className="nav-link" to='/login'>Login</Link>
                             </li>}
                         </ul>
-
-                        {admin && <ul className="navbar-nav">
-                            <li className="nav-item d-flex">
-                                <div className='dropdown d-flex flex-wrap'>
-                                    <h6 className='my-auto mr-2 font-weight-bold text-secondary'>Hello, {admin.nickname}</h6>
-                                    <a className="nav-link dropdown-toggle my-auto" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg" width="40" height="40" className="rounded-circle" />
-                                    </a>
-                                    <div className="dropdown-menu py-0" style={{ maxWidth: '400px' }} aria-labelledby="navbarDropdownMenuLink">
-                                        <a className="dropdown-item d-flex px-5 py-4" href="#">
-                                            <img src="https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg" width="60" height="60" className="my-auto rounded-circle" />
-                                            <div className='my-auto ml-4'>
-                                                <h5 className='font-weight-bold mb-0 text-wrap'>{admin.nickname}</h5>
-                                                <h6 className='text-secondary'>{admin.email}</h6>
-                                            </div>
-                                        </a>
-                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to="/admin/dashboard">
-                                            <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
-                                            <h6 className='font-weight-bold ml-4 my-auto'>Dashboard</h6>
-                                        </Link>
-                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
-                                            onClick={() => props.logout(props.history)}>
-                                            <i className='fa fa-power-off text-main my-auto' style={{ fontSize: '20px' }} />
-                                            <h6 className='font-weight-bold ml-4 my-auto'>Logout</h6>
-                                        </Link>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>}
 
                         {user && <ul className="navbar-nav">
                             <li className="nav-item d-flex">
@@ -116,15 +82,16 @@ const NavbarComponent = (props) => {
                                             <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Dashboard</h6>
                                         </Link>
-                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={`/profile/${user?._id}`}>
+                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={`${ROUTES.PROFILEUSERPUBLIC}/?id=${user?._id}`}>
                                             <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Public Profile</h6>
                                         </Link>
-                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
-                                            onClick={() => props.logout_user(props.history)}>
+                                        <a className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => USERACTION.logout(props.navigate)}>
                                             <i className='fa fa-power-off text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Logout</h6>
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             </li>
@@ -144,7 +111,7 @@ const NavbarComponent = (props) => {
                             style={{ background: 'unset', border: 'unset', boxShadow: 'unset', borderBottom: '2px solid white', fontSize: '30px' }} />
                         <small className="form-text text-muted">Masukan judul anime yang ingin dicari.</small>
                     </div>
-                    <Link className='btn btn-main btn-block' to='/search_anime' state={{search:state.search}}>Submit</Link>
+                    <Link className='btn btn-main btn-block' to='/search_anime' state={{ search: state.search }}>Submit</Link>
                 </ModalBody>
             </Modal>
             {/* end of modals */}

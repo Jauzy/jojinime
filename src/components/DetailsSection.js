@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import $ from 'jquery'
+
 const COLORS = require('../../static/constants/Colors')
+const USERACTION = require('../../static/constants/userAction')
 
 const DetailsSection = (props) => {
-    const { detail, addtoFavourite, user, removeFromFavourite } = props
+    const { detail, name, user, setUser, setLoading } = props
 
     const [state, setState] = useState({
         isDescToggled: false
@@ -94,11 +96,19 @@ const DetailsSection = (props) => {
                         :
                         <button className='btn btn-main px-3' onClick={toggleDesc}>Show More</button>
                     }
-                    {(!user?.favourite?.filter(item => item.mal_id === props.match.params.mal_id)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() => addtoFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Add to Favourite</button>}
-                    {user?.favourite?.filter(item => item.mal_id === props.match.params.mal_id)[0] && <button className='btn btn-danger ml-4' onClick={() => removeFromFavourite(props.match.params.mal_id)}><i className='fa fa-heart mr-2' />Favourite</button>}
+                    {(!user?.favourite?.filter(item => item.name === name)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() =>
+                        Promise.resolve(USERACTION.addToFav({ name, title: detail?.title }, setLoading)).then(value => {
+                            setUser(value)
+                        })
+                    }><i className='fa fa-heart mr-2' />Add to Favourite</button>}
+                    {user?.favourite?.filter(item => item.name === name)[0] && <button className='btn btn-danger ml-4' onClick={() =>
+                        Promise.resolve(USERACTION.removeFav(name, setLoading)).then(value => {
+                            setUser(value)
+                        })
+                    }><i className='fa fa-heart mr-2' />Favourite</button>}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

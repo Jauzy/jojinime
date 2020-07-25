@@ -16,9 +16,7 @@ const COLORS = require('../../static/constants/Colors')
 
 const Spinner = (props) => {
   return (
-    <div className='row'>
       <div className="gooey"></div>
-    </div>
   )
 }
 

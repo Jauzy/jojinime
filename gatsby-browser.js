@@ -20,3 +20,7 @@ import './static/styles/goey-anime.css'
 import './static/styles/index.css'
 import './static/styles/override.css'
 import './static/styles/photocard.css'
+
+import { loadProgressBar } from 'axios-progress-bar'
+
+loadProgressBar()

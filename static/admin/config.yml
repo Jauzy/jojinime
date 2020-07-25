@@ -50,11 +50,12 @@ collections:
               "R-17+ - (Violence & Profanity)",
               "R+ - Mild Nudity",
               "Rx - Hentai",
+              "None"
             ],
           hint: "Anime Age Rating",
         }
       - { label: "Score", name: "score", widget: "string" }
-      - { label: "Total Episode", name: "total_episode", widget: "number" }
+      - { label: "Total Episode", name: "total_episode", widget: "number", hint: "Fill to 1 if Anime is On Going" }
       - {
           label: "Duration",
           name: "duration",
@@ -99,6 +100,7 @@ collections:
               "Ecchi",
               "Mecha",
               "School",
+              "Shounen"
             ],
         }
       - {

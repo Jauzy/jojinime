@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import anime from 'animejs'
 import { Container } from 'reactstrap'
 import { Link, graphql } from 'gatsby'
 
 import { Layout, SEO } from "../components/Index"
 
+const USERACTION = require('../../static/constants/userAction')
 const aquaImg = require('../../static/styles/images/aqua.png')
 const COLORS = require('../../static/constants/Colors')
 
 const Combined = (props) => {
-    const { user } = props
+    const [loading, setLoading] = useState(false)
+    const [user, setUser] = useState(null)
+
     const anime_list = props.data.allFile.edges
     const firstLetter = 'A B C D E F G H I J K L M N P Q R S T U V W X Y Z'
     const genres = [
@@ -41,10 +44,14 @@ const Combined = (props) => {
             duration: 2000
         });
 
+        Promise.resolve(USERACTION.getUserData(setLoading)).then(value => {
+            setUser(value)
+        })
+
     }, [])
 
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={loading}>
             <SEO title='Anime List' />
             <div className='shape-wave-top'></div>
             <Container>
@@ -81,7 +88,7 @@ const Combined = (props) => {
                                                 <small className='font-weight-bol' key={node.childMarkdownRemark.frontmatter.title}>
                                                     <li>
                                                         <Link className='text-decoration- text-white' to={`/${node.name}`}>{node.childMarkdownRemark.frontmatter.title}</Link>
-                                                        {true && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
+                                                        {user?.favourite?.filter(item => item.name === node.name)[0] && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
                                                         {node.childMarkdownRemark.frontmatter.type === 'Movie' && <strong className='text-warning'> : Movie</strong>}
                                                         {node.childMarkdownRemark.frontmatter.status === 'Airing' && <strong className='text-primary'> : Ongoing</strong>}
                                                     </li>
@@ -116,20 +123,20 @@ const Combined = (props) => {
 export const query = graphql`
     {
         allFile(filter: {relativeDirectory: {eq: "anime"}}) {
-        edges {
-            node {
-                childMarkdownRemark {
-                    frontmatter {
-                    status
-                    title
-                    type
+            edges {
+                node {
+                    childMarkdownRemark {
+                        frontmatter {
+                            status
+                            title
+                            type
+                        }
                     }
+                    name
                 }
-                name
             }
         }
     }
-}
 `
 
 export default Combined

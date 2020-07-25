@@ -5,8 +5,7 @@ import { graphql } from 'gatsby'
 import { ListAnime, SEO, Layout } from '../components/Index'
 
 const Movie = (props) => {
-    const movie = props.data.movie.edges
-
+    const movie = props.data.movie.edges.filter(item => item.node.childMarkdownRemark.frontmatter.type === 'Movie')
     useEffect(() => {
 
         anime({
@@ -30,13 +29,13 @@ const Movie = (props) => {
 
 export const query = graphql`
     {
-        movie: allFile(filter: {relativeDirectory: {eq: "anime"}, childMarkdownRemark: {frontmatter: {type: {eq: "Movie"}}}}) {
-        edges {
-            node {
-                name
-                childMarkdownRemark {
-                    frontmatter {
-                        title
+        movie: allFile(filter: {relativeDirectory: {eq: "anime"}}) {
+            edges {
+                node {
+                    name
+                    childMarkdownRemark {
+                        frontmatter {
+                            title
                             cover_image
                             score
                             type

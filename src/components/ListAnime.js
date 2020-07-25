@@ -6,7 +6,7 @@ const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
 
 const ListAnime = (props) => {
-    const { list_anime, title } = props
+    const { list_anime, title, custom_bg } = props
     const maxItem = 10
     const [anime, setAnime] = useState({
         page_number: 1,
@@ -34,10 +34,10 @@ const ListAnime = (props) => {
 
     return (
         <div className='mt-4'>
-            <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
+            {title && <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
                 {title}
-            </div>
-            <div style={{ backgroundColor: '#2D2D2D' }} className='py-1 border-radius-bottom'>
+            </div>}
+            <div style={{ backgroundColor: custom_bg || COLORS.SECONDARY }} className='py-1 border-radius-bottom'>
                 {anime.list?.length > 0 ? <div className='d-flex flex-column'>
                     <div className='d-flex flex-wrap justify-content-center'>
                         {anime.list?.map(({ node }, index) => (

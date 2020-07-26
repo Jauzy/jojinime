@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'universal-cookie'
 import { Link } from "gatsby"
-
+import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+
+//redux
+import { getUserData } from "../../static/redux/Actions/user";
 
 const cookies = new Cookies()
 const ROUTES = require('../../static/constants/Routes')
@@ -10,7 +13,7 @@ const COLORS = require('../../static/constants/Colors')
 const USERACTION = require('../../static/constants/userAction')
 
 const NavbarComponent = (props) => {
-    const { color } = props
+    const { color, dispatch } = props
     let user = cookies.get('user')
     const [state, setState] = useState({
         search: null || '', isModalOpen: false
@@ -21,6 +24,10 @@ const NavbarComponent = (props) => {
     }
 
     const modalToggle = () => setState({ ...state, isModalOpen: !state.isModalOpen })
+
+    useEffect(() => {
+        getUserData(dispatch)
+    }, [])
 
     return (
         <div className=''>
@@ -119,4 +126,4 @@ const NavbarComponent = (props) => {
     )
 }
 
-export default NavbarComponent
+export default connect(null, null)(NavbarComponent)

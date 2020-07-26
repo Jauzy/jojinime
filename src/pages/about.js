@@ -5,8 +5,6 @@ import { Layout, SEO } from '../components/Index'
 const jojiIMG = require("../../static/styles/images/crew/joji.jpg")
 const putriIMG = require('../../static/styles/images/crew/putri.jpg')
 
-const jojinimeIMG = require('../../static/styles/images/jojinime.png')
-
 const About = (props) => {
     const crew = [
         { name: 'Al Jauzy', img: jojiIMG, position: 'Fullstack Developer & Admin' },
@@ -23,11 +21,11 @@ const About = (props) => {
                 </p>
                 <h1 className='text-center text-white font-weight-bold'>WEBSITE <strong className='text-main'>SPEC</strong></h1>
                 <div className='d-flex justify-content-center mt-3 flex-wrap'>
-                    <img src='https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png' style={{ maxHeight: '100px' }} />
-                    <img src='https://javascriptforwp.com/wp-content/uploads/2019/03/badge-gatsby.png' style={{ maxHeight: '100px' }} />
-                    <img src='https://www.syntapse.co.uk/sites/default/files/inline-images/mongo%20logo_0.png' style={{ maxHeight: '100px' }} />
-                    <img src='https://onelittledesigner.com/wp-content/uploads/2016/06/Font-Awesome-Free.png' style={{ maxHeight: '100px' }} />
-                    <img src='https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png' style={{ maxHeight: '100px' }} />
+                    <img src='https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png' alt='logo' style={{ maxHeight: '100px' }} />
+                    <img src='https://javascriptforwp.com/wp-content/uploads/2019/03/badge-gatsby.png' alt='logo' style={{ maxHeight: '100px' }} />
+                    <img src='https://www.syntapse.co.uk/sites/default/files/inline-images/mongo%20logo_0.png' alt='logo' style={{ maxHeight: '100px' }} />
+                    <img src='https://onelittledesigner.com/wp-content/uploads/2016/06/Font-Awesome-Free.png' alt='logo' style={{ maxHeight: '100px' }} />
+                    <img src='https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png' alt='logo' style={{ maxHeight: '100px' }} />
                 </div>
                 <h5 className='text-center my-3'>Five Horsement of Best Website Development Pack</h5>
                 <h1 className='text-center text-white font-weight-bold mt-5 mb-3'>OUR C<strong className='text-main'>RE</strong>W</h1>

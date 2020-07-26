@@ -120,7 +120,7 @@ var cubeAnime = () => {
   var textWrapper = document.querySelector(".title");
   textWrapper.innerHTML = textWrapper.textContent.replace(
     /\S/g,
-    "<span class='letter'>$&</span>"
+    "<span className='letter'>$&</span>"
   );
 
   const timeline = anime.timeline({

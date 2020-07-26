@@ -30,8 +30,8 @@ const EpisodeSection = (props) => {
                     {detail?.title} Episode List <em className='text-dark'>( Link Download + Streaming )</em>
                 </div>
                 <ul style={{ backgroundColor: '#2D2D2D', listStyle: 'none' }} className='px-3 py-1 border-radius-bottom link-list'>
-                    {episodes?.reverse().map(({ node }, index) => (
-                        <li>
+                    {episodes?.map(({ node }, index) => (
+                        <li key={'/episode'+node.childMarkdownRemark.frontmatter.title}>
                             <Link className='text-decoration-none text-white' to={'/' + node.name}>
                                 {node.childMarkdownRemark.frontmatter.title}
                                 <date className='ml-auto'>{node.childMarkdownRemark.frontmatter.date_uploaded}</date>

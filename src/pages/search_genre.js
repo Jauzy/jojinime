@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, graphql } from 'gatsby'
 import anime from 'animejs'
+import genres from '../../static/constants/Genres'
 
 import { Layout, ListAnime, SEO } from '../components/Index'
 const COLORS = require('../../static/constants/Colors')
@@ -10,27 +11,6 @@ const SearchGenre = props => {
         genre: props.location?.state?.genre || '', list: props.data.anime.edges, full_list: props.data.anime.edges
     })
     const { genre, list, full_list } = state
-
-    const genres = [
-        "Action",
-        "Adventure",
-        "Comedy",
-        "Drama",
-        "Slice of Life",
-        "Fantasy",
-        "Magic",
-        "Supernatural",
-        "Horror",
-        "Mystery",
-        "Game",
-        "Pyschological",
-        "Romance",
-        "Sci-Fi",
-        "Harem",
-        "Ecchi",
-        "Mecha",
-        "School",
-    ]
 
     useEffect(() => {
         anime({

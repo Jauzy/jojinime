@@ -21,7 +21,7 @@ const DownloadSection = (props) => {
                             </div>
                             |
                                 <div className='d-flex'>
-                                <a href={video_360} className='mx-3 text-white' download={`Jojinime - ${title} - 360P`}>Jojinime Direct Link</a>| {video_360_size}
+                                <a href={video_360} className='mx-3 text-white' download={`Jojinime - ${title} - 360P`}>Jojinime Direct Link</a>|
                                 </div>
                         </div>
                     </li>
@@ -32,7 +32,7 @@ const DownloadSection = (props) => {
                             </div>
                             |
                                 <div className='d-flex'>
-                                <a href={video_480} className='mx-3 text-white' download={`Jojinime - ${title} - 480P`}>Jojinime Direct Link</a>| {video_480_size}
+                                <a href={video_480} className='mx-3 text-white' download={`Jojinime - ${title} - 480P`}>Jojinime Direct Link</a>|
                                 </div>
                         </div>
                     </li>
@@ -43,7 +43,7 @@ const DownloadSection = (props) => {
                             </div>
                             |
                                 <div className='d-flex'>
-                                <a href={video_720} className='mx-3 text-white' download={`Jojinime - ${title} - 720P`}>Jojinime Direct Link</a>| {video_720_size}
+                                <a href={video_720} className='mx-3 text-white' download={`Jojinime - ${title} - 720P`}>Jojinime Direct Link</a>|
                                 </div>
                         </div>
                     </li>

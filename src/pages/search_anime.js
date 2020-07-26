@@ -37,8 +37,8 @@ const SearchAnime = props => {
                         <label className='ml-auto mr-3 my-auto'>Search by Title</label>
                         <div style={{ maxWidth: '300px' }}>
                             <div className='input-group'>
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i className='fa fa-search' /></div>
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><i className='fa fa-search' /></div>
                                 </div>
                                 <input type="text" class={"form-control bg-dark text-white"} id='search' onChange={onChange} value={state.search} />
                             </div>

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import * as queryString from "query-string";
-
+import { connect } from 'react-redux'
 import { Layout, SEO, ListAnime } from '../components/Index'
+import { getPublicUserData } from '../../static/redux/Actions/user'
+
 const COLORS = require('../../static/constants/Colors')
-const USERACTION = require('../../static/constants/userAction')
 
 const PublicProfile = props => {
-    const { data } = props
-    const [loading, setLoading] = useState(false)
+    const { data, user } = props
     const [favouriteByName, setFav] = useState(null)
-    const [user, setUser] = useState(null)
     const [state, setState] = useState({
         activeSection: 'Anime Favorit',
         list: [],
@@ -19,21 +18,17 @@ const PublicProfile = props => {
     const sections = ['Anime Favorit', 'Tentang']
 
     useEffect(() => {
-        console.log(queryString.parse(props.location.search))
-        Promise.resolve(USERACTION.getPublicUserData(queryString.parse(props.location.search).id, setLoading)).then(value => {
-            setUser(value)
-        })
+        getPublicUserData(props.dispatch, queryString.parse(props.location.search).id)
     }, [])
 
     useEffect(() => {
         if (user) {
             setFav(user.favourite.map(fav => (fav.name)))
         }
-        console.log(user)
     }, [user])
 
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.DARKSECONDARY} loading={loading}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.DARKSECONDARY}>
             <SEO title={user?.nickname || 'Public Profile'} />
             <div>
                 <div style={{ background: COLORS.DARKSECONDARY }}>
@@ -46,7 +41,7 @@ const PublicProfile = props => {
                                 <img src={user?.profile_pict || "https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg"} style={{ marginTop: '-5em', background: COLORS.SECONDARY }} width="200" height="200" className="rounded-circle border mx-auto" />
                             </div>
                             <div className='col-md py-3'>
-                                <h3 className='mb-0'>{user?.fullname || user?.nickname} <h style={{fontSize:'20px'}} className='text-main'>@{user?.nickname}</h></h3>
+                                <h3 className='mb-0'>{user?.fullname || user?.nickname} <h style={{ fontSize: '20px' }} className='text-main'>@{user?.nickname}</h></h3>
                                 <h6 className='text-main'>{user?.email}</h6>
                             </div>
                         </div>
@@ -131,4 +126,6 @@ export const query = graphql`
 }
 `
 
-export default PublicProfile
+export default connect(state => ({
+    user: state.user.public_user
+}), null)(PublicProfile)

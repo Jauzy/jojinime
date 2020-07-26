@@ -60,7 +60,7 @@ const ChatWidget = props => {
     }
 
     const onSend = () => {
-        const msg = state.newMessage
+        // const msg = state.newMessage
         setState({ ...state, newMessage: null })
     }
 

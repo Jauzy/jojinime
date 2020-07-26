@@ -7,7 +7,7 @@ const CommentCard = props => {
     const { likes, user, text, date } = props
     return (
         <div style={{ background: COLORS.SECONDARY }} className='d-flex shadow px-3 pt-3 pb-2 rounded-lg w-100 my-3'>
-            <img src={user?.profile_pict ? user.profile_pict : "https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg"} width="50" height="50" class="rounded-circle" />
+            <img src={user?.profile_pict ? user.profile_pict : "https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg"} width="50" height="50" className="rounded-circle" />
             <div className='mx-2 mb-2'>
                 <Link className='d-flex flex-wrap text-decoration-none' to={`/profile/${user?._id}`}>
                     <h6 className='mx-1 font-weight-bold mb-0 text-main'>{user?.fullname}</h6>
@@ -61,9 +61,9 @@ const CommentSection = props => {
                 <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
 
                 {user && <div className='d-flex align-items-center'>
-                    <img src={user?.profile_pict} width="50" height="50" class="rounded-circle" />
-                    <div class="form-group mx-3 my-auto w-100">
-                        <textarea class="form-control" rows="2" placeholder='ikut berdiskusi...' id='newComment' value={state.newComment} onChange={onChange}></textarea>
+                    <img src={user?.profile_pict} width="50" height="50" className="rounded-circle" />
+                    <div className="form-group mx-3 my-auto w-100">
+                        <textarea className="form-control" rows="2" placeholder='ikut berdiskusi...' id='newComment' value={state.newComment} onChange={onChange}></textarea>
                     </div>
                     <button className='btn btn-main' onClick={onSubmit}><i className='fa fa-paper-plane' /></button>
                 </div>}

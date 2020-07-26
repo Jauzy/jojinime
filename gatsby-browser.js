@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import 'popper.js/dist/popper.min'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import 'react-notifications/lib/notifications.css';
 
 import './static/styles/login.scss'
 import './static/styles/chat.scss'
@@ -23,5 +24,7 @@ import './static/styles/override.css'
 import './static/styles/photocard.css'
 
 import { loadProgressBar } from 'axios-progress-bar'
-
 loadProgressBar()
+
+//redux
+export { default as wrapRootElement } from './static/redux/ReduxWrapper';

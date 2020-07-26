@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react'
-
+import { graphql } from 'gatsby'
 import profileSVG from '../../static/styles/images/profile.svg'
+import { connect } from 'react-redux'
 import { Layout, SEO, Favourite, Pengaturan } from '../components/Index'
 
-const USERACTION = require('../../static/constants/userAction')
 const COLORS = require('../../static/constants/Colors')
 
 const Dashboard = props => {
-    const { data } = props
-    const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState(null)
+    const { data, user } = props
     const [favouriteByName, setFav] = useState(null)
     const [state, setState] = useState({
         activeSection: 'Profile'
     })
     const sections = ['Profile', 'Favorit', 'Pengaturan']
-
-    useEffect(() => {
-        Promise.resolve(USERACTION.getUserData(setLoading)).then(value => {
-            setUser(value)
-        })
-    }, [])
 
     useEffect(() => {
         if (user) {
@@ -29,7 +21,7 @@ const Dashboard = props => {
     }, [user])
 
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={loading} >
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title='Dashboard' />
             <div style={{ backgroundColor: COLORS.LIGHTSECONDARY }} className='pt-5'>
                 <div className='text-white container'>
@@ -86,4 +78,6 @@ export const query = graphql`
 }
 `
 
-export default Dashboard
+export default connect(state => ({
+    user: state.user.user
+}), null)(Dashboard)

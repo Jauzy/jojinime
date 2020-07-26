@@ -2,56 +2,28 @@ import React, { useEffect, useState } from 'react'
 import anime from 'animejs'
 import { Container } from 'reactstrap'
 import { Link, graphql } from 'gatsby'
-
+import { connect } from 'react-redux'
 import { Layout, SEO } from "../components/Index"
+import genres from '../../static/constants/Genres'
 
-const USERACTION = require('../../static/constants/userAction')
 const aquaImg = require('../../static/styles/images/aqua.png')
 const COLORS = require('../../static/constants/Colors')
 
 const Combined = (props) => {
-    const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState(null)
-
+    const { user } = props
     const anime_list = props.data.allFile.edges
     const firstLetter = 'A B C D E F G H I J K L M N P Q R S T U V W X Y Z'
-    const genres = [
-        "Action",
-        "Adventure",
-        "Comedy",
-        "Drama",
-        "Slice of Life",
-        "Fantasy",
-        "Magic",
-        "Supernatural",
-        "Horror",
-        "Mystery",
-        "Game",
-        "Pyschological",
-        "Romance",
-        "Sci-Fi",
-        "Harem",
-        "Ecchi",
-        "Mecha",
-        "School",
-    ]
 
     useEffect(() => {
-
         anime({
             targets: '#anime-wrapper',
             translateX: [-1000, 0],
             duration: 2000
         });
-
-        Promise.resolve(USERACTION.getUserData(setLoading)).then(value => {
-            setUser(value)
-        })
-
     }, [])
 
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={loading}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title='Anime List' />
             <div className='shape-wave-top'></div>
             <Container>
@@ -139,4 +111,6 @@ export const query = graphql`
     }
 `
 
-export default Combined
+export default connect(state => ({
+    user: state.user.user
+}), null)(Combined)

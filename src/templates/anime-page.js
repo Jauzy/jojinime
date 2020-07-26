@@ -1,20 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { Link, graphql } from 'gatsby'
 import Slider from "react-slick";
+import { connect } from 'react-redux'
 
 import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
 
 const COLORS = require('../../static/constants/Colors')
-const USERACTION = require('../../static/constants/userAction')
 
 const AnimePage = (props) => {
-    const { data } = props
-    const [loading, setLoading] = useState(false)
-    const [state, setState] = useState({
-        characters: null, detail: null, recommendation: null
-    })
-    const [user, setUser] = useState(null)
-    const { characters, detail, recommendation } = state
+    const { data, user } = props
 
     var settings = {
         slidesToShow: 5,
@@ -49,25 +43,17 @@ const AnimePage = (props) => {
         ]
     };
 
-    useEffect(() => {
-        Promise.resolve(USERACTION.getUserData(setLoading)).then(value => {
-            setUser(value)
-        })
-    }, [])
-
     return (
-        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY} loading={loading}>
+        <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title={data.anime.edges[0].node.childMarkdownRemark.frontmatter.title} />
             <div className='shape-wave-top'></div>
             <div className='bg-dark container-lg' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
 
                 {/* Details */}
-                <DetailsSection detail={data.anime.edges[0].node.childMarkdownRemark?.frontmatter} name={data.anime.edges[0].node.name} user={user} 
-                    setLoading={setLoading} setUser={setUser}
-                />
+                <DetailsSection detail={data.anime.edges[0].node.childMarkdownRemark?.frontmatter} name={data.anime.edges[0].node.name} user={user} />
 
                 {/* Characters */}
-                {characters?.length > 4 && <div>
+                {/* {characters?.length > 4 && <div>
                     <div className='my-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
                         Characters
                         </div>
@@ -84,13 +70,13 @@ const AnimePage = (props) => {
                             ))}
                         </Slider>
                     </div>
-                </div>}
+                </div>} */}
 
                 {/* stream */}
-                <EpisodeSection detail={detail} episodes={data.episode.edges} batch_link={props.batch_link} anime={data.anime.edges[0].node.childMarkdownRemark.frontmatter} />
+                <EpisodeSection episodes={data.episode.edges} batch_link={props.batch_link} anime={data.anime.edges[0].node.childMarkdownRemark.frontmatter} />
 
                 {/* share */}
-                <ShareSection title={detail?.title} location={props.location} />
+                <ShareSection title={data.anime.edges[0].node.childMarkdownRemark?.frontmatter.title} location={props.location} />
 
                 {/* rekomendasi */}
                 <div className='mb-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
@@ -159,23 +145,24 @@ export const query = graphql`
                 }
             }
         }
-        episode: allFile(filter: {childMarkdownRemark: {frontmatter: {anime_title: {eq: $title}}}}) {
-        edges {
-            node {
-                name
-                childMarkdownRemark {
-                    frontmatter {
-                        title
-                        status
-                        anime_title
-                        episode
-                        date_uploaded(fromNow:true)
+        episode: allFile(filter: {relativeDirectory: {ne: "anime"}, childMarkdownRemark: {frontmatter: {anime_title: {eq: $title}}}}, sort: {fields: childMarkdownRemark___frontmatter___title, order: DESC}) {
+            edges {
+                node {
+                    name
+                    childMarkdownRemark {
+                        frontmatter {
+                            title
+                            desc
+                            episode
+                            date_uploaded(fromNow: true)
+                        }
                     }
                 }
             }
         }
-        }
     }
 `
 
-export default AnimePage
+export default connect(state => ({
+    user: state.user.user
+}), null)(AnimePage)

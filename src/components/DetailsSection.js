@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import $ from 'jquery'
+import { connect } from 'react-redux'
+import { addToFav, removeFav } from '../../static/redux/Actions/user'
 
 const COLORS = require('../../static/constants/Colors')
-const USERACTION = require('../../static/constants/userAction')
 
 const DetailsSection = (props) => {
-    const { detail, name, user, setUser, setLoading } = props
+    const { detail, user } = props
 
     const [state, setState] = useState({
         isDescToggled: false
@@ -26,8 +27,8 @@ const DetailsSection = (props) => {
             </div>
             <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
 
-            <div className='text-center bg-secondary text-white rounded-lg pt-2 pb-1'>
-                <h6>Streaming {detail?.title} Sub Indo</h6>
+            <div className='btn btn-secondary btn-block' style={{cursor:'unset'}}>
+                Anime {detail?.title} Details
             </div>
 
             <div className='row'>
@@ -96,20 +97,19 @@ const DetailsSection = (props) => {
                         :
                         <button className='btn btn-main px-3' onClick={toggleDesc}>Show More</button>
                     }
-                    {(!user?.favourite?.filter(item => item.name === name)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() =>
-                        Promise.resolve(USERACTION.addToFav({ name, title: detail?.title }, setLoading)).then(value => {
-                            setUser(value)
-                        })
+                    
+                    {(!user?.favourite?.filter(item => item._id === detail?._id)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() =>
+                        addToFav(props.dispatch, detail?._id)
                     }><i className='fa fa-heart mr-2' />Add to Favourite</button>}
-                    {user?.favourite?.filter(item => item.name === name)[0] && <button className='btn btn-danger ml-4' onClick={() =>
-                        Promise.resolve(USERACTION.removeFav(name, setLoading)).then(value => {
-                            setUser(value)
-                        })
+
+                    {user?.favourite?.filter(item => item._id === detail?._id)[0] && <button className='btn btn-danger ml-4' onClick={() =>
+                        removeFav(props.dispatch, detail?._id)
                     }><i className='fa fa-heart mr-2' />Favourite</button>}
+                
                 </div>
             </div>
         </div >
     )
 }
 
-export default DetailsSection
+export default connect(null, null)(DetailsSection)

@@ -15,7 +15,7 @@ const Favourite = props => {
     }
 
     useEffect(() => {
-        setState({ ...state, list: state.full_list.filter(item => item.node.childMarkdownRemark.frontmatter.title.toLowerCase().includes(state.search)) })
+        setState({ ...state, list: state.full_list.filter(item => item.title.toLowerCase().includes(state.search)) })
     }, [state.search])
 
     return (

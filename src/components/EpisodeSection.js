@@ -8,7 +8,7 @@ const EpisodeSection = (props) => {
     return (
         <div>
             {/* batch */}
-            {(anime.type === 'TV' && props.batch_link) && <div className='mt-4'>
+            {(anime?.type === 'TV' && props.batch_link) && <div className='mt-4'>
                 <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
                     {detail?.title} Batch
                     </div>

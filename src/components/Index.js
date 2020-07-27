@@ -9,15 +9,21 @@ import DownloadSection from './DownloadSection'
 import CommentSection from './CommentSection'
 import ChatWidget from './ChatWidget'
 import ListAnime from './ListAnime'
+import EditAvatar from './EditAvatar'
 
-// import Profile from './Dashboard/Profile'
+import Profile from './Dashboard/Profile'
 import Favourite from './Dashboard/Favourite'
 import Pengaturan from './Dashboard/Pengaturan'
+
+import InsertNewAnime from './AdminDashboardComp/InsertNewAnime'
 
 export {
     Footer, SEO, DownloadSection, CommentSection,
     Navbar, ShareSection, EpisodeSection, DetailsSection,
     Layout, ChatWidget, ListAnime,
-    // Profile, Pengaturan, Favorite
-    Favourite, Pengaturan
+    Favourite, Pengaturan, EditAvatar,
+    Profile,
+
+
+    InsertNewAnime
 }

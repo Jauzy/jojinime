@@ -22,7 +22,7 @@ const Spinner = (props) => {
 }
 
 const Layout = (props) => {
-  const { navigate, children, navbarColor, loading, noFooter } = props
+  const { navigate, children, navbarColor, loading, noFooter, noLoading} = props
 
   useEffect(() => {
     // METHODS.disableF12()
@@ -30,7 +30,7 @@ const Layout = (props) => {
 
   return (
     <div className='font-open-sans text-white' style={{ background: COLORS.DARKSECONDARY }}>
-      <LoadingOverlay active={loading || false} spinner={<Spinner />}>
+      <LoadingOverlay active={!noLoading ? loading || false : false} spinner={<Spinner />}>
         <Navbar color={navbarColor} navigate={navigate} />
         {/* <ChatWidget /> */}
         {children}

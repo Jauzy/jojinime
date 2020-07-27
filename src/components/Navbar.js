@@ -5,16 +5,14 @@ import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 //redux
-import { getUserData } from "../../static/redux/Actions/user";
+import { getUserData, logout } from "../../static/redux/Actions/user";
 
 const cookies = new Cookies()
 const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
-const USERACTION = require('../../static/constants/userAction')
 
 const NavbarComponent = (props) => {
-    const { color, dispatch } = props
-    let user = cookies.get('user')
+    const { color, dispatch, user } = props
     const [state, setState] = useState({
         search: null || '', isModalOpen: false
     })
@@ -26,7 +24,7 @@ const NavbarComponent = (props) => {
     const modalToggle = () => setState({ ...state, isModalOpen: !state.isModalOpen })
 
     useEffect(() => {
-        getUserData(dispatch)
+        if (cookies.get('user')) getUserData(dispatch)
     }, [])
 
     return (
@@ -85,7 +83,11 @@ const NavbarComponent = (props) => {
                                                 <h6 className='text-secondary text-wrap'>{user.email}</h6>
                                             </div>
                                         </a>
-                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to='/dashboard'>
+                                        {user.admin && <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={`${ROUTES.ADMIN_DASHBOARD}`}>
+                                            <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
+                                            <h6 className='font-weight-bold ml-4 my-auto'>Admin Dashboard</h6>
+                                        </Link>}
+                                        <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={ROUTES.DASHBOARDUSER}>
                                             <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Dashboard</h6>
                                         </Link>
@@ -95,7 +97,7 @@ const NavbarComponent = (props) => {
                                         </Link>
                                         <a className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
                                             style={{ cursor: 'pointer' }}
-                                            onClick={() => USERACTION.logout(props.navigate)}>
+                                            onClick={() => logout(props.navigate)}>
                                             <i className='fa fa-power-off text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Logout</h6>
                                         </a>
@@ -118,7 +120,7 @@ const NavbarComponent = (props) => {
                             style={{ background: 'unset', border: 'unset', boxShadow: 'unset', borderBottom: '2px solid white', fontSize: '30px' }} />
                         <small className="form-text text-muted">Masukan judul anime yang ingin dicari.</small>
                     </div>
-                    <Link className='btn btn-main btn-block' to='/search_anime' state={{ search: state.search }}>Submit</Link>
+                    <Link className='btn btn-main btn-block' to={ROUTES.SEARCHANIME} state={{ search: state.search }}>Submit</Link>
                 </ModalBody>
             </Modal>
             {/* end of modals */}
@@ -126,4 +128,6 @@ const NavbarComponent = (props) => {
     )
 }
 
-export default connect(null, null)(NavbarComponent)
+export default connect(state => ({
+    user: state.user.user
+}), null)(NavbarComponent)

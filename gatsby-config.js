@@ -6,20 +6,13 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `media`,
-        path: `${__dirname}/static/media/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `content`,
-        path: `${__dirname}/static/content/`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `media`,
+    //     path: `${__dirname}/static/media/`,
+    //   },
+    // },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -37,7 +30,9 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
-    `gatsby-plugin-netlify-cms`,
+    
+    //to enable netlify cms
+    // `gatsby-plugin-netlify-cms`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-sass`,
   ],

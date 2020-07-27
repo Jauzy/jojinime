@@ -40,16 +40,16 @@ const ListAnime = (props) => {
             <div style={{ backgroundColor: custom_bg || COLORS.SECONDARY }} className='py-1 border-radius-bottom'>
                 {anime.list?.length > 0 ? <div className='d-flex flex-column'>
                     <div className='d-flex flex-wrap justify-content-center'>
-                        {anime.list?.map(({ node }, index) => (
-                            <div className='my-3' key={index + 'recommend'} style={{ width: '200px', fontSize: '14px' }}>
-                                <Link to={'/' + node.name} className='recommend-card-2 text-white'>
-                                    <div className='position-absolute py-1 px-3 bg-dark' style={{ opacity: '.6' }}><i className='fa fa-eye mr-2' />{node.childMarkdownRemark.frontmatter.total_episode} Episode</div>
-                                    <div className='position-absolute py-1 px-3'><i className='fa fa-eye mr-2' />{node.childMarkdownRemark.frontmatter.total_episode} Episode</div>
-                                    <div className='position-absolute py-1 px-3 bg-dark' style={{ marginTop: '35px', opacity: '.6' }}><i className='fa fa-star mr-2' />{node.childMarkdownRemark.frontmatter.score}</div>
-                                    <div className='position-absolute py-1 px-3' style={{ marginTop: '35px' }}><i className='fa fa-star mr-2' />{node.childMarkdownRemark.frontmatter.score}</div>
-                                    <div className='bg-recommend text-truncate text-white bg-dark p-2 text-center' style={{ width: '180px', marginTop: '225px' }}>{node.childMarkdownRemark.frontmatter.title}</div>
-                                    <div className='position-absolute text-truncate text-white p-2 text-center' style={{ width: '180px', marginTop: '225px' }}>{node.childMarkdownRemark.frontmatter.title}</div>
-                                    <img src={node.childMarkdownRemark.frontmatter.cover_image} style={{ objectFit: 'cover', width: '180px', height: '260px' }} className='rounded-lg' />
+                        {anime.list?.map((anime, index) => (
+                            <div className='list-card' key={index + 'list'}>
+                                <Link to={`/${ROUTES.ANIMEPAGE}?id=${anime._id}`} className='text-white'>
+                                    <div className='list-bg py-1 px-3 bg-dark'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
+                                    <div className='list-bg py-1 px-3'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
+                                    <div className='list-bg list-score py-1 px-3 bg-dark'><i className='fa fa-star mr-2' />{anime.score}</div>
+                                    <div className='list-bg list-score py-1 px-3'><i className='fa fa-star mr-2' />{anime.score}</div>
+                                    <div className='list-bg list-title text-truncate bg-dark p-2'>{anime.title}</div>
+                                    <div className='list-bg list-title text-truncate p-2'>{anime.title}</div>
+                                    <img src={anime.cover_image} className='rounded-lg list-image' />
                                 </Link>
                             </div>
                         ))}

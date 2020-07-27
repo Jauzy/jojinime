@@ -28,10 +28,10 @@ const Streaming = (props) => {
                         <Link className='mr-auto' to={``}><button className='btn btn-main m-1'>See All Eps.</button></Link>
                     </div>
                     <div className='mt-3'>
-                        {url && <video width="100%" style={{ borderRadius: '20px' }} className='' key={url} controls>
+                        {/* {url && <video width="100%" style={{ borderRadius: '20px' }} className='' key={url} controls>
                             <source src={require('../../static/content/' + url)} type="video/mp4" style={{ borderRadius: '20px' }} />
                                 Your browser does not support HTML video.
-                            </video>}
+                            </video>} */}
                     </div>
                     <div>
                         <div className='row mt-2 stream-quality'>
@@ -54,11 +54,11 @@ const Streaming = (props) => {
                     </div>
                 </div>
 
-                <DownloadSection title={episode?.title}
+                {/* <DownloadSection title={episode?.title}
                     video_360={require('../../static/content/' + episode?.stream_360.relativePath)}
                     video_480={require('../../static/content/' + episode?.stream_480.relativePath)}
                     video_720={require('../../static/content/' + episode?.stream_720.relativePath)}
-                />
+                /> */}
 
                 <ShareSection title={episode?.title} location={props.location} />
 

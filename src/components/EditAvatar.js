@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import bsCustomFileInput from 'bs-custom-file-input'
 import $ from 'jquery'
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
@@ -87,12 +86,6 @@ const EditAvatar = props => {
     const onLoad = useCallback(img => {
         imgRef.current = img;
     }, []);
-
-    useEffect(() => {
-        $(document).ready(function () {
-            bsCustomFileInput.init()
-        })
-    }, [])
 
     useEffect(() => {
         if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {

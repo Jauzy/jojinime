@@ -23,8 +23,10 @@ import './static/styles/index.css'
 import './static/styles/override.css'
 import './static/styles/photocard.css'
 
+import bsCustomFileInput from 'bs-custom-file-input'
 import { loadProgressBar } from 'axios-progress-bar'
 loadProgressBar()
+bsCustomFileInput.init()
 
 //redux
 export { default as wrapRootElement } from './static/redux/ReduxWrapper';

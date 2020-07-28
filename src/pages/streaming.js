@@ -19,7 +19,7 @@ const Streaming = (props) => {
                         <div className='mr-auto'>
                             <h4>{episode?.title} Subtitle Indonesia</h4>
                             <h6 className='text-white'>{episode?.desc}</h6>
-                            <small className='text-white'><i className='fa fa-user mr-2' />Posted by Admin <i className='fa fa-clock mx-2' /> {episode.date_uploaded}</small>
+                            <small className='text-white'><i className='fa fa-user mr-2' />Posted by Admin <i className='fa fa-clock mx-2' /> {episode?.date_uploaded}</small>
                         </div>
                     </div>
                     <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />

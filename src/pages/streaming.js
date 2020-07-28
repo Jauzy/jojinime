@@ -55,9 +55,9 @@ const Streaming = (props) => {
                 </div>
 
                 {/* <DownloadSection title={episode?.title}
-                    video_360={require('../../static/content/' + episode?.stream_360.relativePath)}
-                    video_480={require('../../static/content/' + episode?.stream_480.relativePath)}
-                    video_720={require('../../static/content/' + episode?.stream_720.relativePath)}
+                    video_360={null}
+                    video_480={null}
+                    video_720={null}
                 /> */}
 
                 <ShareSection title={episode?.title} location={props.location} />

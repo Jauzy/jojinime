@@ -6,8 +6,8 @@ import { connect } from 'react-redux'
 import { Layout, SEO } from "../../components/Index"
 import genres from '../../../static/constants/Genres'
 import { getAnimes } from '../../../static/redux/Actions/anime'
+import { SittingSvg } from '../../components/SVG/Index'
 
-const aquaImg = require('../../../static/styles/images/aqua.png')
 const COLORS = require('../../../static/constants/Colors')
 const ROUTES = require('../../../static/constants/Routes')
 
@@ -75,7 +75,7 @@ const Combined = (props) => {
                             <div className='col-lg-4'>
                                 <div className=''>
                                     <div className='rounded-lg'>
-                                        <img width='100%' src={aquaImg} style={{ objectFit: 'cover', marginBottom: '-100px' }} alt='aqua' />
+                                        <SittingSvg />
                                     </div>
                                     <div className='p-3 bg-dark'>
                                         <h6>Genre:</h6>

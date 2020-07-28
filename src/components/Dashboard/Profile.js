@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { EditAvatar } from '../Index'
-import { changePassword, updateUser } from '../../../static/redux/Actions/user'
+import { changePassword, updateUser, uploadPublicBanner } from '../../../static/redux/Actions/user'
+import {NotificationManager} from 'react-notifications'
+
+const COLORS = require('../../../static/constants/Colors')
 
 const defaultState = {
     fullname: null, phone_no: null, about: null, birth_date: null, edit_mode: false,
@@ -13,7 +16,7 @@ const Profile = props => {
     const { user } = props
     const [state, setState] = useState({
         fullname: null, phone_no: null, about: null, birth_date: null, edit_mode: false,
-        newpassword: null, oldpassword: null, isModalOpen: false, isEditAvatarModalOpen: false
+        newpassword: null, oldpassword: null, isModalOpen: false, isEditAvatarModalOpen: false,
     })
 
     const modalToggle = () => setState({ ...state, isModalOpen: !state.isModalOpen })
@@ -39,22 +42,54 @@ const Profile = props => {
         setState({ ...state, edit_mode: !state.edit_mode })
     }
 
+    const handleFileInput = (e) => {
+        let file = document.getElementById(e.target.id).files[0]
+        if (file?.type.substring(0, 5) === "image") {
+            if (file.size / 1024 / 1024 <= 4) {
+                if (e.target.files && e.target.files.length > 0) {
+                    let payload = new FormData()
+                    payload.append('picture', file)
+                    uploadPublicBanner(props.dispatch, payload)
+                }
+            }
+            else
+                NotificationManager.error("Ukuran Image Maks 4Mb", 'Error Upload Banner');
+        } else
+            NotificationManager.error("Format File Harus Image", 'Error Upload Banner');
+    }
+
     useEffect(() => {
         setState({ ...state, ...user })
     }, [user])
 
     return (
         <div style={{ backgroundColor: 'transparent' }}>
+            <div className='border' style={{ background: COLORS.MAIN }}>
+                <img alt='banner' src={user?.public_banner || require('../../images/1080p.png')} style={{ objectFit: 'cover', width: '100%', height: '300px' }} />
+            </div>
             <div className='container py-5 text-white'>
                 <div className='row d-flex border-bottom pb-4'>
-                    <div className='col-md-auto m-auto'>
-                        <img src={user?.profile_pict ? user?.profile_pict : "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"} width="150" height="150" class="my-auto rounded-circle" />
+                    <div className='col-sm-auto m-auto'>
+                        <img src={user?.profile_pict ? user?.profile_pict : 'https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg'} alt='profile' width="150" height="150" class="my-auto rounded-circle" />
                     </div>
-                    <div className='col-md m-auto d-flex'>
-                        <div className='my-auto'>
+                    <div className='col-sm m-auto d-flex'>
+                        <div className='my-auto px-3'>
                             <h2>Foto Profile</h2>
-                            <h5 className='text-secondary'>Ukuran foto profil tidak boleh lebih dari 1Mb.</h5>
-                            <button onClick={modalToggleAvatar} className='btn btn-main'>Edit Foto</button>
+                            <h5 className='text-secondary'>Ukuran foto profil tidak boleh lebih dari 1Mb dan banner tidak boleh dari 4Mb.</h5>
+                            <div className='d-flex flex-wrap'>
+                                <button onClick={modalToggleAvatar} className='btn btn-main mx-2'>Edit Avatar</button>
+                                <div className='d-flex align-items-center btn btn-secondary' style={{ cursor: 'unset' }}>
+                                    Edit Banner
+                                    <div className='ml-auto'>
+                                        <div class="file-up-wrapper ml-2">
+                                            <div class="file-upload">
+                                                <input type="file" id='editBanner' onChange={handleFileInput} />
+                                                <i class="fa fa-arrow-up"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

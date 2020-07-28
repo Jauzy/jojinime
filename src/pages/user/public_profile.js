@@ -26,12 +26,13 @@ const PublicProfile = props => {
             <div>
                 <div style={{ background: COLORS.DARKSECONDARY }}>
                     <div className='border' style={{ background: COLORS.MAIN, width: '100%', height: '250px' }}>
-                        <img src={require('../../images/1080p.png')} style={{ objectFit: 'cover', width: '100%', maxHeight: '250px' }} />
+                        <img alt='banner' src={user?.public_banner || require('../../images/1080p.png')} style={{ objectFit: 'cover', width: '100%', maxHeight: '250px' }} />
                     </div>
                     <div className='container'>
                         <div className='row pb-4'>
                             <div className='col-md-auto d-flex'>
-                                <img src={user?.profile_pict || "https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg"} style={{ marginTop: '-5em', background: COLORS.SECONDARY }} width="200" height="200" className="rounded-circle border mx-auto" />
+                                <img alt='profile_pict' src={user?.profile_pict || "https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg"}
+                                    style={{ marginTop: '-5em', background: COLORS.SECONDARY }} width="200" height="200" className="rounded-circle border mx-auto" />
                             </div>
                             <div className='col-md py-3'>
                                 <h3 className='mb-0'>{user?.fullname || user?.nickname} <h style={{ fontSize: '20px' }} className='text-main'>@{user?.nickname}</h></h3>

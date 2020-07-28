@@ -42,7 +42,7 @@ const ListAnime = (props) => {
                     <div className='d-flex flex-wrap justify-content-center'>
                         {anime.list?.map((anime, index) => (
                             <div className='list-card' key={index + 'list'}>
-                                <Link to={`/${ROUTES.ANIMEPAGE}?id=${anime._id}`} className='text-white'>
+                                <Link to={`${ROUTES.ANIMEPAGE}?id=${anime._id}`} className='text-white'>
                                     <div className='list-bg py-1 px-3 bg-dark'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
                                     <div className='list-bg py-1 px-3'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
                                     <div className='list-bg list-score py-1 px-3 bg-dark'><i className='fa fa-star mr-2' />{anime.score}</div>

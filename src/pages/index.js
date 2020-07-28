@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import anime from 'animejs'
-
+import { Link } from 'gatsby'
 import { Container } from 'reactstrap'
-
+import { SittingSvg } from '../components/SVG/Index'
 import { Layout, Footer, SEO } from "../components/Index"
 
 const COLORS = require('../../static/constants/Colors')
@@ -77,15 +77,31 @@ const IndexPage = (props) => {
               <div className='col-md my-auto px-5'>
                 <h1 className='font-weight-bold'>Dah Nonton Berapa Season Hari Ini?</h1>
                 <h5>Yuk nonton terus di jojinime, streaming tanpa buffer dengan server google cloud platform.</h5>
-                <button className='btn btn-main mt-3 px-3' onClick={() => props.navigate(ROUTES.COMBINEDLIST)}>Anime List</button>
+                <Link className='btn btn-main mt-3 px-3' to={ROUTES.COMBINEDLIST}>Anime List</Link>
+              </div>
+            </div>
+          </Container>
+
+          <Container fluid={true}>
+            <div className='row'>
+              <div className='col-md d-flex'>
+                <div className='m-auto'>
+                  <h4 className='mb-0'>Okaerinasai Senpai!</h4>
+                  <h4 className='mb-0'>おかえりなさい せんぱい!</h4>
+                  <h1 className='font-weight-bold'>Daftar dan Login Sekarang!</h1>
+                  <h6>Login untuk menggunakan fitur - fitur lain seperti anime favorit, warna tema, dan lain - lain.</h6>
+                  <div className='d-flex flex-wrap'>
+                    <Link className='btn btn-main' to={ROUTES.LOGINUSER}>Login Sekarang!</Link>
+                  </div>
+                </div>
+              </div>
+              <div className='col-md-5'>
+                <SittingSvg defaultSize={true} />
               </div>
             </div>
           </Container>
 
         </div>
-
-
-        <div className='shape-wave-bottom'></div>
         <Footer />
 
       </div>

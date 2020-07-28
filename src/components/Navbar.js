@@ -97,7 +97,7 @@ const NavbarComponent = (props) => {
                                         </Link>
                                         <a className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
                                             style={{ cursor: 'pointer' }}
-                                            onClick={() => logout(props.navigate)}>
+                                            onClick={() => logout(props.dispatch, props.navigate)}>
                                             <i className='fa fa-power-off text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Logout</h6>
                                         </a>

@@ -30,10 +30,33 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
-    
+
     //to enable netlify cms
     // `gatsby-plugin-netlify-cms`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-sass`,
+    {
+      // The name of the plugin
+      resolve: 'gatsby-source-mongodb',
+      options: {
+        // Name of the database and collection where are books reside
+        dbName: 'jojinime',
+        collection: ['animes', 'episodes', 'users'],
+        server: {
+          address: 'firstcluster-shard-00-02-zqwwp.gcp.mongodb.net',
+          port: 27017
+        },
+        auth: {
+          user: 'root',
+          password: 'root'
+        },
+        extraParams: {
+          replicaSet: 'Firstcluster-0',
+          ssl: true,
+          authSource: 'admin',
+          retryWrites: true
+        }
+      }
+    },
   ],
 }

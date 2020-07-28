@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie'
 import { Layout, SEO } from '../components/Index'
 import { connect } from 'react-redux'
 import { NotificationManager } from 'react-notifications';
-import { login } from "../../static/redux/Actions/user";
+import { login, register, checkUsername } from "../../static/redux/Actions/user";
 
 const cookies = new Cookies()
 const COLORS = require('../../static/constants/Colors')
@@ -12,37 +12,52 @@ const defaultState = {
     email: '',
     password: '',
     nickname: '',
-    isNicknameValid: '',
-    active: 'Login'
+    isNicknameValid: null,
+    active: 'Login',
+    showPassword: false
 }
 
 const Login = props => {
-    const { loading } = props
+    const { loading, isNicknameValid } = props
     const [state, setState] = useState({
         email: '',
         password: '',
         nickname: '',
-        isNicknameValid: '',
-        active: 'Login'
+        isNicknameValid: null,
+        active: 'Login',
+        showPassword: false
     })
     const onChange = (e) => {
         setState({ ...state, [e.target.id]: e.target.value.toString() })
     }
 
     const onLogin = () => {
-        login(props.dispatch, { email: state.email, password: state.password }, props.navigate)
+        if (cookies.get('token') || cookies.get('user')) {
+            NotificationManager.warning("Please logout to continue", "You already logged in!")
+        } else
+            login(props.dispatch, { email: state.email, password: state.password }, props.navigate)
+    }
+
+    const onCheck = () => {
+        checkUsername(props.dispatch, state.nickname)
+    }
+
+    const togglePasswordShow = () => {
+        setState({ ...state, showPassword: !state.showPassword })
     }
 
     const onSignUp = () => {
-
+        if (cookies.get('token') || cookies.get('user')) {
+            NotificationManager.warning("Please logout to continue", "You already logged in!")
+        } else {
+            register(props.dispatch, { email: state.email, password: state.password, nickname: state.nickname })
+            setState({ ...defaultState })
+        }
     }
 
     useEffect(() => {
-        if (cookies.get('token') || cookies.get('user')) {
-            NotificationManager.warning("Please logout to continue", "You already logged in!")
-            props.navigate('/')
-        }
-    }, [])
+        setState({ ...state, isNicknameValid })
+    }, [isNicknameValid])
 
     return (
         <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
@@ -86,17 +101,20 @@ const Login = props => {
                         <div className="navbar-brand font-weight-bold text-white" style={{ fontSize: '40px' }}>
                             Daftar<strong style={{ color: COLORS.MAIN }}>.</strong>
                         </div>
-                        <h6 className='text-white text-center'>Daftar dengan mengisi form dibawah.</h6>
+                        <h6 className='text-white text-center'>Daftar dengan mengisi form dibawah ini.</h6>
                     </div>
 
-                    <div className="form-label-group">
-                        <input type="text" id="nickname" className="form-control" placeholder="Nickname" onChange={onChange} value={state.nickname} />
-                        <label htmlFor="inputNickname">Nickname</label>
+                    <div className='d-flex align-items-center'>
+                        <div className="form-label-group w-100 my-auto mr-2">
+                            <input type="text" id="nickname" className="form-control" placeholder="Nickname" onChange={onChange} value={state.nickname} />
+                            <label htmlFor="inputNickname">Nickname</label>
+                        </div>
+                        <button className='btn btn-main h-100' onClick={onCheck}><i className='fa fa-search' /></button>
                     </div>
-                    <div className='d-flex flex-wrap mb-3'>
-                        <button className='btn btn-main my-auto' onClick={() => props.checkUsername(state.nickname)}>Check</button>
-                        {state.isNicknameValid === false && <small className='text-danger my-auto ml-3'>Nickname already taken!</small>}
-                        {state.isNicknameValid === true && <small className='text-success my-auto ml-3'>Nickname available.</small>}
+                    <div className='d-flex flex-wrap mt-2 mb-3 ml-1'>
+                        {state.isNicknameValid === null && <small className='text-main my-auto'>Note: Click on Magnifier to Check Nickname Availability!</small>}
+                        {state.isNicknameValid === false && <small className='text-danger my-auto'>Nickname already taken!</small>}
+                        {state.isNicknameValid === true && <small className='text-success my-auto'>Nickname available.</small>}
                     </div>
 
                     <div className="form-label-group">
@@ -104,12 +122,15 @@ const Login = props => {
                         <label htmlFor="email">Email address</label>
                     </div>
 
-                    <div className="form-label-group">
-                        <input type="password" id="password" className="form-control" placeholder="Password" onChange={onChange} value={state.password} />
-                        <label htmlFor="password">Password</label>
+                    <div className='d-flex align-items-center'>
+                        <div className="form-label-group w-100 my-auto mr-2">
+                            <input type={state.showPassword ? 'text' : 'password'} id="password" className="form-control" placeholder="Password" onChange={onChange} value={state.password} />
+                            <label htmlFor="password">Password</label>
+                        </div>
+                        <button className='btn btn-main h-100' onClick={togglePasswordShow}><i className={`fa fa-${state.showPassword ? 'eye-slash' : 'eye'}`} /></button>
                     </div>
 
-                    <button className="btn btn-lg btn-main btn-block d-flex align-items-center justify-content-center" onClick={onSignUp}
+                    <button className="btn btn-lg btn-main btn-block d-flex align-items-center justify-content-center mt-3" onClick={onSignUp}
                         disabled={!state.email || !state.nickname || !state.isNicknameValid || !state.password}>
                         {loading && <div className="spinner-border mr-3" style={{ width: '20px', height: '20px' }} role="status">
                             <span className="sr-only">Loading...</span>
@@ -130,5 +151,6 @@ const Login = props => {
 }
 
 export default connect(state => ({
-    loading: state.user.loading
+    loading: state.user.loading,
+    isNicknameValid: state.user.isNicknameValid
 }), null)(Login)

@@ -40,7 +40,7 @@ const EditAvatar = props => {
 
     const handleFileInput = (e) => {
         let file = document.getElementById(e.target.id).files[0]
-        if (file?.type.substring(0, 5) == "image") {
+        if (file?.type.substring(0, 5) === "image") {
             if (file.size / 1024 / 1024 <= 1) {
                 if (e.target.files && e.target.files.length > 0) {
                     const reader = new FileReader();
@@ -165,7 +165,6 @@ const EditAvatar = props => {
                     </div>
                 </div>
                 <div className='col-md'>
-
                 </div>
             </div>
             <button class='btn btn-main' disabled={!upImg} onClick={onSubmit} data-dismiss='modal'>Submit</button>

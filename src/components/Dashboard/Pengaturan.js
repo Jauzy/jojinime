@@ -26,6 +26,7 @@ const Pengaturan = props => {
                     <td><h4>: <input type='color' value={COLORS.DARKSECONDARY} onChange={(e) => COLORS.changeDarkSecondaryColor(e.target.value)} /></h4></td>
                 </tr>
             </table>
+
         </div>
     )
 }

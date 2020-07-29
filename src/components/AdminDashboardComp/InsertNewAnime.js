@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
@@ -14,6 +14,14 @@ const customStyles = {
         ...provided,
         color: state.isSelected ? 'white' : 'black'
     }),
+}
+
+const defaultState = {
+    cover_image: '', title: '', title_english: '', title_japan: '',
+    rating: '', score: '', duration: '', total_episode: '', status: '',
+    airing: '', studio: '', genre: [], type: '', synopsis: '',
+
+    isModalOpen: false
 }
 
 let InsertNewAnime = (props) => {
@@ -43,6 +51,7 @@ let InsertNewAnime = (props) => {
 
     const onSubmit = () => {
         addAnime(props.dispatch, state)
+        setState({...defaultState})
     }
 
     return (
@@ -68,7 +77,7 @@ let InsertNewAnime = (props) => {
                         <DetailsSection detail={state} />
                     </div>
 
-                    <button className={'btn btn-block ' + (valid ? 'btn-main' : 'btn-secondary')} disabled={!valid()}
+                    <button className={'btn btn-block mt-4 ' + (valid ? 'btn-main' : 'btn-secondary')} disabled={!valid()}
                         onClick={onSubmit}>
                         Submit
                     </button>

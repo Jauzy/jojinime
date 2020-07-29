@@ -21,22 +21,23 @@ const Combined = (props) => {
     const [width, setWidth] = useState(1000)
 
     useEffect(() => {
-        if (mode === 'library') {
-            if (window && $(window)) {
-                
+        anime({
+            targets: '#anime-wrapper',
+            translateX: [-1000, 0],
+            duration: 2000
+        });
+        getAnimes(props.dispatch)
+    }, [])
+
+    useEffect(() => {
+        if (window && $(window)) {
+            setWidth($(window).width())
+            if (mode === 'library') {
+
                 function updateSize() {
                     setWidth($(window).width())
                 }
                 window.addEventListener('resize', updateSize);
-
-                useEffect(() => {
-                    anime({
-                        targets: '#anime-wrapper',
-                        translateX: [-1000, 0],
-                        duration: 2000
-                    });
-                    getAnimes(props.dispatch)
-                }, [])
 
                 var makeWinHeight = function () {
                     var vh = $(window).height();
@@ -67,7 +68,7 @@ const Combined = (props) => {
                 <div className='shape-wave-top'></div>
 
                 <Container>
-                    <div className='container bg-dark ' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }} id='anime-wrapper'>
+                    <div className='container bg-dark ' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black', }} id='anime-wrapper'>
                         <div style={{ backgroundColor: '#2D2D2D', borderRadius: '20px' }} className='p-4'>
                             <div className='row'>
                                 <div className='col-lg'>
@@ -103,8 +104,8 @@ const Combined = (props) => {
                                                         <li>
                                                             <Link className='text-decoration- text-white' to={`${ROUTES.ANIMEPAGE}?id=${anime._id}`}>{anime.title}</Link>
                                                             {user?.favourite?.includes(anime._id) && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
-                                                            {anime.type === 'Movie' && <strong className='text-warning'> : Movie</strong>}
-                                                            {anime.status === 'Airing' && <strong className='text-primary'> : Ongoing</strong>}
+                                                            {anime.type === 'Movie' && <strong className='text-secondary'> : Movie</strong>}
+                                                            {anime.status === 'Ongoing' && <strong className='text-main'> : Ongoing</strong>}
                                                         </li>
                                                     </small>
                                                 ))}

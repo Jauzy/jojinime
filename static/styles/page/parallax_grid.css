@@ -20,9 +20,9 @@
     overflow: hidden;
     position: relative;
     width: 200px;
+    /* background-color: red; */
     pointer-events: all;
     overflow: initial;
-    margin: 0 0 30px;
 }
 
 .layer.main {
@@ -34,10 +34,9 @@
 
 .par-col a {
     display: block;
-    padding-top: 20px;
-    height: 290px;
+    height: auto;
     overflow: hidden;
-    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.37);
+    /* box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.37); */
 }
 
 .par-col a .hover {

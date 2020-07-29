@@ -16,6 +16,8 @@ import Favourite from './Dashboard/Favourite'
 import Pengaturan from './Dashboard/Pengaturan'
 
 import InsertNewAnime from './AdminDashboardComp/InsertNewAnime'
+import ScheduleManager from './AdminDashboardComp/ScheduleManager'
+import BrowseAnime from './AdminDashboardComp/BrowseAnime'
 
 export {
     Footer, SEO, DownloadSection, CommentSection,
@@ -25,5 +27,5 @@ export {
     Profile,
 
 
-    InsertNewAnime
+    InsertNewAnime, ScheduleManager, BrowseAnime
 }

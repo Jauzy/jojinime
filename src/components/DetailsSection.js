@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import $ from 'jquery'
 import { connect } from 'react-redux'
 import { addToFav, removeFav } from '../../static/redux/Actions/user'
+import { SteamGame } from './Cards/Index'
 
 const COLORS = require('../../static/constants/Colors')
 
@@ -27,12 +28,14 @@ const DetailsSection = (props) => {
             </div>
             <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
 
-            <div className='btn btn-secondary btn-block' style={{cursor:'unset'}}>
+            <div className='btn btn-secondary btn-block' style={{ cursor: 'unset' }}>
                 Anime {detail?.title} Details
             </div>
 
             <div className='row'>
-                <div className='col-sm-auto d-flex mt-3'><img src={detail?.cover_image} height='auto' className='rounded-lg border mx-auto' /></div>
+                <div className='col-sm-auto d-flex mt-3'>
+                    <SteamGame anime={detail} noLink={true} className='mx-auto' />
+                </div>
                 <div className='col-sm d-flex mt-3'>
                     <table className='my-auto w-100' style={{ maxWidth: '600px' }}>
                         <thead></thead>
@@ -79,7 +82,7 @@ const DetailsSection = (props) => {
                             </tr>
                             <tr>
                                 <td className='font-weight-bold'>Genre</td>
-                                <td className='text-wrap'>: {detail?.genre.map((item) => (item + ', '))}</td>
+                                <td className='text-wrap'>: {detail?.genre?.map((item) => (item + ', '))}</td>
                             </tr>
                         </tbody>
                         <tfoot></tfoot>
@@ -97,7 +100,7 @@ const DetailsSection = (props) => {
                         :
                         <button className='btn btn-main px-3' onClick={toggleDesc}>Show More</button>
                     }
-                    
+
                     {(!user?.favourite?.filter(item => item._id === detail?._id)[0] && user) && <button className='btn btn-secondary ml-4' onClick={() =>
                         addToFav(props.dispatch, detail?._id)
                     }><i className='fa fa-heart mr-2' />Add to Favourite</button>}
@@ -105,7 +108,7 @@ const DetailsSection = (props) => {
                     {user?.favourite?.filter(item => item._id === detail?._id)[0] && <button className='btn btn-danger ml-4' onClick={() =>
                         removeFav(props.dispatch, detail?._id)
                     }><i className='fa fa-heart mr-2' />Favourite</button>}
-                
+
                 </div>
             </div>
         </div >

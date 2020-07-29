@@ -1,9 +1,7 @@
-import { LOADING, FINISH } from '../Actions/anime'
+import { LOADING, FINISH } from '../Actions/schedule'
 
 const initialState = {
-    anime: null,
-    animes: null,
-    recommendations: null,
+    schedules: null,
     loading: false
 };
 

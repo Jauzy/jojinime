@@ -4,12 +4,13 @@ import { ListAnime, SEO, Layout } from '../../components/Index'
 import anime from 'animejs'
 import { connect } from 'react-redux'
 import { getOngoing } from '../../../static/redux/Actions/anime'
+import { getFullSchedule } from '../../../static/redux/Actions/schedule'
 
 const COLORS = require('../../../static/constants/Colors')
+const ROUTES = require('../../../static/constants/Routes')
 
 const Ongoing = (props) => {
-    const {ongoing} = props
-    const schedule = null
+    const { ongoing, schedules } = props
     const dayInAWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'Random']
 
     useEffect(() => {
@@ -20,6 +21,7 @@ const Ongoing = (props) => {
             duration: 2000
         });
         getOngoing(props.dispatch)
+        getFullSchedule(props.dispatch)
     }, [])
 
     return (
@@ -34,18 +36,18 @@ const Ongoing = (props) => {
                         </div>
                     </div>
                     <hr style={{ borderWidth: '5px', borderColor: COLORS.MAIN }} className='rounded-lg mt-1' />
-
+                    
                     <div className='d-flex flex-wrap justify-content-center'>
-                        {dayInAWeek.map((item, index) => (
+                        {dayInAWeek.map((day, index) => (
                             <div style={{ width: '250px' }} className='my-2 mx-1 scheduleContainer' key={index + 'keyscheduleday'}>
                                 <div className='text-center bg-secondary text-white rounded-lg pb-1' style={{ paddingTop: '10px' }}>
-                                    <h6>{item}</h6>
+                                    <h6>{day}</h6>
                                 </div>
                                 <div className='text-center mt-2'>
-                                    {schedule?.filter(({ node }) => node.childMarkdownRemark.frontmatter.day === item)[0]?.node.childMarkdownRemark.frontmatter.animes?.map((item, index) => (
-                                        <Link className='text-decoration-none text-white w-100' key={index + 'keyschedule'}>
+                                    {schedules?.filter(schedule => schedule.day === day)?.map(({anime}, index) => (
+                                        <Link className='text-decoration-none text-white w-100' to={ROUTES.ANIMEPAGE+`?id=${anime._id}`} key={anime.title + 'keyschedule'}>
                                             <div className='text-truncate btn btn-main mb-2 py-2 w-100'>
-                                                {item}
+                                                {anime.title}
                                             </div>
                                         </Link>
                                     ))}
@@ -63,5 +65,6 @@ const Ongoing = (props) => {
 
 export default connect(state => ({
     user: state.user.user,
-    ongoing: state.anime.animes
+    ongoing: state.anime.animes,
+    schedules: state.schedule.schedules
 }), null)(Ongoing)

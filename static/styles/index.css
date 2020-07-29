@@ -4,8 +4,9 @@
     --ligth-secondary-color: #343A40;
 }
 
-html, body, #root {
-    height: 100%;
+body{
+    height: auto;
+    background-color: var(--secondary-color);
 }
 
 .border-radius-top {
@@ -69,8 +70,9 @@ html, body, #root {
 }
 
 .list-card .list-bg {
-    opacity: .6;
+    opacity: .7;
     position: absolute;
+    border-top-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
@@ -96,7 +98,8 @@ html, body, #root {
     border-bottom-left-radius: 5px;
     color: white;
     text-align: center;
-    width: 180px;
+    width: 100%;
+    left: 0;
 }
 
 @media only screen and (max-width: 444px) {
@@ -111,10 +114,11 @@ html, body, #root {
     
     .list-card .list-title {
         margin-bottom: 195px;
-        margin-top: 195px;
+        margin-top: 180px;
         width: 150px;
     }
     .list-card {
+        font-size: 13px;
         width: 150px;
     }
 }
@@ -221,4 +225,15 @@ html, body, #root {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--ligth-secondary-color);
+}
+
+
+.episode-card {
+    background-color: var(--ligth-secondary-color);
+    color: white;
+    border-left: 5px solid var(--main-color);
+}
+
+.episode-card:hover {
+    background-color: var(--secondary-color);
 }

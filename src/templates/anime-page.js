@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
-import { Link } from 'gatsby'
 import Slider from "react-slick";
 import { connect } from 'react-redux'
 
+import { SteamGame } from '../components/Cards/Index'
 import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
 import { getAnimeById } from '../../static/redux/Actions/anime'
+import { getEpisodes } from '../../static/redux/Actions/episode'
 
 const COLORS = require('../../static/constants/Colors')
-const ROUTES = require('../../static/constants/Routes')
 
 const AnimePage = (props) => {
-    const { user, anime, recommendations} = props
-    const episode = null
+    const { user, anime, recommendations, episodes} = props
 
     var settings = {
         slidesToShow: 5,
@@ -40,7 +39,7 @@ const AnimePage = (props) => {
             {
                 breakpoint: 550,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                 }
             }
         ]
@@ -48,6 +47,7 @@ const AnimePage = (props) => {
 
     useEffect(() => {
         getAnimeById(props.dispatch, props.pageContext.mongo_id)
+        getEpisodes(props.dispatch, props.pageContext.mongo_id)
     }, [props.location])
 
     return (
@@ -59,7 +59,12 @@ const AnimePage = (props) => {
                 <DetailsSection detail={anime} user={user} />
 
                 {/* stream */}
-                <EpisodeSection episodes={episode} batch_link={props.batch_link} anime={anime} />
+                <EpisodeSection episodes={episodes}
+                    batch_link={[
+                        { url: anime?.batch_360, quality: '360' },
+                        { url: anime?.batch_480, quality: '480' },
+                        { url: anime?.batch_720, quality: '720' }]}
+                    anime={anime} />
 
                 {/* share */}
                 <ShareSection title={anime?.title} location={props.location} />
@@ -68,16 +73,10 @@ const AnimePage = (props) => {
                 <div className='mb-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
                     Rekomendasi Anime Lainnya
                     </div>
-                <div className='bg-light p-3' style={{ borderTop: '5px solid ' + COLORS.MAIN, borderRadius: '20px' }}>
+                <div className='bg-light' style={{ borderTop: '5px solid ' + COLORS.MAIN, borderRadius: '20px' }}>
                     <Slider {...settings}>
                         {recommendations?.map((anime, index) => (
-                            <div className='' key={index + 'recommend'} style={{ width: '200px' }}>
-                                <Link to={`${ROUTES.ANIMEPAGE}?id=${anime._id}`} className='recommend-card'>
-                                    <div className='bg-recommend text-truncate p-3 text-center text-white' style={{ width: '200px', height: '50px' }}></div>
-                                    <div className='position-absolute text-truncate p-3 text-center text-white' style={{ width: '200px', bottom: '3px' }}>{anime.title}</div>
-                                    <img src={anime.cover_image} style={{ objectFit: 'cover', width: '200px', height: '280px' }} alt='cover' className='rounded-lg' />
-                                </Link>
-                            </div>
+                            <SteamGame anime={anime} className='mx-auto' />
                         ))}
                     </Slider>
                 </div>
@@ -91,6 +90,6 @@ const AnimePage = (props) => {
 export default connect(state => ({
     user: state.user.user,
     anime: state.anime.anime,
-    episodes: state.anime.episodes,
+    episodes: state.episode.episodes,
     recommendations: state.anime.recommendations
 }), null)(AnimePage)

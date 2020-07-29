@@ -30,9 +30,9 @@ const Layout = (props) => {
   }, [])
 
   return (
-    <div className='font-open-sans text-white' style={{ background: COLORS.DARKSECONDARY }}>
+    <div className='font-open-sans text-white'>
       <LoadingOverlay active={!noLoading ? loading_user || loading_anime || false : false} spinner={<Spinner />}>
-        <Navbar color={navbarColor} navigate={navigate} />
+        <Navbar color={navbarColor} navigate={navigate} noHamburger={noFooter} />
         {/* <ChatWidget /> */}
         {children}
         {!noFooter && <Footer />}

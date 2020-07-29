@@ -13,5 +13,6 @@ export const LOGINUSER = '/login'
 export const ADMIN_DASHBOARD = '/admin'
 
 export const ANIMEPAGE = '/anime-page'
-// export const STREAMING = '/streaming/:mal_id/episode/:episode_id/:total_episode'
+export const ANIMEDASH = '/anime-dash'
+export const STREAMING = '/streaming'
 

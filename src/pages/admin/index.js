@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Layout, SEO, InsertNewAnime} from '../../components/Index'
+import { Layout, SEO, InsertNewAnime, ScheduleManager, BrowseAnime } from '../../components/Index'
 import { connect } from 'react-redux'
 import { navigate } from 'gatsby'
-import profileSVG from '../../../static/styles/images/profile.svg'
+import { DashboardSvg } from '../../components/SVG/Index'
 
 const COLORS = require('../../../static/constants/Colors')
 
@@ -23,15 +23,18 @@ const AdminIndex = (props) => {
             <SEO title={`Admin ${user?.name || ''}`} />
 
             <div style={{ backgroundColor: COLORS.LIGHTSECONDARY }} className='pt-5'>
-                <div className='text-white container'>
-                    <div className='row d-flex'>
-                        <div className='col-md my-auto'>
-                            <h6>{user?.nickname} / Admin</h6>
-                            <h4 className='mb-0'>Selamat Datang Admin!</h4>
-                            <h1 className='font-weight-bold'>{user?.fullname || user?.nickname}</h1>
+                <div className='text-white container-fluid'>
+                    <div className='row d-flex' style={{ overflowX: 'hidden' }}>
+                        <div className='col-md d-flex'>
+                            <div className='m-auto'>
+                                <h6>{user?.nickname} / Admin / <strong>{state.activeSection}</strong></h6>
+                                <h4 className='mb-0'>Okaerinasai Admin-kun!</h4>
+                                <h4 className='mb-0'>おかえりなさい あｄみんーくん!</h4>
+                                <h1 className='font-weight-bold'>{user?.fullname || user?.nickname}</h1>
+                            </div>
                         </div>
                         <div className='col-md-5 my-auto'>
-                            <img src={profileSVG} alt='icon' width='100%' />
+                            <DashboardSvg />
                         </div>
                     </div>
                 </div>
@@ -50,6 +53,8 @@ const AdminIndex = (props) => {
             </div>
 
             {state.activeSection === 'Insert New Anime' && <InsertNewAnime />}
+            {state.activeSection === 'Schedule Manager' && <ScheduleManager />}
+            {state.activeSection === 'Browse Anime' && <BrowseAnime />}
 
             <div className='shape-wave-bottom'></div>
         </Layout>

@@ -21,7 +21,7 @@ const Dashboard = props => {
                     <div className='row d-flex'>
                         <div className='col-md d-flex'>
                             <div className='m-auto'>
-                                <h6>{user?.nickname} / {state.activeSection}</h6>
+                                <h6>{user?.nickname} / <strong>{state.activeSection}</strong></h6>
                                 <h4 className='mb-0'>Okaerinasai Senpai!</h4>
                                 <h4 className='mb-0'>おかえりなさい せんぱい!</h4>
                                 <h1 className='font-weight-bold'>{user?.fullname || user?.nickname}</h1>

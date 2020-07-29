@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
+const ROUTES = require('../../static/constants/Routes')
+
 const Footer = (props) => {
     const { className } = props
     return (
@@ -24,9 +26,10 @@ const Footer = (props) => {
                             <div className="col-md d-flex flex-column">
                                 <h6 className="font-weight-bolder text-white mb-2 mt-3 font-roboto">Navigation</h6>
                                 <ul className="navbar-nav mb-3">
-                                    <li className="nav-item"><a className="text-decoration-none text-white" href='#'>Search Anime</a></li>
-                                    <li className="nav-item"><a className="text-decoration-none text-white" href='#'>Anime List</a></li>
-                                    <li className="nav-item"><Link className="text-decoration-none text-white" to='/'>Home</Link></li>
+                                    <li className="nav-item"><Link className="text-white" to={ROUTES.SEARCHANIME}>Search Anime</Link></li>
+                                    <li className="nav-item"><Link className="text-white" to={ROUTES.SEARCHGENRE}>Search Genre</Link></li>
+                                    <li className="nav-item"><Link className="text-white" to={ROUTES.COMBINEDLIST}>Anime List</Link></li>
+                                    <li className="nav-item"><Link className="text-white" to={ROUTES.HOME}>Home</Link></li>
                                 </ul>
                             </div>
                         </div>

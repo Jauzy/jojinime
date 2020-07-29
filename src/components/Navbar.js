@@ -12,7 +12,7 @@ const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
 
 const NavbarComponent = (props) => {
-    const { color, dispatch, user } = props
+    const { color, dispatch, user, noHamburger } = props
     const [state, setState] = useState({
         search: null || '', isModalOpen: false
     })
@@ -35,27 +35,31 @@ const NavbarComponent = (props) => {
                         Jojinime<strong style={{ color: COLORS.MAIN }}>.</strong>
                     </Link>
 
+                    {!noHamburger && <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>}
+
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto align-items-center">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to={ROUTES.HOME}>Home</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={ROUTES.COMBINEDLIST}>Anime List</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={ROUTES.MOVIELIST}>Movie List</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={ROUTES.ONGOINGLIST}>On - Going List</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={ROUTES.SEARCHGENRE}>Genre List</Link>
-                            </li>
-                            <li className="nav-item">
+                            <li className="nav-item mr-auto">
                                 <Link className="nav-link" to='#' onClick={modalToggle}><i className='fa fa-search' /></Link>
                             </li>
-                            <li className="nav-item dropdown">
+                            <li className="nav-item active mr-auto">
+                                <Link className="nav-link" to={ROUTES.HOME}>Home</Link>
+                            </li>
+                            <li className="nav-item mr-auto">
+                                <Link className="nav-link" to={ROUTES.COMBINEDLIST}>Anime List</Link>
+                            </li>
+                            <li className="nav-item mr-auto">
+                                <Link className="nav-link" to={ROUTES.MOVIELIST}>Movie List</Link>
+                            </li>
+                            <li className="nav-item mr-auto">
+                                <Link className="nav-link" to={ROUTES.ONGOINGLIST}>On - Going List</Link>
+                            </li>
+                            <li className="nav-item mr-auto">
+                                <Link className="nav-link" to={ROUTES.SEARCHGENRE}>Genre List</Link>
+                            </li>
+                            <li className="nav-item dropdown mr-auto">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     More
                                 </a>
@@ -63,19 +67,19 @@ const NavbarComponent = (props) => {
                                     <Link className="dropdown-item" to={ROUTES.ABOUT}>About Us</Link>
                                 </div>
                             </li>
-                            {!cookies.get('user') && <li className="nav-item">
+                            {!cookies.get('user') && <li className="nav-item mr-auto">
                                 <Link className="nav-link" to='/login'>Login</Link>
                             </li>}
                         </ul>
 
                         {user && <ul className="navbar-nav">
-                            <li className="nav-item d-flex">
-                                <div className='dropdown d-flex flex-wrap'>
-                                    <h6 className='my-auto mr-2 font-weight-bold text-secondary'>Hello, {user.nickname}</h6>
-                                    <a className="nav-link dropdown-toggle my-auto" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li className="nav-item">
+                                <div className='dropdown'>
+                                    <div className='d-flex dropdown-toggle align-items-center' id="userDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <h6 className='mr-2 mb-0 font-weight-bold text-secondary'>Hello, {user.nickname}</h6>
                                         <img src={user?.profile_pict ? user?.profile_pict : 'https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg'} width="40" height="40" className="rounded-circle" />
-                                    </a>
-                                    <div className="dropdown-menu py-0" style={{ maxWidth: '400px' }} aria-labelledby="navbarDropdownMenuLink">
+                                    </div>
+                                    <div className="dropdown-menu py-0 mt-3" style={{ maxWidth: '400px' }} aria-labelledby="userDrop">
                                         <a className="dropdown-item d-flex px-4 py-4" href="#">
                                             <img src={user?.profile_pict ? user?.profile_pict : 'https://storage.googleapis.com/file-upload-test-bucket/createit_default_profile_pict.svg'} width="60" height="60" className="my-auto rounded-circle" />
                                             <div className='my-auto ml-4'>
@@ -84,7 +88,7 @@ const NavbarComponent = (props) => {
                                             </div>
                                         </a>
                                         {user.admin && <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={`${ROUTES.ADMIN_DASHBOARD}`}>
-                                            <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
+                                            <i className='fa fa-cogs text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Admin Dashboard</h6>
                                         </Link>}
                                         <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={ROUTES.DASHBOARDUSER}>
@@ -92,7 +96,7 @@ const NavbarComponent = (props) => {
                                             <h6 className='font-weight-bold ml-4 my-auto'>Dashboard</h6>
                                         </Link>
                                         <Link className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary" to={`${ROUTES.PROFILEUSERPUBLIC}/?id=${user?._id}`}>
-                                            <i className='fa fa-user text-main my-auto' style={{ fontSize: '20px' }} />
+                                            <i className='fa fa-globe-asia text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Public Profile</h6>
                                         </Link>
                                         <a className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"

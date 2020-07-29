@@ -2,6 +2,7 @@ import { NotificationManager } from 'react-notifications';
 import baseURL from '../../constants/baseURL'
 
 import Cookies from 'universal-cookie'
+import { navigate } from 'gatsby';
 const cookies = new Cookies()
 
 //action type
@@ -14,6 +15,36 @@ const enableLoading = () => ({
 const finishReq = (data) => ({
     type: FINISH, data: { loading: false, ...data }
 });
+
+export const deleteAnime = async (dispatch, animeID) => {
+    NotificationManager.info("Please Wait...", 'Deleting Anime');
+    dispatch(enableLoading())
+    try {
+        const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
+        await baseURL.delete(`/anime/${animeID}`, config)
+        NotificationManager.success('Anime Deleted');
+        navigate('/admin')
+        dispatch(finishReq(null))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Deleting Anime');
+        dispatch(finishReq(error))
+    }
+}
+
+export const updateInfo = async (dispatch, animeID, payload) => {
+    NotificationManager.info("Please Wait...", 'Updating Anime Info');
+    dispatch(enableLoading())
+    try {
+        const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
+        await baseURL.put(`/anime/${animeID}`, payload, config)
+        NotificationManager.success(payload.title + ' Info Updated');
+        const { data } = await baseURL.get(`/anime/${animeID}`)
+        dispatch(finishReq({ anime: data.anime, recommendations: data.recommendations }))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Updating Anime Info');
+        dispatch(finishReq(error))
+    }
+}
 
 export const addAnime = async (dispatch, payload) => {
     NotificationManager.info("Please Wait...", 'Adding Anime');
@@ -47,7 +78,7 @@ export const getAnimeById = async (dispatch, animeID) => {
             NotificationManager.error('Anime not Found!');
         }
         const { data } = await baseURL.get(`/anime/${animeID}`)
-        dispatch(finishReq({ anime: data.anime, episodes: data.episodes, recommendations: data.recommendations }))
+        dispatch(finishReq({ anime: data.anime, recommendations: data.recommendations }))
     } catch (error) {
         NotificationManager.error(error.response?.data.message, 'Error Fetch Anime');
         dispatch(finishReq(error))

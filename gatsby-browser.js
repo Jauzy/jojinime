@@ -12,19 +12,34 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-notifications/lib/notifications.css';
 
-import './static/styles/login.scss'
-import './static/styles/chat.scss'
-import './static/styles/404page.css'
-import './static/styles/cube-anime.css'
-import './static/styles/floating-labels.css'
-import './static/styles/font.css'
-import './static/styles/goey-anime.css'
-import './static/styles/index.css'
-import './static/styles/override.css'
-import './static/styles/photocard.css'
+import './static/styles/widget/file-upload.scss'
+import './static/styles/widget/chat.scss'
+import './static/styles/widget/floating-labels.css'
 
-import bsCustomFileInput from 'bs-custom-file-input'
+import './static/styles/page/404page.css'
+import './static/styles/page/parallax_grid.css'
+
+import './static/styles/misc/cube-anime.css'
+import './static/styles/misc/goey-anime.css'
+
+import './static/styles/cards/hearthstone.scss'
+import './static/styles/cards/photocard.css'
+import './static/styles/cards/steam-game.scss'
+import './static/styles/cards/steam-trade.scss'
+
+import './static/styles/override.css'
+import './static/styles/font.css'
+import './static/styles/index.css'
+
 import { loadProgressBar } from 'axios-progress-bar'
+import bsCustomFileInput from 'bs-custom-file-input'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ru from 'javascript-time-ago/locale/ru'
+
+JavascriptTimeAgo.addLocale(en)
+JavascriptTimeAgo.addLocale(ru)
+
 loadProgressBar()
 bsCustomFileInput.init()
 

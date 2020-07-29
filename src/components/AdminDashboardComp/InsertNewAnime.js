@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
@@ -49,7 +49,7 @@ let InsertNewAnime = (props) => {
         <div className='text-white'>
             <div className='shape-wave-top'></div>
             <div className='container bg-dark' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black', marginBottom: '150px' }}>
-                <div style={{ backgroundColor: '#2D2D2D', borderRadius: '20px' }} className='p-4 '>
+                <div style={{ backgroundColor: COLORS.DARKSECONDARY, borderRadius: '20px' }} className='p-4 '>
                     <div className='d-flex'>
                         <div>
                             <h4>Add New Anime to Database</h4>
@@ -68,14 +68,14 @@ let InsertNewAnime = (props) => {
                         <DetailsSection detail={state} />
                     </div>
 
-                    <button className={'btn btn-block ' + (valid ? 'btn-primary' : 'btn-secondary')} disabled={!valid()}
+                    <button className={'btn btn-block ' + (valid ? 'btn-main' : 'btn-secondary')} disabled={!valid()}
                         onClick={onSubmit}>
                         Submit
                     </button>
 
                     <Modal isOpen={state.isModalOpen} toggle={modalToggle} scrollable={true} centered={true} className='modal-custom' size='md'>
-                        <ModalHeader toggle={modalToggle}>Adding New Anime to Database</ModalHeader>
-                        <ModalBody className='my-5'>
+                        <ModalHeader toggle={modalToggle} className='align-items-center'>Adding New Anime to Database</ModalHeader>
+                        <ModalBody className=''>
 
                             <FormGroup>
                                 <Label for="cover_image">Cover Image</Label>

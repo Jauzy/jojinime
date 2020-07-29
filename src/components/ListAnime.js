@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import { Link } from 'gatsby'
 
+import { SteamTrade, SteamGame } from './Cards'
+
 const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
 
@@ -39,19 +41,9 @@ const ListAnime = (props) => {
             </div>}
             <div style={{ backgroundColor: custom_bg || COLORS.SECONDARY }} className='py-1 border-radius-bottom'>
                 {anime.list?.length > 0 ? <div className='d-flex flex-column'>
-                    <div className='d-flex flex-wrap justify-content-center'>
+                    <div className='d-flex flex-wrap justify-content-center pb-3'>
                         {anime.list?.map((anime, index) => (
-                            <div className='list-card' key={index + 'list'}>
-                                <Link to={`${ROUTES.ANIMEPAGE}?id=${anime._id}`} className='text-white'>
-                                    <div className='list-bg py-1 px-3 bg-dark'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
-                                    <div className='list-bg py-1 px-3'><i className='fa fa-eye mr-2' />{anime.total_episode} Episode</div>
-                                    <div className='list-bg list-score py-1 px-3 bg-dark'><i className='fa fa-star mr-2' />{anime.score}</div>
-                                    <div className='list-bg list-score py-1 px-3'><i className='fa fa-star mr-2' />{anime.score}</div>
-                                    <div className='list-bg list-title text-truncate bg-dark p-2'>{anime.title}</div>
-                                    <div className='list-bg list-title text-truncate p-2'>{anime.title}</div>
-                                    <img src={anime.cover_image} className='rounded-lg list-image' />
-                                </Link>
-                            </div>
+                            <SteamGame anime={anime} />
                         ))}
                     </div>
                     <div className='m-auto'>

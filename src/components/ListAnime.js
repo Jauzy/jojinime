@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import { Link } from 'gatsby'
 
-import { SteamTrade, SteamGame } from './Cards'
+import { SteamTrade, SteamGame } from './Cards/Index'
 
 const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')

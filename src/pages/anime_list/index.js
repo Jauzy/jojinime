@@ -18,25 +18,26 @@ const Combined = (props) => {
     const { user, anime_list } = props
     const firstLetter = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z'
     const [mode, setMode] = useState('list')
-    const [width, setWidth] = useState($(window).width())
-
-    function updateSize() {
-        setWidth($(window).width())
-    }
-    window.addEventListener('resize', updateSize);
-
-    useEffect(() => {
-        anime({
-            targets: '#anime-wrapper',
-            translateX: [-1000, 0],
-            duration: 2000
-        });
-        getAnimes(props.dispatch)
-    }, [])
+    const [width, setWidth] = useState(1000)
 
     useEffect(() => {
         if (mode === 'library') {
-            if (typeof window !== `undefined`) {
+            if (window && $(window)) {
+                
+                function updateSize() {
+                    setWidth($(window).width())
+                }
+                window.addEventListener('resize', updateSize);
+
+                useEffect(() => {
+                    anime({
+                        targets: '#anime-wrapper',
+                        translateX: [-1000, 0],
+                        duration: 2000
+                    });
+                    getAnimes(props.dispatch)
+                }, [])
+
                 var makeWinHeight = function () {
                     var vh = $(window).height();
                     var projects = vh / 2;

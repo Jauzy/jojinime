@@ -33,12 +33,6 @@ import './static/styles/index.css'
 
 import { loadProgressBar } from 'axios-progress-bar'
 import bsCustomFileInput from 'bs-custom-file-input'
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ru from 'javascript-time-ago/locale/ru'
-
-JavascriptTimeAgo.addLocale(en)
-JavascriptTimeAgo.addLocale(ru)
 
 loadProgressBar()
 bsCustomFileInput.init()

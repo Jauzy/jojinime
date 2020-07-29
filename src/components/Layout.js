@@ -12,6 +12,13 @@ import { NotificationContainer } from 'react-notifications';
 import { connect } from 'react-redux'
 import { Navbar, Footer, ChatWidget } from './Index'
 
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ru from 'javascript-time-ago/locale/ru'
+
+JavascriptTimeAgo.addLocale(en)
+JavascriptTimeAgo.addLocale(ru)
+
 const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
 
@@ -32,7 +39,7 @@ const Layout = (props) => {
   return (
     <div className='font-open-sans text-white'>
       <LoadingOverlay active={!noLoading ? loading_user || loading_anime || false : false} spinner={<Spinner />}>
-        <Navbar color={navbarColor} navigate={navigate} noHamburger={noFooter} />
+        <Navbar color={navbarColor || COLORS.DARKSECONDARY} navigate={navigate} noHamburger={noFooter} />
         {/* <ChatWidget /> */}
         {children}
         {!noFooter && <Footer />}

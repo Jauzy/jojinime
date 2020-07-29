@@ -35,7 +35,8 @@ const Streaming = (props) => {
                             <h4>{episode?.anime.title} {episode?.title} Subtitle Indonesia</h4>
                             <h6 className='text-white'>{episode?.desc}</h6>
                             <small className='text-white'><i className='fa fa-user mr-2' />Posted by Admin {episode?.admin?.nickname}
-                                <i className='fa fa-clock ml-3 mr-1' /> <ReactTimeAgo date={new Date(episode?.date_uploaded)} />
+                                <i className='fa fa-clock ml-3 mr-1' /> 
+                                {/* <ReactTimeAgo date={new Date(episode?.date_uploaded)} /> */}
                             </small>
                         </div>
                     </div>

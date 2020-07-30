@@ -17,7 +17,9 @@ const ROUTES = require('../../static/constants/Routes')
 
 const AnimePage = (props) => {
     const { user, anime, recommendations, episodes } = props
-
+    const [state, setState] = useState({
+        isTruncated: false
+    })
     var settings = {
         slidesToShow: 4,
         arrows: false,

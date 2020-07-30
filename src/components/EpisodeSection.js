@@ -10,9 +10,9 @@ const EpisodeSection = (props) => {
     return (
         <div>
             {/* batch */}
-            {(anime?.type === 'TV' && props.batch_link) && <div className='mt-4'>
+            {(anime?.type === 'TV') && <div className='mt-4'>
                 <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
-                    {anime?.title} Batch
+                    <i className='fa fa-list mr-2' />{anime?.title} Batch
                     </div>
                 <ul style={{ backgroundColor: '#2D2D2D', listStyle: 'none' }} className='px-3 py-1 border-radius-bottom link-list'>
                     {batch_link?.map(item => (
@@ -24,13 +24,18 @@ const EpisodeSection = (props) => {
                             <a className='text-decoration-none text-white' href={item.url}>{anime?.title} Batch {item.quality}p</a>
                         </li>
                     ))}
+                    {(!batch_link[0].url) &&
+                        <div className='text-center text-secondary py-3'>
+                            Batch tidak/belum tersedia
+                        </div>
+                    }
                 </ul>
             </div>}
 
             {/* episodes */}
             <div className='mt-4'>
                 <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
-                    {anime?.title} Episode List <em className='text-dark'>( Link Download + Streaming )</em>
+                    <i className='fa fa-list mr-2' />{anime?.title} Episode List <em className='text-dark'>( Link Download + Streaming )</em>
                 </div>
                 <ul style={{ backgroundColor: '#2D2D2D', listStyle: 'none' }} className='px-3 py-1 border-radius-bottom link-list'>
                     {episodes?.map((eps, index) => (

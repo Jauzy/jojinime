@@ -76,8 +76,13 @@ body{
     border-bottom-right-radius: 5px;
 }
 
-.list-card:hover .list-bg {
-    opacity: 1;
+.list-hover:hover .list-bg {
+    opacity: 0.8;
+}
+
+.list-hover:hover .list-title {
+    margin-top: 180px;
+    height: 100px;
 }
 
 .list-card .list-score {
@@ -94,7 +99,7 @@ body{
 
 .list-card .list-title {
     margin-bottom: 225px;
-    margin-top: 225px;
+    margin-top: 226px;
     border-bottom-left-radius: 5px;
     color: white;
     text-align: center;
@@ -112,9 +117,14 @@ body{
         height: 230px;
     }
     
+    .list-hover:hover .list-title {
+        margin-top: 160px;
+        height: 100px;
+    }
+
     .list-card .list-title {
         margin-bottom: 195px;
-        margin-top: 180px;
+        margin-top: 185px;
         width: 150px;
     }
     .list-card {

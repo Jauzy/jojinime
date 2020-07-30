@@ -103,7 +103,7 @@ const Combined = (props) => {
                                                     <small className='font-weight-bol' key={anime.title}>
                                                         <li>
                                                             <Link className='text-decoration- text-white' to={`${ROUTES.ANIMEPAGE}?id=${anime._id}`}>{anime.title}</Link>
-                                                            {user?.favourite?.includes(anime._id) && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
+                                                            {user?.favourite?.filter(fav => fav._id === anime._id)[0] && <i className='fa fa-heart text-danger ml-1' style={{ fontSize: '10px' }} />}
                                                             {anime.type === 'Movie' && <strong className='text-secondary'> : Movie</strong>}
                                                             {anime.status === 'Ongoing' && <strong className='text-main'> : Ongoing</strong>}
                                                         </li>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import anime from 'animejs'
-import {connect} from 'react-redux'
-import {getMovies} from '../../../static/redux/Actions/anime'
+import { connect } from 'react-redux'
+import { getMovies } from '../../../static/redux/Actions/anime'
 import { ListAnime, SEO, Layout } from '../../components/Index'
 
 const Movie = (props) => {

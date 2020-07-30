@@ -1,20 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as queryString from "query-string";
 import Slider from "react-slick";
 import { connect } from 'react-redux'
+import StarRatings from 'react-star-ratings';
+import { Link } from 'gatsby'
 
 import { SteamGame } from '../components/Cards/Index'
-import { ShareSection, DetailsSection, EpisodeSection, Layout, SEO } from '../components/Index';
+import { ShareSection, EpisodeSection, Layout, SEO } from '../components/Index';
 import { getAnimeById } from '../../static/redux/Actions/anime'
 import { getEpisodes } from '../../static/redux/Actions/episode'
+import { addToFav, removeFav } from '../../static/redux/Actions/user'
 
+const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
+const ROUTES = require('../../static/constants/Routes')
 
 const AnimePage = (props) => {
-    const { user, anime, recommendations, episodes} = props
+    const { user, anime, recommendations, episodes } = props
+    const [state, setState] = useState({
+        isTruncated: false
+    })
 
     var settings = {
-        slidesToShow: 5,
+        slidesToShow: 4,
         arrows: false,
         autoplay: true,
         infinite: true,
@@ -22,27 +30,15 @@ const AnimePage = (props) => {
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 4,
-                }
-            },
-            {
-                breakpoint: 950,
-                settings: {
                     slidesToShow: 3,
                 }
             },
             {
-                breakpoint: 750,
+                breakpoint: 767,
                 settings: {
                     slidesToShow: 2,
                 }
             },
-            {
-                breakpoint: 550,
-                settings: {
-                    slidesToShow: 2,
-                }
-            }
         ]
     };
 
@@ -51,39 +47,96 @@ const AnimePage = (props) => {
         getEpisodes(props.dispatch, queryString.parse(props.location.search).id)
     }, [props.location])
 
+    useEffect(() => {
+        setState({ ...state, isTruncated: anime?.synopsis.length > 300 })
+    }, [anime])
+
     return (
         <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title={anime?.title || 'Anime Detail'} />
-            <div className='shape-wave-top'></div>
-            <div className='bg-dark container-lg' style={{ borderRadius: '20px', boxShadow: '0px 0px 10px black' }}>
-                {/* Details */}
-                <DetailsSection detail={anime} user={user} />
-
-                {/* stream */}
-                <EpisodeSection episodes={episodes}
-                    batch_link={[
-                        { url: anime?.batch_360, quality: '360' },
-                        { url: anime?.batch_480, quality: '480' },
-                        { url: anime?.batch_720, quality: '720' }]}
-                    anime={anime} />
-
-                {/* share */}
-                <ShareSection title={anime?.title} location={props.location} />
-
-                {/* rekomendasi */}
-                <div className='mb-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
-                    Rekomendasi Anime Lainnya
+            <div style={{ backgroundColor: COLORS.LIGHTSECONDARY }}>
+                <div className='border' style={{ width: '100%' }}>
+                    <img alt='banner' src={anime?.cover_image} style={{ objectFit: 'cover', width: '100%', maxHeight: '350px', filter: 'brightness(.4) contrast(1) blur(5px)' }} />
+                </div>
+                <div className='container' style={{ marginTop: '-15em' }}>
+                    <div className='row'>
+                        <div className='col-lg-3 d-flex justify-content-center'>
+                            <SteamGame anime={anime} noLink={true} noLabel={true} />
+                        </div>
+                        <div className='col-lg d-flex'>
+                            <div className='my-auto'>
+                                <h1 className='mb-1 font-weight-bold'>{anime?.title}</h1>
+                                <h3 className=''>{anime?.title_japan}</h3>
+                                {anime?.genre?.map(item => (
+                                    <Link className='btn btn-main m-1' key={item + '-genre'} to={ROUTES.SEARCHGENRE} state={{ genre: item }} >{item}</Link>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                <div className='bg-light' style={{ borderTop: '5px solid ' + COLORS.MAIN, borderRadius: '20px' }}>
-                    <Slider {...settings}>
-                        {recommendations?.map((anime, index) => (
-                            <SteamGame anime={anime} className='mx-auto' />
-                        ))}
-                    </Slider>
                 </div>
 
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-lg-3 my-2'>
+                            <div className='d-flex justify-content-center flex-wrap'>
+                                <div className='w-100 p-2 text-center m-1' style={{ backgroundColor: COLORS.DARKSECONDARY, borderRadius: '50px' }}>{anime?.total_episode} Episodes</div>
+                                <div className='w-100 p-2 text-center m-1' style={{ backgroundColor: COLORS.DARKSECONDARY, borderRadius: '50px' }}>{anime?.duration}</div>
+                                <div className='w-100 p-2 text-center m-1' style={{ backgroundColor: COLORS.MAIN, borderRadius: '50px' }}>{anime?.status}</div>
+
+                                {(!user?.favourite?.filter(item => item._id === anime?._id)[0] && user) &&
+                                    <button className='btn btn-secondary btn-block m-1'
+                                        style={{ borderRadius: '50px' }} onClick={() =>
+                                            addToFav(props.dispatch, anime?._id)
+                                        }><i className='fa fa-heart mr-2' />Add to Favourite</button>}
+
+                                {user?.favourite?.filter(item => item._id === anime?._id)[0] &&
+                                    <button className='btn btn-danger btn-block m-1'
+                                        style={{ borderRadius: '50px' }} onClick={() =>
+                                            removeFav(props.dispatch, anime?._id)
+                                        }><i className='fa fa-heart mr-2' />Favourite</button>}
+
+                            </div>
+                        </div>
+                        <div className='col-lg my-2' style={{ marginTop: '-0em' }}>
+                            <div className='d-flex flex-wrap align-items-center'>
+                                <StarRatings
+                                    rating={parseFloat(anime?.score || 0) / 2}
+                                    starDimension="40px"
+                                    starSpacing="15px"
+                                    starRatedColor={COLORS.MAIN}
+                                />
+                                <div className='mx-4'>
+                                    <small>Score</small>
+                                    <h4 className='mb-0 font-weight-bold'>{anime?.score}</h4>
+                                </div>
+                                <h2 className='ml-auto font-weight-bold'>{anime?.studio}</h2>
+                            </div>
+                            <p className='mb-0 mt-4'>
+                                <strong className='text-main'>{anime?.title}, </strong>{state.isTruncated ? METHODS.text_truncate(anime?.synopsis, 300) : METHODS.text_truncate(anime?.synopsis)}
+                            </p>
+                            {state.isTruncated && <button className='btn btn-main mt-2' onClick={() => setState({ ...state, isTruncated: false })}>Show More</button>}
+
+                            <EpisodeSection episodes={episodes}
+                                batch_link={[
+                                    { url: anime?.batch_360, quality: '360' },
+                                    { url: anime?.batch_480, quality: '480' },
+                                    { url: anime?.batch_720, quality: '720' }]}
+                                anime={anime} />
+
+                            <div className=''>
+                                <Slider {...settings}>
+                                    {recommendations?.map((anime, index) => (
+                                        <SteamGame anime={anime} key={index} />
+                                    ))}
+                                </Slider>
+                            </div>
+
+                            <ShareSection title={anime?.title} location={props.location} />
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className='shape-wave-bottom'></div>
         </Layout>
     )
 }

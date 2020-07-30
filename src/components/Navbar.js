@@ -124,7 +124,7 @@ const NavbarComponent = (props) => {
                             style={{ background: 'unset', border: 'unset', boxShadow: 'unset', borderBottom: '2px solid white', fontSize: '30px' }} />
                         <small className="form-text text-muted">Masukan judul anime yang ingin dicari.</small>
                     </div>
-                    <Link className='btn btn-main btn-block' to={ROUTES.SEARCHANIME} state={{ search: state.search }}>Submit</Link>
+                    <Link className='btn btn-main btn-block' to={ROUTES.SEARCHANIME} state={{ search: state.search }}>Search</Link>
                 </ModalBody>
             </Modal>
             {/* end of modals */}

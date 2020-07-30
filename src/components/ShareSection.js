@@ -24,10 +24,7 @@ const ShareSection = (props) => {
     const url = "https://www.jojinime.xyz"
     return (
         <div>
-            <div className='mb-3 bg-secondary py-2 font-weight-bold rounded-lg text-center'>
-                Jangan Lupa Bantu Share Anime {title} Sub Indo Ke Teman Kalian Ya
-                    </div>
-            <div className='mb-4 d-flex flex-wrap justify-content-center'>
+            <div className='my-4 d-flex flex-wrap justify-content-center'>
                 <FacebookShareButton url={url + pathname} className={className} style={{ borderRadius: '20px' }}>
                     <FacebookIcon size={32} round={true} /> <strong className='my-auto ml-2'>Facebook</strong>
                 </FacebookShareButton>

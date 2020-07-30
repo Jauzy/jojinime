@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import * as queryString from "query-string";
 import Slider from "react-slick";
 import { connect } from 'react-redux'
 import StarRatings from 'react-star-ratings';
 import { Link } from 'gatsby'
+import axios from 'axios'
 
 import { SteamGame } from '../components/Cards/Index'
 import { ShareSection, EpisodeSection, Layout, SEO } from '../components/Index';
 import { getAnimeById } from '../../static/redux/Actions/anime'
-import { getEpisodes } from '../../static/redux/Actions/episode'
 import { addToFav, removeFav } from '../../static/redux/Actions/user'
 
 const METHODS = require('../../static/constants/Methods')
@@ -20,6 +19,8 @@ const AnimePage = (props) => {
     const [state, setState] = useState({
         isTruncated: false
     })
+    const [playlist, setPlaylist] = useState(null)
+
     var settings = {
         slidesToShow: 4,
         arrows: false,
@@ -43,11 +44,16 @@ const AnimePage = (props) => {
 
     useEffect(() => {
         getAnimeById(props.dispatch, props.pageContext.mongo_id)
-        getEpisodes(props.dispatch, props.pageContext.mongo_id)
+        // getEpisodes(props.dispatch, props.pageContext.mongo_id)
     }, [props.location])
 
     useEffect(() => {
         setState({ ...state, isTruncated: anime?.synopsis.length > 300 })
+        if (anime?.playlist_link) {
+            axios.get('https://cdn.jwplayer.com/v2/playlists/6wK0AaDt').then(result => {
+                setPlaylist(result.data.playlist)
+            })
+        }
     }, [anime])
 
     return (
@@ -115,7 +121,7 @@ const AnimePage = (props) => {
                             </p>
                             {state.isTruncated && <button className='btn btn-main mt-2' onClick={() => setState({ ...state, isTruncated: false })}>Show More</button>}
 
-                            <EpisodeSection episodes={episodes}
+                            <EpisodeSection episodes={playlist}
                                 batch_link={[
                                     { url: anime?.batch_360, quality: '360' },
                                     { url: anime?.batch_480, quality: '480' },

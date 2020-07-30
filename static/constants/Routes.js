@@ -1,5 +1,4 @@
 export const HOME = '/'
-export const ABOUT = '/about'
 export const COMBINEDLIST = '/anime_list'
 export const MOVIELIST = '/anime_list/movie'
 export const ONGOINGLIST = '/anime_list/ongoing'
@@ -16,3 +15,6 @@ export const ANIMEPAGE = '/anime-page'
 export const ANIMEDASH = '/anime-dash'
 export const STREAMING = '/streaming'
 
+
+export const ABOUT = '/about'
+export const JAUZY = '/about/jauzy'

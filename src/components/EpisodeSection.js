@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import ReactTimeAgo from 'react-time-ago'
 
 const COLORS = require('../../static/constants/Colors')
 const ROUTES = require('../../static/constants/Routes')
@@ -40,9 +39,9 @@ const EpisodeSection = (props) => {
                 <ul style={{ backgroundColor: '#2D2D2D', listStyle: 'none' }} className='px-3 py-1 border-radius-bottom link-list'>
                     {episodes?.map((eps, index) => (
                         <li key={'/episode' + eps?.title}>
-                            <Link className='text-decoration-none text-white' to={ROUTES.STREAMING + `?id=${eps?._id}`}>
+                            <Link className='text-decoration-none text-white' to={ROUTES.STREAMING + `?id=${anime?._id}`} state={{ episode: index }}>
                                 {anime?.title} {eps?.title}
-                                <date className='ml-auto'><ReactTimeAgo date={new Date(eps?.date_uploaded)} /></date>
+                                <date className='ml-auto'>{Math.floor(eps.duration / 60)} Menit.</date>
                             </Link>
 
                         </li>

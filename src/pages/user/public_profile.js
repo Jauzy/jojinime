@@ -35,7 +35,10 @@ const PublicProfile = props => {
                                     style={{ marginTop: '-5em', background: COLORS.SECONDARY }} width="200" height="200" className="rounded-circle border mx-auto" />
                             </div>
                             <div className='col-md py-3'>
-                                <h3 className='mb-0'>{user?.fullname || user?.nickname} <h style={{ fontSize: '20px' }} className='text-main'>@{user?.nickname}</h></h3>
+                                <h3 className='mb-2'>{user?.fullname || user?.nickname}
+                                    {user?.verified && <i className=' ml-2 mr-3 fa fa-check btn-main p-1 rounded-circle' style={{ fontSize: '17px' }} />}
+                                    <h style={{ fontSize: '20px' }} className='text-main'>@{user?.nickname}</h>
+                                </h3>
                                 <h6 className='text-main'>{user?.email}</h6>
                             </div>
                         </div>

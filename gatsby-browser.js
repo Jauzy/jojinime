@@ -16,6 +16,7 @@ import './static/styles/widget/file-upload.scss'
 import './static/styles/widget/chat.scss'
 import './static/styles/widget/floating-labels.css'
 import './static/styles/widget/share.css'
+import './static/styles/widget/jwplayer.css'
 
 import './static/styles/page/404page.css'
 import './static/styles/page/parallax_grid.css'

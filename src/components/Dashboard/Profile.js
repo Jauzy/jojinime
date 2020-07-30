@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { EditAvatar } from '../Index'
-import { changePassword, updateUser, uploadPublicBanner } from '../../../static/redux/Actions/user'
-import {NotificationManager} from 'react-notifications'
+import { changePassword, updateUser, uploadPublicBanner, sendVerificationEmail} from '../../../static/redux/Actions/user'
+import { NotificationManager } from 'react-notifications'
 
 const COLORS = require('../../../static/constants/Colors')
 
@@ -15,7 +15,7 @@ const defaultState = {
 const Profile = props => {
     const { user } = props
     const [state, setState] = useState({
-        fullname: null, phone_no: null, about: null, birth_date: null, edit_mode: false,
+        fullname: null, phone_no: null, about: null, birth_date: null, edit_mode: false, verified: false,
         newpassword: null, oldpassword: null, isModalOpen: false, isEditAvatarModalOpen: false,
     })
 
@@ -45,7 +45,7 @@ const Profile = props => {
     const handleFileInput = (e) => {
         let file = document.getElementById(e.target.id).files[0]
         if (file?.type.substring(0, 5) === "image") {
-            if (file.size / 1024 / 1024 <= 4) {
+            if (file.size / 1024 / 1024 <= 1) {
                 if (e.target.files && e.target.files.length > 0) {
                     let payload = new FormData()
                     payload.append('picture', file)
@@ -74,8 +74,8 @@ const Profile = props => {
                     </div>
                     <div className='col-sm m-auto d-flex'>
                         <div className='my-auto px-3'>
-                            <h2>Foto Profile</h2>
-                            <h5 className='text-secondary'>Ukuran foto profil tidak boleh lebih dari 1Mb dan banner tidak boleh dari 4Mb.</h5>
+                            <h2>Foto Profil</h2>
+                            <h5 className='text-secondary'>Ukuran foto profil dan banner tidak boleh lebih dari 1Mb.</h5>
                             <div className='d-flex flex-wrap'>
                                 <button onClick={modalToggleAvatar} className='btn btn-main mx-2'>Edit Avatar</button>
                                 <div className='d-flex align-items-center btn btn-secondary' style={{ cursor: 'unset' }}>
@@ -170,11 +170,18 @@ const Profile = props => {
                         <td><h4>Email</h4></td>
                         <td><h4>: <strong>{user?.email}</strong></h4></td>
                     </tr>
-                    <tr>
-                        <td><button className='btn btn-main' onClick={modalToggle}>Ganti Password</button></td>
-                        <td></td>
-                    </tr>
                 </table>
+                <div className='d-flex mt-3 align-items-center'>
+                    <button className='btn btn-main' onClick={modalToggle}>Ganti Password</button>
+                    {state.verified && <div className='mx-2 btn btn-main'>
+                        <i className='mr-2 fa fa-check p-1 rounded-circle' style={{ fontSize: '17px' }} /> Verified
+                    </div>}
+
+                    {!state.verified && <div className='mx-2 btn btn-danger' onClick={() => sendVerificationEmail(props.dispatch)}>
+                        <i className='mr-2 fa fa-times p-1 rounded-circle' style={{ fontSize: '17px' }} /> Verify Email
+                    </div>}
+
+                </div>
 
                 <Modal isOpen={state.isModalOpen} toggle={modalToggle} scrollable={true} centered={true} className='modal-custom' size='xl'>
                     <ModalHeader toggle={modalToggle}></ModalHeader>

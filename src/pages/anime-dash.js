@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 import { Link } from 'gatsby'
 import * as queryString from "query-string";
 import swal from 'sweetalert'
+import axios from 'axios'
 
 import { Layout, SEO } from '../components/Index'
 import genres from '../../static/constants/Genres'
 import { getAnimeById, updateInfo, deleteAnime } from '../../static/redux/Actions/anime'
-import { getEpisodes, addEpisode, updateInfoEps, deleteEps } from '../../static/redux/Actions/episode'
 import { SittingSvg } from '../components/SVG/Index'
 
-import ReactTimeAgo from 'react-time-ago'
-import Select from 'react-select'
 import { FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Select from 'react-select'
 
 const COLORS = require('../../static/constants/Colors')
 const ROUTES = require('../../static/constants/Routes')
@@ -25,10 +24,6 @@ const customStyles = {
     }),
 }
 
-const defaultEpisode = {
-    title: '', desc: '', stream_360: '', stream_480: '', stream_720: '',
-}
-
 const AnimeDashboard = props => {
     const { anime, navigate, user, episodes } = props
     const [state, setState] = useState({
@@ -37,35 +32,33 @@ const AnimeDashboard = props => {
         airing: '', studio: '', genre: [], type: '', synopsis: '', batch_360: '',
         batch_480: '', batch_720: '',
 
-        isModalOpen: false, isModalAddEpisodeOpen: false
-    })
-
-    const [episode, setEps] = useState({
-        title: '', desc: '', stream_360: '', stream_480: '', stream_720: '',
+        isModalOpen: false
     })
 
     const [update, setUpd] = useState({
-        title: '', desc: '', stream_360: '', stream_480: '', stream_720: '',
+        playlist_link: '', isPlaylistModalOpen: false
     })
+
+    const [playlist, setPlaylist] = useState(null)
 
     const modalToggle = () => {
         setState({ ...state, isModalOpen: !state.isModalOpen })
     }
 
-    const modalToggleAddEpisode = () => {
-        setState({ ...state, isModalAddEpisodeOpen: !state.isModalAddEpisodeOpen })
+    const modalTogglePlaylist = () => {
+        setUpd({ ...update, isPlaylistModalOpen: !update.isPlaylistModalOpen })
     }
 
     const onChange = e => {
         setState({ ...state, [e.target.id]: e.target.value.toString() })
     }
 
-    const onChangeEps = e => {
-        setEps({ ...episode, [e.target.id]: e.target.value.toString() })
-    }
-
     const onChangeUpd = e => {
         setUpd({ ...update, [e.target.id]: e.target.value.toString() })
+    }
+
+    const onUpdatePlaylist = e => {
+        updateInfo(props.dispatch, queryString.parse(props.location.search).id, update)
     }
 
     const onUpdate = () => {
@@ -76,20 +69,10 @@ const AnimeDashboard = props => {
         deleteAnime(props.dispatch, queryString.parse(props.location.search).id)
     }
 
-    const onAddNewEps = () => {
-        addEpisode(props.dispatch, queryString.parse(props.location.search).id, episode)
-        setEps({ ...defaultEpisode })
-        modalToggleAddEpisode()
-    }
+    useEffect(() => {
+        getAnimeById(props.dispatch, queryString.parse(props.location.search).id)
 
-    const onUpdateEps = (episodeID) => {
-        updateInfoEps(props.dispatch, episodeID, queryString.parse(props.location.search).id, update)
-        setUpd({ ...defaultEpisode })
-    }
-
-    const onDeleteEps = (episodeID) => {
-        deleteEps(props.dispatch, episodeID, queryString.parse(props.location.search).id)
-    }
+    }, [])
 
     useEffect(() => {
         if (user && !user?.admin) navigate('/')
@@ -97,11 +80,17 @@ const AnimeDashboard = props => {
 
     useEffect(() => {
         setState({ ...anime })
+        setUpd({ playlist_link: anime?.playlist_link })
+        if (anime?.playlist_link) {
+            axios.get('https://cdn.jwplayer.com/v2/playlists/6wK0AaDt').then(result => {
+                setPlaylist(result.data.playlist)
+            })
+        }
     }, [anime])
 
     useEffect(() => {
         getAnimeById(props.dispatch, queryString.parse(props.location.search).id)
-        getEpisodes(props.dispatch, queryString.parse(props.location.search).id)
+        // getEpisodes(props.dispatch, queryString.parse(props.location.search).id)
     }, [])
 
     return (
@@ -163,134 +152,43 @@ const AnimeDashboard = props => {
                 <div className='p-4' style={{ backgroundColor: COLORS.LIGHTSECONDARY }}>
                     <div className='my-3 d-flex flex-wrap align-items-center'>
                         <h1 className='mr-auto font-weight-bold'>Episodes List</h1>
-                        <button className='btn btn-main' onClick={modalToggleAddEpisode}>
-                            <i className='fa fa-plus mr-2' />Add New Episode</button>
+                        <button className='btn btn-main' onClick={modalTogglePlaylist}>
+                            <i className='fa fa-plus mr-2' />Update Playlist Link</button>
                     </div>
                     <div className='row'>
-                        {episodes?.map(eps => (
+                        {playlist?.map((item, index) => (
                             <div className='col-lg-4'>
-                                <div className='episode-card shadow rounded-lg p-3 mx-3 my-2' style={{ cursor: 'pointer' }}
-                                    onClick={() => setUpd({ ...eps })} data-target={`#modal${eps.title.replace(/\s+/g, '-')}`} data-toggle='modal'>
+                                <div className={`episode-card shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}>
                                     <small>{anime?.title_japan}
-                                        <strong className='text-secondary'><i className='fa fa-clock mr-1 ml-2' /><ReactTimeAgo date={new Date(eps.date_uploaded)} /></strong>
+                                        <strong className='text-secondary'><i className='fa fa-clock mr-1 ml-2' />{Math.floor(item.duration / 60)} Menit.</strong>
                                     </small><br />
-                                    <h4 className='mb-1'>{anime?.title} {eps.title}</h4>
-                                    <h6>{eps.desc || 'Not Set'}</h6>
+                                    <h4 className='mb-1'>{item.title}</h4>
+                                    <h6>{item.description || 'Not Set'}</h6>
                                 </div>
-
-                                <div className="modal fade" id={`modal${eps.title.replace(/\s+/g, '-')}`} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog modal-dialog-centered">
-                                        <div className="modal-content">
-                                            <div className="modal-header align-items-center">
-                                                <h5 className="modal-title">Edit {anime?.title} {eps?.title}</h5>
-                                                <button type="button" className="close text-white" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div className="modal-body">
-
-                                                <FormGroup>
-                                                    <Label for="episode_title">Episode Title</Label>
-                                                    <Input invalid={update.title === ''} onChange={onChangeUpd} id='title' value={update.title} />
-                                                    <FormFeedback invalid>Required! Episode Title Cant Be Change After Submit!</FormFeedback>
-                                                    <FormText>Ex: Episode 1, Episode 2, Ova 1, etc.</FormText>
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <Label for="episode_desc">Episode Desc</Label>
-                                                    <Input onChange={onChangeUpd} id='desc' value={update.desc} />
-                                                    <FormText>Optional, Look for Episode Desc in MAL.</FormText>
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <Label for="stream_360">Stream 360p Link</Label>
-                                                    <Input invalid={update.stream_360 === ''} onChange={onChangeUpd} id='stream_360' value={update.stream_360} />
-                                                    <FormFeedback invalid>Required!</FormFeedback>
-                                                    <FormText>Streaming Link Url.</FormText>
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <Label for="stream_480">Stream 480p Link</Label>
-                                                    <Input invalid={update.stream_480 === ''} onChange={onChangeUpd} id='stream_480' value={update.stream_480} />
-                                                    <FormFeedback invalid>Required!</FormFeedback>
-                                                    <FormText>Streaming Link Url.</FormText>
-                                                </FormGroup>
-
-                                                <FormGroup>
-                                                    <Label for="stream_720">Stream 720p Link</Label>
-                                                    <Input invalid={update.stream_720 === ''} onChange={onChangeUpd} id='stream_720' value={update.stream_720} />
-                                                    <FormFeedback invalid>Required!</FormFeedback>
-                                                    <FormText>Streaming Link Url.</FormText>
-                                                </FormGroup>
-
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => {
-                                                    onDeleteEps(eps?._id)
-                                                }}>Delete</button>
-                                                <button type="button" className="btn btn-primary" data-dismiss="modal" disabled={state.anime_title?.length < 2}
-                                                    onClick={() => {
-                                                        onUpdateEps(eps?._id)
-                                                    }}
-                                                >Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         ))}
                     </div>
-                    {episodes?.length < 1 && <div>
+                    {playlist?.length < 1 && <div>
                         <h1 className='text-center font-weight-bold my-4'>There's no Episodes Yet.</h1>
                     </div>}
                 </div>
 
             </div>
 
-            <Modal isOpen={state.isModalAddEpisodeOpen} toggle={modalToggleAddEpisode} scrollable={true} centered={true} id='add-eps' className='modal-custom' size='md'>
-                <ModalHeader toggle={modalToggleAddEpisode} className='align-items-center'>Add New Episode</ModalHeader>
+            <Modal isOpen={update.isPlaylistModalOpen} toggle={modalTogglePlaylist} scrollable={true} centered={true} id='upd-playlist' className='modal-custom' size='md'>
+                <ModalHeader toggle={modalTogglePlaylist} className='align-items-center'>Update Playlist Link</ModalHeader>
                 <ModalBody className=''>
 
                     <FormGroup>
-                        <Label for="episode_title">Episode Title</Label>
-                        <Input invalid={episode.title === ''} onChange={onChangeEps} id='title' value={episode.title} />
-                        <FormFeedback invalid>Required! Episode Title Cant Be Change After Submit!</FormFeedback>
-                        <FormText>Ex: Episode 1, Episode 2, Ova 1, etc.</FormText>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="episode_desc">Episode Desc</Label>
-                        <Input onChange={onChangeEps} id='desc' value={episode.desc} />
-                        <FormText>Optional, Look for Episode Desc in MAL.</FormText>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="stream_360">Stream 360p Link</Label>
-                        <Input invalid={episode.stream_360 === ''} onChange={onChangeEps} id='stream_360' value={episode.stream_360} />
-                        <FormFeedback invalid>Required!</FormFeedback>
-                        <FormText>Streaming Link Url.</FormText>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="stream_480">Stream 480p Link</Label>
-                        <Input invalid={episode.stream_480 === ''} onChange={onChangeEps} id='stream_480' value={episode.stream_480} />
-                        <FormFeedback invalid>Required!</FormFeedback>
-                        <FormText>Streaming Link Url.</FormText>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="stream_720">Stream 720p Link</Label>
-                        <Input invalid={episode.stream_720 === ''} onChange={onChangeEps} id='stream_720' value={episode.stream_720} />
-                        <FormFeedback invalid>Required!</FormFeedback>
-                        <FormText>Streaming Link Url.</FormText>
+                        <Label for="playlist_link">Playlist Link</Label>
+                        <Input onChange={onChangeUpd} id='playlist_link' value={update.playlist_link} />
+                        <FormText>From JW Player Playlist.</FormText>
                     </FormGroup>
 
                 </ModalBody>
                 <ModalFooter>
-                    <button className='btn btn-main' onClick={onAddNewEps}>
-                        Submit Eps
+                    <button className='btn btn-main' onClick={onUpdatePlaylist}>
+                        Update Playlist
                     </button>
                 </ModalFooter>
             </Modal>

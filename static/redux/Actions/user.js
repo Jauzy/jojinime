@@ -95,7 +95,7 @@ export const getPublicUserData = async (dispatch, userID) => {
 }
 
 export const addToFav = async (dispatch, animeID) => {
-    NotificationManager.info('Adding to Favourite');
+    NotificationManager.info('Please Wait...', 'Adding to Favourite');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -110,7 +110,7 @@ export const addToFav = async (dispatch, animeID) => {
 }
 
 export const removeFav = async (dispatch, animeID) => {
-    NotificationManager.info('Adding to Favourite');
+    NotificationManager.info('Please Wait...', 'Adding to Favourite');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -125,7 +125,7 @@ export const removeFav = async (dispatch, animeID) => {
 }
 
 export const uploadProfilePict = async (dispatch, payload) => {
-    NotificationManager.info('Updating Profile Pict');
+    NotificationManager.info('Please Wait...', 'Updating Profile Pict');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -140,7 +140,7 @@ export const uploadProfilePict = async (dispatch, payload) => {
 }
 
 export const uploadPublicBanner = async (dispatch, payload) => {
-    NotificationManager.info('Updating Public Banner');
+    NotificationManager.info('Please Wait...', 'Updating Public Banner');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -155,7 +155,7 @@ export const uploadPublicBanner = async (dispatch, payload) => {
 }
 
 export const changePassword = async (dispatch, { newPassword, oldPassword }) => {
-    NotificationManager.info('Updating Password');
+    NotificationManager.info('Please Wait...', 'Updating Password');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -170,7 +170,7 @@ export const changePassword = async (dispatch, { newPassword, oldPassword }) => 
 }
 
 export const updateUser = async (dispatch, payload) => {
-    NotificationManager.info('Updating Profile');
+    NotificationManager.info('Please Wait...', 'Updating Profile');
     dispatch(enableLoading())
     try {
         const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
@@ -180,6 +180,33 @@ export const updateUser = async (dispatch, payload) => {
         dispatch(finishReq({ user: data.user }))
     } catch (error) {
         NotificationManager.error(error.response?.data.message, 'Error Adding To Favourite');
+        dispatch(finishReq(error))
+    }
+}
+
+export const sendVerificationEmail = async (dispatch) => {
+    NotificationManager.info('Please Wait...', 'Sending Verification Email');
+    dispatch(enableLoading())
+    try {
+        const config = { headers: { token: `JOJINIME ${cookies.get('token')}` } }
+        await baseURL.post(`/user/verify`, null, config)
+        NotificationManager.success('Verification Email Sent!');
+        dispatch(finishReq(null))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Sending Verification Email');
+        dispatch(finishReq(error))
+    }
+}
+
+export const verifyEmail = async (dispatch, token) => {
+    NotificationManager.info('Please Wait...', 'Verifying Email');
+    dispatch(enableLoading())
+    try {
+        await baseURL.put(`/user/verify/${token}`)
+        NotificationManager.success('Account Verified!');
+        dispatch(finishReq(null))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Verifying Email');
         dispatch(finishReq(error))
     }
 }

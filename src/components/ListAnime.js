@@ -37,7 +37,7 @@ const ListAnime = (props) => {
     return (
         <div className='mt-4'>
             {title && <div style={{ backgroundColor: COLORS.MAIN }} className='px-4 py-2 font-weight-bold border-radius-top'>
-                {title}
+                <i className='fa fa-list mr-2' />{title}
             </div>}
             <div style={{ backgroundColor: custom_bg || COLORS.SECONDARY }} className='py-1 border-radius-bottom'>
                 {anime.list?.length > 0 ? <div className='d-flex flex-column'>

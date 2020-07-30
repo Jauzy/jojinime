@@ -1,9 +1,9 @@
 import React from 'react'
-import { Layout, SEO } from '../components/Index'
-import { ReactSvg } from '../components/SVG/Index'
+import { Layout, SEO } from '../../components/Index'
+import { ReactSvg } from '../../components/SVG/Index'
 
-const jojiIMG = require("../../static/styles/images/crew/joji.jpg")
-const putriIMG = require('../../static/styles/images/crew/putri.jpg')
+const jojiIMG = require("../../../static/styles/images/crew/joji.jpg")
+const putriIMG = require('../../../static/styles/images/crew/putri.jpg')
 
 const About = (props) => {
     const crew = [

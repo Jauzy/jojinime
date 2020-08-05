@@ -3,12 +3,12 @@ import Slider from "react-slick";
 import { connect } from 'react-redux'
 import StarRatings from 'react-star-ratings';
 import { Link } from 'gatsby'
-import axios from 'axios'
 
 import { SteamGame } from '../components/Cards/Index'
 import { ShareSection, EpisodeSection, Layout, SEO } from '../components/Index';
 import { getAnimeById } from '../../static/redux/Actions/anime'
 import { addToFav, removeFav } from '../../static/redux/Actions/user'
+import { getEpisodes } from '../../static/redux/Actions/episode'
 
 const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
@@ -44,17 +44,16 @@ const AnimePage = (props) => {
 
     useEffect(() => {
         getAnimeById(props.dispatch, props.pageContext.mongo_id)
-        // getEpisodes(props.dispatch, props.pageContext.mongo_id)
     }, [props.location])
 
     useEffect(() => {
         setState({ ...state, isTruncated: anime?.synopsis.length > 300 })
-        if (anime?.playlist_link) {
-            axios.get('https://cdn.jwplayer.com/v2/playlists/6wK0AaDt').then(result => {
-                setPlaylist(result.data.playlist)
-            })
-        }
+        getEpisodes(props.dispatch, anime?.playlist_360)
     }, [anime])
+
+    useEffect(() => {
+        setPlaylist(episodes)
+    }, [episodes])
 
     return (
         <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>

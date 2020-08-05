@@ -8,7 +8,7 @@ export const PROFILEUSERPUBLIC = '/user/public_profile'
 export const DASHBOARDUSER = '/user/dashboard'
 
 export const LOGINUSER = '/login'
-
+export const FORGOTPASSWORD = '/forgot-password'
 export const ADMIN_DASHBOARD = '/admin'
 
 export const ANIMEPAGE = '/anime-page'

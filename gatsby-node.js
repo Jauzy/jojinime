@@ -23,7 +23,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }`)
     result.data.anime.nodes.forEach(anime => {
         createPage({
-            path: anime.title.toLowerCase().replace(/[|&;:!$%@"<>()+,]/g, "-"),
+            path: anime.title.toLowerCase().replace(/\s+/g, '-').replace(/[|&;:!$%@"<>()+,]/g, "-"),
             component: path.resolve(`./src/templates/anime-page.js`),
             context: {
                 // Data passed to context is available

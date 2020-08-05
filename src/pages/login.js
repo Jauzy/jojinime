@@ -4,9 +4,11 @@ import { Layout, SEO } from '../components/Index'
 import { connect } from 'react-redux'
 import { NotificationManager } from 'react-notifications';
 import { login, register, checkUsername } from "../../static/redux/Actions/user";
+import { Link } from 'gatsby'
 
 const cookies = new Cookies()
 const COLORS = require('../../static/constants/Colors')
+const ROUTES = require('../../static/constants/Routes')
 
 const defaultState = {
     email: '',
@@ -93,6 +95,7 @@ const Login = props => {
                                 setState({ ...defaultState, active: 'SignUp' })
                             }}>Daftar.</span>
                         </small>
+                        <small className='mx-auto mt-3'><Link className='text-white' to={ROUTES.FORGOTPASSWORD}>Lupa Password?</Link></small>
                     </div>
                 </div>}
 

@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'gatsby'
 import * as queryString from "query-string";
 import swal from 'sweetalert'
-import axios from 'axios'
 
 import { Layout, SEO } from '../components/Index'
 import genres from '../../static/constants/Genres'
 import { getAnimeById, updateInfo, deleteAnime } from '../../static/redux/Actions/anime'
+import { getEpisodes } from '../../static/redux/Actions/episode'
 import { SittingSvg } from '../components/SVG/Index'
 
 import { FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
@@ -36,10 +36,8 @@ const AnimeDashboard = props => {
     })
 
     const [update, setUpd] = useState({
-        playlist_link: '', isPlaylistModalOpen: false
+        playlist_360: '', playlist_480: '', playlist_720: '', isPlaylistModalOpen: false
     })
-
-    const [playlist, setPlaylist] = useState(null)
 
     const modalToggle = () => {
         setState({ ...state, isModalOpen: !state.isModalOpen })
@@ -70,27 +68,21 @@ const AnimeDashboard = props => {
     }
 
     useEffect(() => {
-        getAnimeById(props.dispatch, queryString.parse(props.location.search).id)
-
-    }, [])
-
-    useEffect(() => {
         if (user && !user?.admin) navigate('/')
     }, [user])
 
     useEffect(() => {
         setState({ ...anime })
-        setUpd({ playlist_link: anime?.playlist_link })
-        if (anime?.playlist_link) {
-            axios.get('https://cdn.jwplayer.com/v2/playlists/6wK0AaDt').then(result => {
-                setPlaylist(result.data.playlist)
-            })
-        }
+        setUpd({
+            playlist_360: anime?.playlist_360,
+            playlist_480: anime?.playlist_480,
+            playlist_720: anime?.playlist_720,
+        })
+        getEpisodes(props.dispatch, anime?.playlist_360)
     }, [anime])
 
     useEffect(() => {
         getAnimeById(props.dispatch, queryString.parse(props.location.search).id)
-        // getEpisodes(props.dispatch, queryString.parse(props.location.search).id)
     }, [])
 
     return (
@@ -105,8 +97,8 @@ const AnimeDashboard = props => {
                                 <div className='row'>
                                     <div className='col-md-auto d-flex'>
                                         <Link className='m-3 steam-game-container text-white m-auto' to={ROUTES.ANIMEPAGE + `?id=${anime?._id}`}>
-                                            <div class="b-game-card">
-                                                <div class="b-game-card__cover rounded-lg" style={{ backgroundImage: `url(${anime?.cover_image})` }}>
+                                            <div className="b-game-card">
+                                                <div className="b-game-card__cover rounded-lg" style={{ backgroundImage: `url(${anime?.cover_image})` }}>
                                                     <div className='list-card'>
                                                         <div className='list-bg py-1 px-3 bg-dark'><i className='fa fa-eye mr-2' />{anime?.total_episode} Episode</div>
                                                         <div className='list-bg py-1 px-3'><i className='fa fa-eye mr-2' />{anime?.total_episode} Episode</div>
@@ -156,7 +148,7 @@ const AnimeDashboard = props => {
                             <i className='fa fa-plus mr-2' />Update Playlist Link</button>
                     </div>
                     <div className='row'>
-                        {playlist?.map((item, index) => (
+                        {episodes?.map((item) => (
                             <div className='col-lg-4'>
                                 <div className={`episode-card shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}>
                                     <small>{anime?.title_japan}
@@ -168,7 +160,7 @@ const AnimeDashboard = props => {
                             </div>
                         ))}
                     </div>
-                    {playlist?.length < 1 && <div>
+                    {(episodes?.length < 1 || !episodes) && <div>
                         <h1 className='text-center font-weight-bold my-4'>There's no Episodes Yet.</h1>
                     </div>}
                 </div>
@@ -180,8 +172,20 @@ const AnimeDashboard = props => {
                 <ModalBody className=''>
 
                     <FormGroup>
-                        <Label for="playlist_link">Playlist Link</Label>
-                        <Input onChange={onChangeUpd} id='playlist_link' value={update.playlist_link} />
+                        <Label for="playlist_360">Playlist 360</Label>
+                        <Input onChange={onChangeUpd} id='playlist_360' value={update.playlist_360} />
+                        <FormText>From JW Player Playlist.</FormText>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="playlist_480">Playlist 480</Label>
+                        <Input onChange={onChangeUpd} id='playlist_480' value={update.playlist_480} />
+                        <FormText>From JW Player Playlist.</FormText>
+                    </FormGroup>
+                    
+                    <FormGroup>
+                        <Label for="playlist_720">Playlist 720</Label>
+                        <Input onChange={onChangeUpd} id='playlist_720' value={update.playlist_720} />
                         <FormText>From JW Player Playlist.</FormText>
                     </FormGroup>
 

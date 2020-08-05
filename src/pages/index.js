@@ -5,6 +5,7 @@ import { Container } from 'reactstrap'
 import { SittingSvg } from '../components/SVG/Index'
 import { Layout, Footer, SEO } from "../components/Index"
 
+const animeIMG = require('../images/1073171.jpg')
 const COLORS = require('../../static/constants/Colors')
 const ROUTES = require('../../static/constants/Routes')
 
@@ -25,7 +26,6 @@ const IndexPage = (props) => {
     <Layout navigate={props.navigate} navbarColor={'transparent'} noFooter={true} noLoading={true}>
       <SEO title="Home" />
       <div className='position-absolute w-100' style={{ top: 0, backgroundColor: COLORS.DARKSECONDARY }}>
-
         <div className="bg-wrap">
 
           <div className='vh-100 d-flex align-items-center'>
@@ -37,41 +37,43 @@ const IndexPage = (props) => {
             <div className="gooey-rec"></div>
           </div>
 
-          <Container >
+          <Container className='mb-5'>
             <div className='row d-flex mb-5'>
-              <div className='col-md-auto'>
-                <h1 className="font-weight-bold pb-3 title mb-0">ストリーム<strong className='text-main'>.</strong></h1>
-                <h6 className='title' style={{ marginTop: '-20px' }}>Sutorīmu</h6>
-                <div className="svg-cont">
-                  <svg className='cube-svg' viewBox="0 0 615.23 443.15">
-                    <g id="shadow">
-                      <polygon id="shadow-2" data-name="shadow" className="cls-1"
-                        points="307.15 80.38 614.19 266.7 307.05 443.15 0 256.83 307.15 80.38" />
-                    </g>
-                    <g id="platform-cont">
-                      <g id="platform">
-                        <polygon className="cls-2"
-                          points="308.08 362.76 307.09 403.11 0.05 216.79 1.04 176.45 308.08 362.76" />
-                        <polygon className="cls-3"
-                          points="615.23 186.32 614.24 226.66 307.09 403.11 308.08 362.76 615.23 186.32" />
-                        <polygon className="cls-4" points="308.19 0 615.23 186.32 308.08 362.76 1.04 176.45 308.19 0" />
+              <div className='col-md-auto d-flex justify-content-center'>
+                <div>
+                  <h1 className="font-weight-bold pb-3 title mb-0">ストリーム<strong className='text-main'>.</strong></h1>
+                  <h6 className='title' style={{ marginTop: '-20px' }}>Sutorīmu</h6>
+                  <div className="svg-cont">
+                    <svg className='cube-svg' viewBox="0 0 615.23 443.15">
+                      <g id="shadow">
+                        <polygon id="shadow-2" data-name="shadow" className="cls-1"
+                          points="307.15 80.38 614.19 266.7 307.05 443.15 0 256.83 307.15 80.38" />
                       </g>
-                      <polygon id="Square" className="cls-5"
-                        points="307.13 56.82 517.99 184.77 307.06 305.94 96.2 178 307.13 56.82" />
-                      <polygon id="Triangle" className="cls-6"
-                        points="307.13 56.82 517.99 184.77 195.2 238.07 195.2 238.07 307.13 56.82" />
-                      <polygon id="Pause-right" className="cls-7"
-                        points="307.13 56.82 517.99 184.77 448.15 224.89 237.29 96.94 307.13 56.82" />
-                      <polygon id="Pause-left" className="cls-7"
-                        points="166.04 137.87 376.9 265.82 307.06 305.94 96.2 178 166.04 137.87" />
-                      <polygon id="Line-left" className="cls-7"
-                        points="96.2 178 307.06 305.94 307.06 305.94 96.2 178 96.2 178" />
-                      <polygon id="Next-right" className="cls-8"
-                        points="307.13 56.82 517.99 184.77 227.65 216.51 227.65 216.51 307.13 56.82" />
-                      <polygon id="Next-left" className="cls-8"
-                        points="131.12 157.93 341.98 285.88 307.06 305.94 96.2 178 131.12 157.93" />
-                    </g>
-                  </svg>
+                      <g id="platform-cont">
+                        <g id="platform">
+                          <polygon className="cls-2"
+                            points="308.08 362.76 307.09 403.11 0.05 216.79 1.04 176.45 308.08 362.76" />
+                          <polygon className="cls-3"
+                            points="615.23 186.32 614.24 226.66 307.09 403.11 308.08 362.76 615.23 186.32" />
+                          <polygon className="cls-4" points="308.19 0 615.23 186.32 308.08 362.76 1.04 176.45 308.19 0" />
+                        </g>
+                        <polygon id="Square" className="cls-5"
+                          points="307.13 56.82 517.99 184.77 307.06 305.94 96.2 178 307.13 56.82" />
+                        <polygon id="Triangle" className="cls-6"
+                          points="307.13 56.82 517.99 184.77 195.2 238.07 195.2 238.07 307.13 56.82" />
+                        <polygon id="Pause-right" className="cls-7"
+                          points="307.13 56.82 517.99 184.77 448.15 224.89 237.29 96.94 307.13 56.82" />
+                        <polygon id="Pause-left" className="cls-7"
+                          points="166.04 137.87 376.9 265.82 307.06 305.94 96.2 178 166.04 137.87" />
+                        <polygon id="Line-left" className="cls-7"
+                          points="96.2 178 307.06 305.94 307.06 305.94 96.2 178 96.2 178" />
+                        <polygon id="Next-right" className="cls-8"
+                          points="307.13 56.82 517.99 184.77 227.65 216.51 227.65 216.51 307.13 56.82" />
+                        <polygon id="Next-left" className="cls-8"
+                          points="131.12 157.93 341.98 285.88 307.06 305.94 96.2 178 131.12 157.93" />
+                      </g>
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div className='col-md my-auto px-5'>
@@ -82,7 +84,7 @@ const IndexPage = (props) => {
             </div>
           </Container>
 
-          <Container fluid={true}>
+          <Container fluid={true} className='mt-5'>
             <div className='row'>
               <div className='col-md d-flex'>
                 <div className='m-auto'>

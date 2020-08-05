@@ -30,7 +30,7 @@ const Spinner = (props) => {
 
 const Layout = (props) => {
   const { navigate, children, navbarColor, noFooter, noLoading } = props
-  const { loading_user, loading_anime } = props
+  const { loading_user, loading_anime, loading_episode } = props
 
   useEffect(() => {
     // METHODS.disableF12()
@@ -38,8 +38,8 @@ const Layout = (props) => {
 
   return (
     <div className='font-open-sans text-white'>
-      <LoadingOverlay active={!noLoading ? loading_user || loading_anime || false : false} spinner={<Spinner />}>
-        <Navbar color={navbarColor || COLORS.DARKSECONDARY} navigate={navigate} noHamburger={noFooter} />
+      <LoadingOverlay active={!noLoading ? loading_user || loading_anime || loading_episode || false : false} spinner={<Spinner />}>
+        <Navbar color={navbarColor || COLORS.DARKSECONDARY} navigate={navigate} noHamburger={false} />
         {/* <ChatWidget /> */}
         {children}
         {!noFooter && <Footer />}
@@ -55,5 +55,6 @@ Layout.propTypes = {
 
 export default connect(state => ({
   loading_user: state.user.loading,
-  loading_anime: state.anime.loading
+  loading_anime: state.anime.loading,
+  loading_episode: state.episode.loading,
 }), null)(Layout)

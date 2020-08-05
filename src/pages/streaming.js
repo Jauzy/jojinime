@@ -1,26 +1,58 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'gatsby'
 import { connect } from 'react-redux'
 import { getAnimeById } from '../../static/redux/Actions/anime'
+import { getEpisodes } from '../../static/redux/Actions/episode'
 import * as queryString from "query-string";
-import ReactTimeAgo from 'react-time-ago'
 import ReactJWPlayer from 'react-jw-player';
-import axios from 'axios'
 import StarRatings from 'react-star-ratings'
+import Slider from "react-slick";
 
-import { SEO, Layout, DownloadSection, ShareSection, CommentSection } from '../components/Index'
+import { SteamGame } from '../components/Cards/Index'
+import { SEO, Layout, CommentSection } from '../components/Index'
 
 const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
-const ROUTES = require('../../static/constants/Routes')
 
 const Streaming = (props) => {
-    const { anime } = props
+    const { anime, episodes, recommendations } = props
     const [playlist, setPlaylist] = useState(null)
     const [current, setCurrent] = useState(null)
     const [state, setState] = useState({
-        isTruncated: false
+        isTruncated: false, playlist: 'playlist_360'
     })
+
+    var settings = {
+        slidesToShow: 5,
+        arrows: false,
+        autoplay: true,
+        infinite: true,
+        responsive: [
+            {
+                breakpoint: 1700,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+
+        ]
+    };
+
+    const onChangePlaylist = (e) => {
+        setState({ ...state, playlist: e.target.value })
+        getEpisodes(props.dispatch, anime?.[e.target.value])
+    }
 
     useEffect(() => {
         getAnimeById(props.dispatch, queryString.parse(props.location.search).id)
@@ -28,24 +60,46 @@ const Streaming = (props) => {
 
     useEffect(() => {
         setState({ ...state, isTruncated: anime?.synopsis.length > 300 })
-        if (anime?.playlist_link) {
-            axios.get(anime?.playlist_link).then(result => {
-                if (props.location.state) {
-                    window.jwplayer().playlistItem(props.location.state.episode)
-                    setCurrent(result.data.playlist[props.location.state.episode])
-                } else setCurrent(result.data.playlist[0])
-                setPlaylist(result.data.playlist)
-            })
-        }
+        getEpisodes(props.dispatch, anime?.playlist_360)
     }, [anime])
+
+    useEffect(() => {
+        if (episodes) {
+            if (props.location.state && window.jwplayer) {
+                window.jwplayer().playlistItem(props.location.state.episode)
+                setCurrent(episodes[props.location.state.episode])
+            } else setCurrent(episodes[0])
+        }
+        setPlaylist(episodes)
+    }, [episodes])
 
     return (
         <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
             <SEO title={`${anime?.title} - Streaming`} />
             <div style={{ backgroundColor: COLORS.LIGHTSECONDARY }}>
+
                 <div className='container-fluid px-10 pt-4'>
                     <div className='row'>
-                        <div className='col-md-8 my-2'>
+                        <div className='col-lg my-2'>
+                            <div className='d-flex flex-wrap mb-3 align-items-center'>
+                                <div className='mr-auto'>
+                                    <div className='input-group'>
+                                        <div className="input-group-prepend ">
+                                            <span className="input-group-text text-white" style={{ backgroundColor: COLORS.MAIN }}><i className='fa fa-video' /></span>
+                                        </div>
+                                        <select className="form-control form-control-sm" onChange={onChangePlaylist} value={state.playlist}>
+                                            <option value='playlist_360'>Playlist 360P</option>
+                                            <option value='playlist_480' disabled={!anime?.playlist_480}>Playlist 480P</option>
+                                            <option value='playlist_720' disabled={!anime?.playlist_720}>Playlist 720P</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='d-flex align-items-center'>
+                                    <i className='fa fa-eye mx-2' />
+                                    <i className='fa fa-heart mx-2' />
+                                    <i className='fa fa-share mx-2' />
+                                </div>
+                            </div>
                             <ReactJWPlayer
                                 playerId='streaming'
                                 playerScript='https://cdn.jwplayer.com/libraries/OJReti3u.js'
@@ -78,10 +132,18 @@ const Streaming = (props) => {
                                     <strong className='text-main'>{anime?.title}, </strong>{state.isTruncated ? METHODS.text_truncate(anime?.synopsis, 300) : METHODS.text_truncate(anime?.synopsis)}
                                 </p>
                                 {state.isTruncated && <button className='btn btn-main mt-2' onClick={() => setState({ ...state, isTruncated: false })}>Show More</button>}
-
                             </div>
+
+                            <div className='my-5'>
+                                <Slider {...settings}>
+                                    {recommendations?.map((anime, index) => (
+                                        <SteamGame anime={anime} key={index} />
+                                    ))}
+                                </Slider>
+                            </div>
+
                         </div>
-                        <div className='col-md my-2'>
+                        <div className='col-lg-4 my-2'>
                             <div className='mb-4 mx-3'><i className='fa fa-list mr-2' />Episodes List</div>
                             {playlist?.map((item, index) => (
                                 <div className={`episode-card${current?.title === item.title ? '-active' : ''} shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}
@@ -89,16 +151,30 @@ const Streaming = (props) => {
                                         window.jwplayer().playlistItem(index)
                                         setCurrent(playlist[index])
                                     }}>
-                                    <small>{anime?.title_japan}
-                                        {current?.title === item.title && <strong className='text-secondary'><i className='fa fa-video mr-1 ml-2' />Watching</strong>}
-                                    </small><br />
-                                    <h4 className='mb-1'>{item.title}</h4>
-                                    <h6>{item.description || 'Not Set'}</h6>
+                                    <div className='row'>
+                                        <div className='col-md-auto'>
+                                            <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                        </div>
+                                        <div className='col-md d-flex align-items-center'>
+                                            <div>
+                                                <small>{anime?.title_japan}
+                                                    {current?.title === item.title && <strong className='text-secondary'><i className='fa fa-video mr-1 ml-2' />Watching</strong>}
+                                                </small><br />
+                                                <h4 className='mb-1'>{item.title}</h4>
+                                                <h6>{item.description || 'Not Set'}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
+
+                <div className='container-fluid'>
+                    <CommentSection />
+                </div>
+
             </div>
         </Layout>
     )
@@ -107,4 +183,6 @@ const Streaming = (props) => {
 export default connect(state => ({
     user: state.user.user,
     anime: state.anime.anime,
+    episodes: state.episode.episodes,
+    recommendations: state.anime.recommendations
 }), null)(Streaming)

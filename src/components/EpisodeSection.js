@@ -40,7 +40,7 @@ const EpisodeSection = (props) => {
                     {episodes?.map((eps, index) => (
                         <li key={'/episode' + eps?.title}>
                             <Link className='text-decoration-none text-white' to={ROUTES.STREAMING + `?id=${anime?._id}`} state={{ episode: index }}>
-                                {anime?.title} {eps?.title}
+                                {eps?.title}
                                 <date className='ml-auto'>{Math.floor(eps.duration / 60)} Menit.</date>
                             </Link>
 

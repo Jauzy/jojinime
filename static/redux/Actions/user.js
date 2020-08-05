@@ -202,11 +202,37 @@ export const verifyEmail = async (dispatch, token) => {
     NotificationManager.info('Please Wait...', 'Verifying Email');
     dispatch(enableLoading())
     try {
-        await baseURL.put(`/user/verify/${token}`)
+        await baseURL.put(`/user/verify/${token}`, null)
         NotificationManager.success('Account Verified!');
         dispatch(finishReq(null))
     } catch (error) {
         NotificationManager.error(error.response?.data.message, 'Error Verifying Email');
+        dispatch(finishReq(error))
+    }
+}
+
+export const sendResetPasswordEmail = async (dispatch, email) => {
+    NotificationManager.info('Please Wait...', 'Sending Reset Password Email');
+    dispatch(enableLoading())
+    try {
+        await baseURL.post(`/user/reset/${email}`, null)
+        NotificationManager.success('Reset Password Email Sent!');
+        dispatch(finishReq(null))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Sending Reset Password Email');
+        dispatch(finishReq(error))
+    }
+}
+
+export const resetPassword = async (dispatch, password, token) => {
+    NotificationManager.info('Please Wait...', 'Reset Password');
+    dispatch(enableLoading())
+    try {
+        await baseURL.put(`/user/reset/${token}`, { newPassword: password })
+        NotificationManager.success('Password Reset Success!');
+        dispatch(finishReq(null))
+    } catch (error) {
+        NotificationManager.error(error.response?.data.message, 'Error Reseting Password');
         dispatch(finishReq(error))
     }
 }

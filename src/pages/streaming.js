@@ -86,7 +86,7 @@ const Streaming = (props) => {
 
                 <div className='container-fluid px-10 pt-4'>
                     <div className='row'>
-                        <div className='col-lg my-2'>
+                        <div className='col-xl my-2'>
                             <div className='d-flex flex-wrap mb-3 align-items-center'>
                                 <div className='mr-auto'>
                                     <div className='input-group'>
@@ -149,7 +149,7 @@ const Streaming = (props) => {
                             </div>
 
                         </div>
-                        <div className='col-lg-4 my-2'>
+                        <div className='col-xl-4 my-2'>
                             <div className='mb-4 mx-3'><i className='fa fa-list mr-2' />Episodes List</div>
                             {playlist?.slice(0, state.maxView).map((item, index) => (
                                 <div className={`episode-card${current?.title === item.title ? '-active' : ''} shadow rounded-lg p-3 mx-3 my-3`} style={{ cursor: 'pointer' }} key={'eps' + item.title}

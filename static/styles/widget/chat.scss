@@ -11,16 +11,19 @@ $gradient: linear-gradient(to right, $primary, $secondary);
 $mobile: 700px;
 
 //UI
+.chat-app .is-active {
+    height: 600px;
+}
+
 .chat-app {
     font-size: 16px;
     line-height: 1.25;
     font-family: "Roboto", sans-serif;
-    height: 600px;
     width: 360px;
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 2;
+    z-index: 5;
     color: $dark;
     .title {
         font-size: 1.25em;
@@ -203,6 +206,7 @@ $mobile: 700px;
     .message {
         width: calc(100% - 2em);
         padding: 0.75em;
+        padding-bottom: 0;
         background: white;
         margin-top: 0.25em;
         border-radius: 16px;

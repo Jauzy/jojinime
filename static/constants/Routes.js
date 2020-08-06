@@ -18,3 +18,6 @@ export const STREAMING = '/streaming'
 
 export const ABOUT = '/about'
 export const JAUZY = '/about/jauzy'
+
+// export const ENDPOINT = "http://127.0.0.1:80";
+export const ENDPOINT = "https://server.jojinime.xyz";

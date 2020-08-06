@@ -5,21 +5,12 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useEffect } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import LoadingOverlay from 'react-loading-overlay';
-import { NotificationContainer } from 'react-notifications';
 import { connect } from 'react-redux'
-import { Navbar, Footer, ChatWidget } from './Index'
+import { Navbar, Footer } from './Index'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ru from 'javascript-time-ago/locale/ru'
-
-JavascriptTimeAgo.addLocale(en)
-JavascriptTimeAgo.addLocale(ru)
-
-const METHODS = require('../../static/constants/Methods')
 const COLORS = require('../../static/constants/Colors')
 
 const Spinner = (props) => {
@@ -32,20 +23,12 @@ const Layout = (props) => {
   const { navigate, children, navbarColor, noFooter, noLoading } = props
   const { loading_user, loading_anime, loading_episode } = props
 
-  useEffect(() => {
-    // METHODS.disableF12()
-  }, [])
-
   return (
-    <div className='font-open-sans text-white'>
-      <LoadingOverlay active={!noLoading ? loading_user || loading_anime || loading_episode || false : false} spinner={<Spinner />}>
-        <Navbar color={navbarColor || COLORS.DARKSECONDARY} navigate={navigate} noHamburger={false} />
-        {/* <ChatWidget /> */}
-        {children}
-        {!noFooter && <Footer />}
-        <NotificationContainer />
-      </LoadingOverlay>
-    </div>
+    <LoadingOverlay active={!noLoading ? loading_user || loading_anime || loading_episode || false : false} spinner={<Spinner />}>
+      <Navbar color={navbarColor || COLORS.DARKSECONDARY} navigate={navigate} noHamburger={false} />
+      {children}
+      {!noFooter && <Footer />}
+    </LoadingOverlay>
   )
 }
 

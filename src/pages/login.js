@@ -4,7 +4,10 @@ import { Layout, SEO } from '../components/Index'
 import { connect } from 'react-redux'
 import { NotificationManager } from 'react-notifications';
 import { login, register, checkUsername } from "../../static/redux/Actions/user";
+import { resetUtils, setupSocket } from "../../static/redux/Actions/utils";
 import { Link } from 'gatsby'
+//socket
+import socketIOClient from "socket.io-client";
 
 const cookies = new Cookies()
 const COLORS = require('../../static/constants/Colors')
@@ -20,7 +23,7 @@ const defaultState = {
 }
 
 const Login = props => {
-    const { loading, isNicknameValid } = props
+    const { loading, isNicknameValid, socket} = props
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -36,8 +39,14 @@ const Login = props => {
     const onLogin = () => {
         if (cookies.get('token') || cookies.get('user')) {
             NotificationManager.warning("Please logout to continue", "You already logged in!")
-        } else
+        } else {
+            if(socket){
+                socket.disconnect()
+                resetUtils(props.dispatch)
+                setupSocket(props.dispatch, socketIOClient(ROUTES.ENDPOINT))
+            } else setupSocket(props.dispatch, socketIOClient(ROUTES.ENDPOINT))
             login(props.dispatch, { email: state.email, password: state.password }, props.navigate)
+        }
     }
 
     const onCheck = () => {
@@ -155,5 +164,6 @@ const Login = props => {
 
 export default connect(state => ({
     loading: state.user.loading,
-    isNicknameValid: state.user.isNicknameValid
+    isNicknameValid: state.user.isNicknameValid,
+    socket: state.utils.socket
 }), null)(Login)

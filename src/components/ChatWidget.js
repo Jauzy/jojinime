@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
+import { connect } from 'react-redux'
+import { joinRoom, publicMsgs } from '../../static/redux/Actions/utils'
+import { Link } from 'gatsby'
 
 function chatInit(selector) {
     let chat = document.querySelector(selector);
@@ -34,38 +37,77 @@ function chatInit(selector) {
 }
 
 const ChatWidget = props => {
-    const { user } = props
-    const chatMessage = useRef(null)
-    
+    const { user, socket, roomUsers, publicMSGS } = props
+
     const outputMessage = (message) => {
         const div = document.createElement('div')
-        if (message.nickname === user.nickname)
+        if (user && message.user?.nickname === user.nickname)
             div.classList.add('message')
-        else div.classList.add('message reply')
+        else {
+            div.classList.add('message')
+            div.classList.add('reply')
+        }
         div.innerHTML = `
-            <h6 style='font-weight:bold'>${message.nickname}<small className='ml-2'> ${message.time}</small></h6>
+            <a class='text-decoration-none text-${user && message.user?.nickname === user.nickname ? 'light' : 'dark'}' href='/user/public_profile?id=${message.user?._id}'>
+                <h6 class='font-weight-bold'>${message?.user?.nickname ? message?.user?.nickname : message?.user}
+                    <small className='ml-2'> ${message?.time}</small>
+                </h6>
+            </a>
             <p className="text mb-0 pb-0">
-                ${message.text}
+                ${message?.text}
             </p>
         `
         document.querySelector('.chat-messages').appendChild(div)
+        document.querySelector('.chat-app_content').scrollTop = document.querySelector('.chat-messages').scrollHeight
     }
 
     const [state, setState] = useState({
         newMessage: ''
     })
-    
+
     const onChange = e => {
         setState({ ...state, [e.target.id]: e.target.value })
     }
 
     const onSend = () => {
-        // const msg = state.newMessage
-        setState({ ...state, newMessage: null })
+        const msg = state.newMessage
+        socket.emit('chatMessage', user, msg, 'Public')
+        setState({ ...state, newMessage: '' })
     }
 
     useEffect(() => {
         chatInit('#chat-app')
+    }, [])
+
+    useEffect(() => {
+        if (publicMSGS) {
+            publicMSGS.map(data => outputMessage(data))
+        }
+    }, [publicMSGS])
+
+    useEffect(() => {
+        if (socket) {
+            if (!roomUsers) {
+                socket.emit('joinRoom', { username: user?.nickname || 'Guest', room: 'Public' })
+            }
+        }
+    }, [socket])
+
+    useEffect(() => {
+        if (socket) {
+            socket.on("recoverMessage", data => {
+                if (data) {
+                    publicMsgs(props.dispatch, data)
+                }
+            });
+            socket.on("message", data => {
+                if (data)
+                    outputMessage(data)
+            });
+            socket.on("roomUsers", data => {
+                joinRoom(props.dispatch, data)
+            });
+        }
     }, [])
 
     return (
@@ -92,8 +134,8 @@ const ChatWidget = props => {
                             </div> */}
 
                             <div className="content">
-                                <p className="title mb-0">Chatroom</p>
-                                <p className="subtitle">Diskusi apa saja dengan para pengunjung lainnya.</p>
+                                <h3 className='font-weight-bold mb-0'>Public Room</h3>
+                                <p className="subtitle"><strong>{roomUsers?.users.length}</strong> Users Online <i className='fa fa-circle' style={{color:'#0CC243'}} /></p>
                             </div>
 
                         </div>
@@ -101,7 +143,7 @@ const ChatWidget = props => {
                     </div>
 
                     <div className="chat-app_content">
-                        <div className="messages chat-messages" ref={chatMessage}>
+                        <div className="messages chat-messages py-4" id='chat-box'>
 
                             {/* <div className="message reply">
                                 <h6 className='font-weight-bold'>Weeb Developer<small className='text-secondary ml-2'>15m</small></h6>
@@ -122,17 +164,19 @@ const ChatWidget = props => {
 
                     <div className="chat-app_footer">
                         <div className="tools">
-                            <a className="button-icon">
+                            {/* <a className="button-icon">
                                 <i className="far fa-smile-wink"></i>
                             </a>
                             <a className="button-icon">
                                 <i className="fas fa-paperclip"></i>
-                            </a>
+                            </a> */}
                             <a className="copyright">
                                 Powered by Jojinime
                             </a>
                         </div>
-                        <input className="chat-input" id='newMessage' value={state.newMessage} onChange={onChange} type="text" placeholder="Type..." />
+                        <input className="chat-input" id='newMessage' value={state.newMessage} onKeyDown={(e) => {
+                            if (e.key === 'Enter') onSend()
+                        }} onChange={onChange} type="text" placeholder="Type..." />
                     </div>
 
                 </div>
@@ -141,4 +185,10 @@ const ChatWidget = props => {
     )
 }
 
-export default ChatWidget
+export default connect(state => ({
+    user: state.user.user,
+    socket: state.utils.socket,
+    loading: state.user.loading,
+    roomUsers: state.utils.roomUsers,
+    publicMSGS: state.utils.publicMSGS
+}), null)(ChatWidget)

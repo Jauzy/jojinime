@@ -43,7 +43,7 @@ const ListAnime = (props) => {
                 {anime.list?.length > 0 ? <div className='d-flex flex-column'>
                     <div className='d-flex flex-wrap justify-content-center pb-3'>
                         {anime.list?.map((anime, index) => (
-                            <SteamGame anime={anime} />
+                            <SteamGame anime={anime} key={index} />
                         ))}
                     </div>
                     <div className='m-auto'>

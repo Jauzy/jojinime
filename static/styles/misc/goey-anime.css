@@ -26,7 +26,7 @@
     height: 1000px;
     width: 1000px;
     left: -500px;
-    top: -250px;
+    top: -0px;
     transform: rotate(-180deg);
     animation: transform 30s ease-in-out infinite both alternate, movement_two 60s ease-in-out infinite both;
 }

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'universal-cookie'
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import { connect } from 'react-redux'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 //redux
 import { getUserData, logout } from "../../static/redux/Actions/user";
+import { resetUtils } from "../../static/redux/Actions/utils";
 
 const cookies = new Cookies()
 const ROUTES = require('../../static/constants/Routes')
 const COLORS = require('../../static/constants/Colors')
 
 const NavbarComponent = (props) => {
-    const { color, dispatch, user, noHamburger } = props
+    const { color, dispatch, user, noHamburger, socket } = props
     const [state, setState] = useState({
         search: null || '', isModalOpen: false
     })
@@ -101,7 +102,14 @@ const NavbarComponent = (props) => {
                                         </Link>
                                         <a className="text-decoration-none dropdown-item d-flex py-3 px-5 bg-light text-secondary border-top rounded-bottom"
                                             style={{ cursor: 'pointer' }}
-                                            onClick={() => logout(props.dispatch, props.navigate)}>
+                                            onClick={() => {
+                                                logout(props.dispatch, props.navigate)
+                                                if(socket){
+                                                    socket.disconnect()
+                                                }
+                                                navigate(ROUTES.LOGINUSER)
+                                                resetUtils(props.dispatch)
+                                            }}>
                                             <i className='fa fa-power-off text-main my-auto' style={{ fontSize: '20px' }} />
                                             <h6 className='font-weight-bold ml-4 my-auto'>Logout</h6>
                                         </a>
@@ -133,5 +141,6 @@ const NavbarComponent = (props) => {
 }
 
 export default connect(state => ({
-    user: state.user.user
+    user: state.user.user,
+    socket: state.utils.socket
 }), null)(NavbarComponent)

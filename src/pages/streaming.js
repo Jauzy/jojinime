@@ -18,7 +18,8 @@ const Streaming = (props) => {
     const [playlist, setPlaylist] = useState(null)
     const [current, setCurrent] = useState(null)
     const [state, setState] = useState({
-        isTruncated: false, playlist: 'playlist_360'
+        isTruncated: false, playlist: 'playlist_360', maxView: 4,
+        list: []
     })
 
     var settings = {
@@ -60,7 +61,7 @@ const Streaming = (props) => {
 
     useEffect(() => {
         setState({ ...state, isTruncated: anime?.synopsis.length > 300 })
-        getEpisodes(props.dispatch, anime?.playlist_360)
+        getEpisodes(props.dispatch, anime?.[state.playlist])
     }, [anime])
 
     useEffect(() => {
@@ -71,7 +72,12 @@ const Streaming = (props) => {
             } else setCurrent(episodes[0])
         }
         setPlaylist(episodes)
+        setState({ ...state, list: episodes?.slice(0, state.maxView) })
     }, [episodes])
+
+    useEffect(() => {
+        getEpisodes(props.dispatch, anime?.[state.playlist])
+    }, [state.playlist])
 
     return (
         <Layout navigate={props.navigate} navbarColor={COLORS.LIGHTSECONDARY}>
@@ -103,7 +109,7 @@ const Streaming = (props) => {
                             <ReactJWPlayer
                                 playerId='streaming'
                                 playerScript='https://cdn.jwplayer.com/libraries/OJReti3u.js'
-                                playlist='https://cdn.jwplayer.com/v2/playlists/6wK0AaDt'
+                                playlist={anime?.[state.playlist]}
                                 customProps={{ skin: { name: 'netflix' } }}
                             />
                             <small className='text-muted mx-2'>*Note : Jika Player Loading Saat Mengganti Episode, Tekan Episode Sekali Lagi.</small>
@@ -111,7 +117,7 @@ const Streaming = (props) => {
 
                                 <div className='mr-auto'>
                                     <h5 className='mb-0 text-main'>{anime?.title} {anime?.title_japan}</h5>
-                                    <h1>{current?.title}</h1>
+                                    <h1>{current?.title.replace(/360|480|720|/gi, "").replace('Eps', "Episode")}</h1>
                                     <h6>{current?.description}</h6>
                                 </div>
 
@@ -145,28 +151,30 @@ const Streaming = (props) => {
                         </div>
                         <div className='col-lg-4 my-2'>
                             <div className='mb-4 mx-3'><i className='fa fa-list mr-2' />Episodes List</div>
-                            {playlist?.map((item, index) => (
-                                <div className={`episode-card${current?.title === item.title ? '-active' : ''} shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}
+                            {playlist?.slice(0, state.maxView).map((item, index) => (
+                                <div className={`episode-card${current?.title === item.title ? '-active' : ''} shadow rounded-lg p-3 mx-3 my-3`} style={{ cursor: 'pointer' }} key={'eps' + item.title}
                                     onClick={() => {
                                         window.jwplayer().playlistItem(index)
                                         setCurrent(playlist[index])
                                     }}>
                                     <div className='row'>
-                                        <div className='col-md-auto d-flex justify-content-center'>
-                                            <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                        <div className='col-md-auto d-flex justify-content-center align-items-center'>
+                                            <div>
+                                                <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                            </div>
                                         </div>
                                         <div className='col-md d-flex align-items-center'>
                                             <div>
-                                                <small>{anime?.title_japan}
-                                                    {current?.title === item.title && <strong className='text-secondary'><i className='fa fa-video mr-1 ml-2' />Watching</strong>}
-                                                </small><br />
-                                                <h4 className='mb-1'>{item.title}</h4>
+                                                <small>{anime?.title_japan}</small><br />
+                                                {current?.title === item.title && <small><strong className='text-secondary'><i className='fa fa-video mr-1' />Watching</strong><br /></small>}
+                                                <h4 className='mb-1'>{item.title.replace(/360|480|720|/gi, "").replace(anime.title, "").replace('Eps', "Episode")}</h4>
                                                 <h6>{item.description || 'Not Set'}</h6>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             ))}
+                            {playlist?.length > state.maxView &&  <button className='btn btn-main btn-block' onClick={() => setState({ ...state, maxView: state.maxView + 4 })}>View More</button>}
                         </div>
                     </div>
                 </div>

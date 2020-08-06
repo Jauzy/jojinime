@@ -181,16 +181,18 @@ const AnimeDashboard = props => {
                             <hr style={{ borderColor: COLORS.MAIN }} />
                             <div className='row'>
                                 {item.playlist?.map((item) => (
-                                    <div className='col-lg-4'>
+                                    <div className='col-xl-4'>
                                         <div className={`episode-card shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}>
                                             <div className='row'>
-                                                <div className='col-md-auto d-flex justify-content-center'>
-                                                    <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                                <div className='col-lg-auto d-flex justify-content-center align-items-center'>
+                                                    <div>
+                                                        <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                                    </div>
                                                 </div>
-                                                <div className='col-md d-flex align-items-center'>
+                                                <div className='col-lg d-flex align-items-center'>
                                                     <div>
                                                         <h6 className='text-secondary mb-0'>{anime?.title} - {anime?.title_japan}</h6>
-                                                        <h4 className='mb-1'>{item.title}</h4>
+                                                        <h4 className='mb-1'>{item.title.replace(/360|480|720|/gi, "").replace('Eps', "Episode")}</h4>
                                                         <h6>{item.description || 'Not Set'}</h6>
                                                     </div>
                                                 </div>

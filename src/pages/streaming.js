@@ -152,7 +152,7 @@ const Streaming = (props) => {
                                         setCurrent(playlist[index])
                                     }}>
                                     <div className='row'>
-                                        <div className='col-md-auto'>
+                                        <div className='col-md-auto d-flex justify-content-center'>
                                             <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
                                         </div>
                                         <div className='col-md d-flex align-items-center'>

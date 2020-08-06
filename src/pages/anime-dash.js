@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'gatsby'
 import * as queryString from "query-string";
 import swal from 'sweetalert'
+import axios from 'axios'
 
 import { Layout, SEO } from '../components/Index'
 import genres from '../../static/constants/Genres'
@@ -39,6 +40,10 @@ const AnimeDashboard = props => {
         playlist_360: '', playlist_480: '', playlist_720: '', isPlaylistModalOpen: false
     })
 
+    const [playlist, setPlaylist] = useState({
+        playlist_360: [], playlist_480: [], playlist_720: []
+    })
+
     const modalToggle = () => {
         setState({ ...state, isModalOpen: !state.isModalOpen })
     }
@@ -67,6 +72,26 @@ const AnimeDashboard = props => {
         deleteAnime(props.dispatch, queryString.parse(props.location.search).id)
     }
 
+    const retriveEpisodes = async (anime) => {
+        if (anime) {
+            let playlist_360 = null
+            let playlist_480 = null
+            let playlist_720 = null
+            if (anime?.playlist_360)
+                playlist_360 = await axios.get(anime?.playlist_360)
+            if (anime?.playlist_480)
+                playlist_480 = await axios.get(anime?.playlist_480)
+            if (anime?.playlist_720)
+                playlist_720 = await axios.get(anime?.playlist_720)
+
+            setPlaylist({
+                playlist_360: playlist_360 ? playlist_360.data?.playlist : [],
+                playlist_480: playlist_480 ? playlist_480.data?.playlist : [],
+                playlist_720: playlist_720 ? playlist_720.data?.playlist : []
+            })
+        }
+    }
+
     useEffect(() => {
         if (user && !user?.admin) navigate('/')
     }, [user])
@@ -78,7 +103,7 @@ const AnimeDashboard = props => {
             playlist_480: anime?.playlist_480,
             playlist_720: anime?.playlist_720,
         })
-        getEpisodes(props.dispatch, anime?.playlist_360)
+        retriveEpisodes(anime)
     }, [anime])
 
     useEffect(() => {
@@ -144,25 +169,42 @@ const AnimeDashboard = props => {
                 <div className='p-4' style={{ backgroundColor: COLORS.LIGHTSECONDARY }}>
                     <div className='my-3 d-flex flex-wrap align-items-center'>
                         <h1 className='mr-auto font-weight-bold'>Episodes List</h1>
-                        <button className='btn btn-main' onClick={modalTogglePlaylist}>
+                        <button className='btn btn-main' onClick={modalTogglePlaylist} style={{ cursor: 'pointer' }}>
                             <i className='fa fa-plus mr-2' />Update Playlist Link</button>
                     </div>
-                    <div className='row'>
-                        {episodes?.map((item) => (
-                            <div className='col-lg-4'>
-                                <div className={`episode-card shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}>
-                                    <small>{anime?.title_japan}
-                                        <strong className='text-secondary'><i className='fa fa-clock mr-1 ml-2' />{Math.floor(item.duration / 60)} Menit.</strong>
-                                    </small><br />
-                                    <h4 className='mb-1'>{item.title}</h4>
-                                    <h6>{item.description || 'Not Set'}</h6>
-                                </div>
+
+                    {[{ quality: '360', playlist: playlist.playlist_360 },
+                    { quality: '480', playlist: playlist.playlist_480 },
+                    { quality: '720', playlist: playlist.playlist_720 },].map(item => (
+                        <div className='my-3'>
+                            <h5 className='text-center'>{item.quality}P Quality</h5>
+                            <hr style={{ borderColor: COLORS.MAIN }} />
+                            <div className='row'>
+                                {item.playlist?.map((item) => (
+                                    <div className='col-lg-4'>
+                                        <div className={`episode-card shadow rounded-lg p-3 mx-3 my-2`} style={{ cursor: 'pointer' }} key={'eps' + item.title}>
+                                            <div className='row'>
+                                                <div className='col-md-auto d-flex justify-content-center'>
+                                                    <img src={item.image} width='150px' className='rounded-lg shadow-lg' />
+                                                </div>
+                                                <div className='col-md d-flex align-items-center'>
+                                                    <div>
+                                                        <h6 className='text-secondary mb-0'>{anime?.title} - {anime?.title_japan}</h6>
+                                                        <h4 className='mb-1'>{item.title}</h4>
+                                                        <h6>{item.description || 'Not Set'}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                    {(episodes?.length < 1 || !episodes) && <div>
-                        <h1 className='text-center font-weight-bold my-4'>There's no Episodes Yet.</h1>
-                    </div>}
+                            {(item.playlist?.length < 1 || !item.playlist) && <div>
+                                <h1 className='text-center font-weight-bold my-4'>There's no Episodes Yet.</h1>
+                            </div>}
+                        </div>
+                    ))}
+
                 </div>
 
             </div>
@@ -182,7 +224,7 @@ const AnimeDashboard = props => {
                         <Input onChange={onChangeUpd} id='playlist_480' value={update.playlist_480} />
                         <FormText>From JW Player Playlist.</FormText>
                     </FormGroup>
-                    
+
                     <FormGroup>
                         <Label for="playlist_720">Playlist 720</Label>
                         <Input onChange={onChangeUpd} id='playlist_720' value={update.playlist_720} />

@@ -22,7 +22,7 @@
     "gatsby-plugin-sharp": "^2.6.14",
     "gatsby-source-filesystem": "^2.3.14",
     "gatsby-source-mongodb": "^2.3.10",
-    "gatsby-transformer-remark": "^2.8.26",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.5.7",
     "jquery": "^3.5.1",
     "netlify-cms-app": "^2.12.18",
